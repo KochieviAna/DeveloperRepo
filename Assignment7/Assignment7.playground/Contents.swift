@@ -223,7 +223,7 @@ print("---------------------------")
 
 for product in 0..<productsArray.count {
     if productsArray[product].category == .grain && productsArray[product].status == .available {
-        productsArray[product].status = .sold
+        productsArray[product].purchase()
     }
 }
 print(productsArray)
