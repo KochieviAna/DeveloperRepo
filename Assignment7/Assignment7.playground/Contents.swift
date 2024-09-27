@@ -197,7 +197,23 @@ let productFifteen = Product(
     status: .sold
 )
 
-var productsArray: [Product] = [productOne, productTwo, productThree, productFour, productFive, productSix, productSeven, productEight, productNine, productTen, productEleven, productTwelve, productThirteen, productFourteen, productFifteen]
+var productsArray: [Product] = [
+    productOne,
+    productTwo,
+    productThree,
+    productFour,
+    productFive,
+    productSix,
+    productSeven,
+    productEight,
+    productNine,
+    productTen,
+    productEleven,
+    productTwelve,
+    productThirteen,
+    productFourteen,
+    productFifteen
+]
 
 print(productsArray)
 
@@ -240,6 +256,18 @@ print("---------------------------")
 
 //MARK: 9.შექმენით ფუნქცია რომელიც მიიღებს პროდუქტების მასივს და დააბრუნებს dictionary-ს სადაც key იქნება კატეგორიის სახელწოდება და value იქნება იმ პროდუქტების მასივი რომლებიც შეესაბამება მოცემულ კატეგორიას.
 
-func productsDictionary(products array: [Product]) -> [FoodGroup: [Product]] {
-    return [:]
+func categorizeProducts(products array: [Product]) -> [FoodGroup: [Product]] {
+    var categorizedProducts: [FoodGroup: [Product]] = [:]
+    for product in array {
+        let categoryKey = product.category
+        if categorizedProducts[categoryKey] != nil {
+            categorizedProducts[categoryKey]?.append(product)
+        } else {
+            categorizedProducts[categoryKey] = [product]
+        }
+    }
+    return categorizedProducts
 }
+
+print(categorizeProducts(products: productsArray))
+
