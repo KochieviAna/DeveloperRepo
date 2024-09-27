@@ -237,3 +237,9 @@ let sumOfAvailableProductPrice = productsArray.filter { $0.status == .available 
 print(sumOfAvailableProductPrice)
 
 print("---------------------------")
+
+//MARK: 9.შექმენით ფუნქცია რომელიც მიიღებს პროდუქტების მასივს და დააბრუნებს dictionary-ს სადაც key იქნება კატეგორიის სახელწოდება და value იქნება იმ პროდუქტების მასივი რომლებიც შეესაბამება მოცემულ კატეგორიას.
+
+func productsDictionary(products array: [Product]) -> [FoodGroup: [Product]] {
+    return [:]
+}
