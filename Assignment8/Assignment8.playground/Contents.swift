@@ -133,19 +133,70 @@ let averageReleaseYear: Int = filmsArray.reduce(0) { $0 + $1.releaseYear } / fil
 print(averageReleaseYear)
 
 //MARK: 9. შექმენით კლასი SuperHero, რომელიც შეიცავს შემდეგ ველებს:
-
 //name სუპერ გმირის სახელი
 //superPower  სუპერ ძალა
 //level - PowerLevel enum-ის ტიპის,
 //და allies ამავე ტიპის მოკავშირეების ჩამონათვალი,
 //დაამატეთ ინიციალიზაციის და დეინიციალიზაციის მეთოდები
 
+class SuperHero {
+    let name: String
+    let superPower: String
+    let level: PowerLevel
+    var allies: [String]
+    
+    init(name: String, superPower: String, level: PowerLevel, allies: [String]) {
+        self.name = name
+        self.superPower = superPower
+        self.level = level
+        self.allies = allies
+    }
+    
+    deinit {
+        print("Deinit has been called")
+    }
+}
 
 //MARK: 10. შექმენით Enum PowerLevel, რომელიც მოიცავს შემდეგ დონეებს: weak, average, strong, super და დაამატეთ აღწერის მეთოდი რომელიც დააბრუნებს level-ს ტექსტური ფორმით.
 
+enum PowerLevel: String {
+    case weak = "Weak"
+    case average = "Average"
+    case strong = "Strong"
+    case superStrongPower = "Super"
+    
+    func describe() -> String {
+        return self.rawValue
+    }
+}
 
+extension SuperHero {
+    func describe() -> String {
+        return "\(name) has as superpower level \(level.describe())"
+    }
+}
 //MARK: 11. uniquePowers ყველა გმირისათვის და დააბრუნებს  უნიკალური ძალების სიას
-
-
+extension SuperHero {
+    func uniquePowers(from heroes: [SuperHero]) -> Set<String> {
+        let allPowers = heroes.map { $0.superPower }
+        let uniquePowers = Set(allPowers)
+        return uniquePowers
+    }
+}
 //MARK: 12.  მეთოდი addAlly დაამატებს მოკავშირეების სიას, შექმენით 2 SuperHero ობიექტი და გახადეთ ისინი მოკავშირეები.
+extension SuperHero {
+    func addAlly(allies: [SuperHero]) {
+        for ally in allies {
+            self.allies.append(ally.name)
+            ally.allies.append(self.name)
+        }
+    }
+}
 
+let hero1 = SuperHero(name: "Flash", superPower: "Speed", level: .superStrongPower, allies: [])
+let hero2 = SuperHero(name: "Superman", superPower: "Strength", level: .superStrongPower, allies: [])
+
+hero1.addAlly(allies: [hero2])
+
+print("\(hero1.name)'s allies: \(hero1.allies)")
+print("\(hero2.name)'s allies: \(hero2.allies)")
