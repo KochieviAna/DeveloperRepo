@@ -246,19 +246,74 @@ for book in LibraryMemberTwo.borrowedBooks {
     print(" - \(book.title)")
 }
 
+print("-----------------")
+
+
 //MARK: 9. გააფართოვეთ "Array" ტიპი, სადაც ელემენტი აკმაყოფილებს "Readable" პროტოკოლს (ანუ ამ ექსთენშენი მოცემული მეთოდები ხელმსიაწვდომი იქნება მხოლოდ [Readable] მასივისთვის), შემდეგი მეთოდებით:
 //   - "findByAuthor(_ author: String) -> [Readable]" - აბრუნებს ავტორის მიხედვით ნაპოვნ წიგნებს
 //   - "oldestBook() -> Readable?" - აბრუნებს ყველაზე ძველ წიგნს
 
 
+extension Array where Element: Readable {
+    func findByAuthor(_ author: String) -> [Readable] {
+        return self.filter { $0.author == author }
+    }
+    
+    func oldestBook() -> Readable? {
+        return self.min { $0.publicationYear < $1.publicationYear }
+    }
+}
+
 //MARK: 10. შექმენით "EBook" სტრუქტურა, რომელიც დააკმაყოფილებს "Readable" პროტოკოლს და დაამატეთ "fileSize: Double" ფროფერთი.
 //  გამოიყენეთ "extension", რომ დაამატოთ "printDetails()" მეთოდი, რომელიც დაბეჭდავს ელექტრონული წიგნის დეტალებს.
 //  შექმენით მინიმუმ 2 "EBook" ობიექტი და გამოიძახეთ "printDetails()" მეთოდი თითოეულისთვის.
 
+struct EBook: Readable {
+    let fileSize: Double
+    let title: String
+    let author: String
+    let publicationYear: Int
+    let readingLevel: ReadingLevel
+    
+    func read() {
+        print("You have successfully read the book: \(title)")
+    }
+}
+
+extension EBook {
+    func printDetails() {
+        print("Book title: \(title), author: \(author), publication year: \(publicationYear), reading level: \(readingLevel), file size: \(fileSize)")
+    }
+}
+
+let eBookOne = EBook(fileSize: 98.2, title: "The Godfather", author: "Mario Puzo", publicationYear: 1969, readingLevel: .intermediate)
+let eBookTwo = EBook(fileSize: 67.5, title: "Fight Club", author: "Chuck Palahniuk", publicationYear: 1996, readingLevel: .advanced)
+
+eBookOne.printDetails()
+eBookTwo.printDetails()
+
+print("-----------------")
 
 //MARK: 11. შექმენით ჯენერიკ ფუნქცია "findMostFrequent<T: Hashable>(_ array: [T]) -> T?", რომელიც იპოვის და დააბრუნებს მასივში ყველაზე ხშირად გამეორებულ ელემენტს. თუ რამდენიმე ელემენტი თანაბრად ხშირად მეორდება, დააბრუნეთ პირველი მათგანი.
 
+func findMostFrequent<T: Hashable>(_ array: [T]) -> T? {
+    var frequency: [T: Int] = [:]
+    
+    for element in array {
+        frequency[element, default: 0] += 1
+    }
+    
+    return frequency.max(by: { $0.value < $1.value })?.key
+}
 
 //MARK: 12. შექმენით მასივი, რომელიც შეიცავს ყველა წიგნის ავტორს მე-7 დავალებაში შექმნილი ბიბლიოთეკიდან.
 //გამოიძახეთ "findMostFrequent" ფუნქცია ამ მასივზე, რათა იპოვოთ ყველაზე პოპულარული ავტორი.
 //დაბეჭდეთ შედეგი: "ბიბლიოთეკაში ყველაზე პოპულარული ავტორი არის: [ავტორის სახელი]".
+
+let authors = library.books.map { $0.author }
+
+if let mostPopularAuthor = findMostFrequent(authors) {
+    print("The most popular author in the library is: \(mostPopularAuthor)")
+} else {
+    print("No authors found.")
+}
