@@ -3,11 +3,11 @@ import UIKit
 //MARK: 1. შექმენით "Genre" ტიპის enum, რომელიც შეიცავს წიგნის ჟანრებს (მაგ: fiction, nonFiction, mystery, sciFi, biography). დაამატეთ computed property "description", რომელიც დააბრუნებს ჟანრის აღწერას.
 
 enum Genre: String {
-    case fiction = "Fiction",
-         nonFiction = "Non-Fiction",
-         mystery = "Mystery",
-         sciFi = "Sci-Fi",
-         biography = "Biography"
+    case fiction = "Fiction"
+    case nonFiction = "Non-Fiction"
+    case mystery = "Mystery"
+    case sciFi = "Sci-Fi"
+    case biography = "Biography"
     
     var description: String {
         switch self {
@@ -28,9 +28,9 @@ enum Genre: String {
 //   - "read()" მეთოდი, რომელიც დაბეჭდავს ინფორმაციას წიგნის წაკითხვის შესახებ, მაგ: "გილოცავთ თქვენ ერთ კლიკში წაიკითხეთ წიგნი" ან რამე სხვა, მიეცით ფანტაზიას გასაქანი 🤘
 
 enum ReadingLevel: String {
-    case beginner = "Beginner",
-         intermediate = "Intermediate",
-         advanced = "Advanced"
+    case beginner = "Beginner"
+    case intermediate = "Intermediate"
+    case advanced = "Advanced"
 }
 
 protocol Readable {
@@ -90,7 +90,8 @@ class Library {
             books.append(book)
         } else {
             print("The book '\(book.title)' is already in the library.")
-        }    }
+        }
+    }
     
     func removeBookWith(title: String) {
         books.removeAll(where: { $0.title == title })
@@ -119,13 +120,9 @@ func groupBooksByLevel<T: Readable>(_ books: [T]) -> [ReadingLevel: [T]] {
     var booksByLevel: [ReadingLevel: [T]] = [:]
     
     for book in books {
-        let level = book.readingLevel
-        if booksByLevel[level] == nil {
-            booksByLevel[level] = [book]
-        } else {
-            booksByLevel[level]?.append(book)
-        }
+        booksByLevel[book.readingLevel, default: []].append(book)
     }
+    
     return booksByLevel
 }
 
@@ -256,11 +253,11 @@ print("-----------------")
 
 extension Array where Element: Readable {
     func findByAuthor(_ author: String) -> [Readable] {
-        return self.filter { $0.author == author }
+        self.filter { $0.author == author }
     }
     
     func oldestBook() -> Readable? {
-        return self.min { $0.publicationYear < $1.publicationYear }
+        self.min { $0.publicationYear < $1.publicationYear }
     }
 }
 
