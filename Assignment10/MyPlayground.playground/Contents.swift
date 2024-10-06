@@ -52,7 +52,7 @@ class Trainer {
     }
     
     public func add(creature: DigitalCreature) {
-        if !creatures.contains(where: {$0.name == creature.name}) {
+        if !creatures.contains(where: { $0.name == creature.name }) {
             creatures.append(creature)
             creature.trainer = self
         } else {
@@ -116,12 +116,7 @@ class DigitalCreature: CreatureStats {
 //      გააფართოვეთ CreatureManager კლასი მეთოდით func trainAllCreatures(), რომელიც გაწვრთნის ყველა არსებას. 
 
 class CreatureManager {
-    private var creatures: [DigitalCreature]
-    
-    init(creatures: [DigitalCreature]) {
-        self.creatures = creatures
-    }
-    
+    private var creatures: [DigitalCreature] = []
     
     public func adoptCreature(_ creature: DigitalCreature) {
         if !creatures.contains(where: { $0.name == creature.name }) {
@@ -151,7 +146,7 @@ class CreatureManager {
 extension CreatureManager {
     
     func trainAllCreatures() {
-        let creaturesWithTrainer = creatures.filter {$0.trainer != nil}
+        let creaturesWithTrainer = creatures.filter { $0.trainer != nil }
         if creaturesWithTrainer.isEmpty {
             print("There are no creatures with trainers to train!")
         } else {
@@ -244,8 +239,8 @@ func updateLeaderboard(players: [CreatureManager]) -> [CreatureManager] {
 let trainer1 = Trainer(name: "Ana")
 let trainer2 = Trainer(name: "Alex")
 
-let creatureManager1 = CreatureManager(creatures: [])
-let creatureManager2 = CreatureManager(creatures: [])
+let creatureManager1 = CreatureManager()
+let creatureManager2 = CreatureManager()
 
 let creatureShop1 = CreatureShop()
 let creatureShop2 = CreatureShop()
