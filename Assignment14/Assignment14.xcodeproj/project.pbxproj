@@ -148,6 +148,7 @@
 				DEVELOPMENT_TEAM = 6YJPZH2Y6W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Assignment14/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Girl Math";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -175,6 +176,7 @@
 				DEVELOPMENT_TEAM = 6YJPZH2Y6W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Assignment14/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Girl Math";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
