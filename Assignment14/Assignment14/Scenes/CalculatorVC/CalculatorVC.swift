@@ -236,6 +236,9 @@ final class CalculatorVC: UIViewController {
     private var previousInput: String = ""
     private var currentOperation: String?
     private var isCalculatingPercentage: Bool = false
+    private var clearButtonTappedCalled = false
+    
+    var history: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -457,6 +460,7 @@ final class CalculatorVC: UIViewController {
     
     private func historyButtonTapped() {
         let historyVC = HistoryVC()
+        historyVC.history = history // Pass the history array
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = .push
@@ -545,6 +549,9 @@ final class CalculatorVC: UIViewController {
                 return
             }
         }
+        
+        let equationString = "\(previousInput) \(currentOperation ?? "") \(currentInput) = \(result)"
+        history.append(equationString)
         
         currentInput = String(result)
         updateResultLabel()

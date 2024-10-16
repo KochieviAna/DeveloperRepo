@@ -22,16 +22,42 @@ final class HistoryVC: UIViewController {
         return barButtonItem
     }()
     
+    private let historyLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .right
+        label.font = UIFont.arimoRegular(size: 20)
+        label.textColor = UIColor(hexString: "000000")
+        return label
+    }()
+    
+    var history: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        title = "History"
         setupUI()
+        setUpConstraints()
+        displayHistory()
     }
     
     
     private func setupUI() {
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = customBackButton
+        view.addSubview(historyLabel)
+    }
+    
+    private func setUpConstraints() {
+        historyLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            historyLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            historyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            historyLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            historyLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     private func backButtonTapped() {
@@ -40,5 +66,14 @@ final class HistoryVC: UIViewController {
         transition.type = .push
         transition.subtype = .fromRight
         navigationController?.view.layer.add(transition, forKey: kCATransition)
-        navigationController?.popViewController(animated: false)    }
+        navigationController?.popViewController(animated: false)
+    }
+    
+    private func displayHistory() {
+        if history.isEmpty {
+            historyLabel.text = "No history available."
+        } else {
+            historyLabel.text = history.joined(separator: "\n")
+        }
+    }
 }
