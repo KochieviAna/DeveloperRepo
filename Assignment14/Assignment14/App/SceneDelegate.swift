@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         let vc = CalculatorVC()
-        window?.rootViewController = vc
+        let navigationController = UINavigationController(rootViewController: vc)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 }
