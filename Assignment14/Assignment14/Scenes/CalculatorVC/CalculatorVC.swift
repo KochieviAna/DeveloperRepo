@@ -552,6 +552,7 @@ final class CalculatorVC: UIViewController {
         
         let equationString = "\(previousInput) \(currentOperation ?? "") \(currentInput) = \(result)"
         history.append(equationString)
+        history.append("\(result)")
         
         currentInput = String(result)
         updateResultLabel()
@@ -565,6 +566,7 @@ final class CalculatorVC: UIViewController {
     }
     
     private func clearButtonTapped() {
+        history.append("AC")
         currentInput = ""
         previousInput = ""
         currentOperation = nil
