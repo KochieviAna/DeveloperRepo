@@ -22,13 +22,13 @@ final class HistoryVC: UIViewController {
         return barButtonItem
     }()
     
-    private let historyLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .right
-        label.font = UIFont.arimoRegular(size: 20)
-        label.textColor = UIColor(hexString: "000000")
-        return label
+    private let historyTextView: UITextView = {
+        let view = UITextView(frame: .zero)
+        view.textAlignment = .right
+        view.font = UIFont.arimoRegular(size: 20)
+        view.textColor = UIColor(hexString: "000000")
+        view.isEditable = false
+        return view
     }()
     
     var history: [String] = []
@@ -46,17 +46,17 @@ final class HistoryVC: UIViewController {
     private func setupUI() {
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = customBackButton
-        view.addSubview(historyLabel)
+        view.addSubview(historyTextView)
     }
     
     private func setUpConstraints() {
-        historyLabel.translatesAutoresizingMaskIntoConstraints = false
+        historyTextView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            historyLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            historyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            historyLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            historyLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            historyTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            historyTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            historyTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            historyTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -71,9 +71,9 @@ final class HistoryVC: UIViewController {
     
     private func displayHistory() {
         if history.isEmpty {
-            historyLabel.text = "No history available."
+            historyTextView.text = "No history available."
         } else {
-            historyLabel.text = history.joined(separator: "\n")
+            historyTextView.text = history.joined(separator: "\n")
         }
     }
 }
