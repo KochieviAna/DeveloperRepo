@@ -9,11 +9,24 @@ import UIKit
 
 final class CalculatorVC: UIViewController {
     
+    private lazy var historyButton: UIBarButtonItem = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "clock"), for: .normal)
+        button.tintColor = UIColor(hexString: "1E1E1E")
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.addAction(UIAction(handler: { [weak self] action in
+            self?.historyButtonTapped()
+        }), for: .touchUpInside)
+        let barButtonItem = UIBarButtonItem(customView: button)
+        return barButtonItem
+    }()
+    
     private lazy var equationLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = UIFont.arimoRegular(size: 20)
         label.textColor = UIColor(hexString: "637381")
-        label.text = "120 x 3 + 608 + 1080"
+        label.text = ""
         return label
     }()
     
@@ -21,7 +34,7 @@ final class CalculatorVC: UIViewController {
         let label = UILabel(frame: .zero)
         label.font = UIFont.arimoBold(size: 48)
         label.textColor = UIColor(hexString: "1E1E1E")
-        label.text = "2,048"
+        label.text = ""
         return label
     }()
     
@@ -219,14 +232,25 @@ final class CalculatorVC: UIViewController {
         return button
     }()
     
+    private var currentInput: String = ""
+    private var previousInput: String = ""
+    private var currentOperation: String?
+    private var isCalculatingPercentage: Bool = false
+    private var clearButtonTappedCalled = false
+    
+    var history: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupUI()
         setupConstraints()
+        addActionsToButtons()
     }
     
     private func setupUI() {
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = historyButton
         view.addSubview(equationLabel)
         view.addSubview(resultLabel)
         view.addSubview(wrapperView)
@@ -433,10 +457,141 @@ final class CalculatorVC: UIViewController {
             equalButton.widthAnchor.constraint(equalToConstant: 64)
         ])
     }
+    
+    private func historyButtonTapped() {
+        let historyVC = HistoryVC()
+        historyVC.history = history // Pass the history array
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = .push
+        transition.subtype = .fromLeft
+        navigationController?.view.layer.add(transition, forKey: kCATransition)
+        navigationController?.pushViewController(historyVC, animated: true)
+    }
+    
+    private func addActionsToButtons() {
+        let buttonActions: [(UIButton, String)] = [
+            (zeroButton, "0"), (oneButton, "1"), (twoButton, "2"),
+            (threeButton, "3"), (fourButton, "4"), (fiveButton, "5"),
+            (sixButton, "6"), (sevenButton, "7"), (eightButton, "8"),
+            (nineButton, "9")
+        ]
+        
+        for (button, number) in buttonActions {
+            button.addAction(UIAction(handler: { _ in self.numberButtonTapped(number) }), for: .touchUpInside)
+        }
+        
+        let operatorActions: [(UIButton, String)] = [
+            (plusButton, "+"), (minusButton, "-"),
+            (multiplyButton, "×"), (divisionButton, "÷"),
+            (percentageButton, "%")
+        ]
+        
+        for (button, operation) in operatorActions {
+            button.addAction(UIAction(handler: { _ in self.operatorButtonTapped(operation) }), for: .touchUpInside)
+        }
+        
+        equalButton.addAction(UIAction(handler: { _ in self.equalButtonTapped() }), for: .touchUpInside)
+        dotButton.addAction(UIAction(handler: { _ in self.dotButtonTapped() }), for: .touchUpInside)
+        aCButton.addAction(UIAction(handler: { _ in self.clearButtonTapped() }), for: .touchUpInside)
+    }
+    
+    private func numberButtonTapped(_ number: String) {
+        currentInput += number
+        updateEquationLabel()
+    }
+    
+    private func operatorButtonTapped(_ operation: String) {
+        if operation == "%" {
+            if !currentInput.isEmpty {
+                previousInput = currentInput
+                currentInput = ""
+                isCalculatingPercentage = true
+                updateEquationLabel()
+            }
+            return
+        }
+        
+        guard !currentInput.isEmpty else { return }
+        
+        previousInput = currentInput
+        currentInput = ""
+        currentOperation = operation
+        updateEquationLabel()
+    }
+    
+    private func equalButtonTapped() {
+        let result: Double
+        
+        if isCalculatingPercentage {
+            guard let baseNumber = Double(previousInput),
+                  let percentageValue = Double(currentInput) else {
+                return
+            }
+            result = baseNumber * (percentageValue / 100)
+            isCalculatingPercentage = false
+        } else {
+            guard let firstNumber = Double(previousInput),
+                  let secondNumber = Double(currentInput) else {
+                return
+            }
+            
+            switch currentOperation {
+            case "+":
+                result = firstNumber + secondNumber
+            case "-":
+                result = firstNumber - secondNumber
+            case "×":
+                result = firstNumber * secondNumber
+            case "÷":
+                result = secondNumber == 0 ? Double.nan : firstNumber / secondNumber
+            default:
+                return
+            }
+        }
+        
+        let equationString = "\(previousInput) \(currentOperation ?? "") \(currentInput) = \(result)"
+        history.append(equationString)
+        history.append("\(result)")
+        
+        currentInput = String(result)
+        updateResultLabel()
+        clearOperation()
+    }
+    
+    private func dotButtonTapped() {
+        guard !currentInput.contains(".") else { return }
+        currentInput += "."
+        updateEquationLabel()
+    }
+    
+    private func clearButtonTapped() {
+        history.append("AC")
+        currentInput = ""
+        previousInput = ""
+        currentOperation = nil
+        isCalculatingPercentage = false
+        updateEquationLabel()
+        updateResultLabel()
+    }
+    
+    private func updateEquationLabel() {
+        if isCalculatingPercentage {
+            equationLabel.text = "\(previousInput) % \(currentInput)"
+        } else if let operation = currentOperation {
+            equationLabel.text = "\(previousInput) \(operation) \(currentInput)"
+        } else {
+            equationLabel.text = currentInput.isEmpty ? "" : currentInput
+        }
+    }
+    
+    private func updateResultLabel() {
+        resultLabel.text = currentInput
+    }
+    
+    private func clearOperation() {
+        previousInput = ""
+        currentOperation = nil
+        isCalculatingPercentage = false
+    }
 }
-
-
-
-
-
-
