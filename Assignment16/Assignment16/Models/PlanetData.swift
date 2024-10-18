@@ -10,5 +10,5 @@ import UIKit
 struct PlanetData {
     let image: UIImage
     let name: String
-    let surfaceArea: Double
+    let surfaceArea: Int
 }
