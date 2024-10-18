@@ -32,7 +32,6 @@ final class PlanetCell: UITableViewCell {
     private lazy var arrowImage: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.image = UIImage(named: "navigate_next")
-        imageView.tintColor = UIColor(hexString: "B34416")
         return imageView
     }()
     

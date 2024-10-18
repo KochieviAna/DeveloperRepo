@@ -27,7 +27,12 @@ extension PlanetListVC: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlanetDetailsVC()
-//        let planetData = planetData[indexPath.row]
+        let planetData = planetData[indexPath.row]
+        vc.planetName = planetData.name
+        vc.planetImage = planetData.image
+        vc.area = planetData.surfaceArea
+        vc.temperature = planetData.temperature
+        vc.mass = planetData.mass
         navigationController?.pushViewController(vc, animated: true)
     }
 }
