@@ -189,7 +189,7 @@ final class PlanetDetailsVC: UIViewController {
             massStackView.topAnchor.constraint(equalTo: temperatureStackView.bottomAnchor, constant: 15),
             massStackView.leadingAnchor.constraint(equalTo: temperatureStackView.leadingAnchor),
             massStackView.trailingAnchor.constraint(equalTo: temperatureStackView.trailingAnchor),
-            massStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            massStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             massStackView.heightAnchor.constraint(equalTo: temperatureStackView.heightAnchor)
 
         ])
