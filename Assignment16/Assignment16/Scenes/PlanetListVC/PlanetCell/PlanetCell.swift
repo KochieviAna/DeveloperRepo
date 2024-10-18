@@ -17,20 +17,21 @@ final class PlanetCell: UITableViewCell {
     private lazy var planetNameLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(ofSize: 36, weight: .bold)
+        label.numberOfLines = 0
         label.textColor = UIColor(hexString: "F2EDEB")
         return label
     }()
     
     private lazy var surfaceareaLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.font = .systemFont(ofSize: 16, weight: .light)
         label.textColor = UIColor(hexString: "F2EDEB")
         return label
     }()
-    
+ 
     private lazy var arrowImage: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        imageView.image = UIImage(named: "greaterthan")
+        imageView.image = UIImage(named: "navigate_next")
         imageView.tintColor = UIColor(hexString: "B34416")
         return imageView
     }()
@@ -48,6 +49,7 @@ final class PlanetCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
     private func setupUI() {
         contentView.addSubview(planetImage)
         contentView.addSubview(planetNameLabel)
@@ -62,27 +64,30 @@ final class PlanetCell: UITableViewCell {
         arrowImage.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            planetImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            planetImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            planetImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            planetImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            planetImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             planetImage.heightAnchor.constraint(equalToConstant: 100),
-            planetImage.widthAnchor.constraint(equalTo: planetImage.heightAnchor)
+            planetImage.widthAnchor.constraint(equalToConstant: 100)
         ])
         
         NSLayoutConstraint.activate([
-            planetNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            planetNameLabel.leadingAnchor.constraint(equalTo: planetImage.trailingAnchor, constant: 36)
+            planetNameLabel.topAnchor.constraint(equalTo: planetImage.topAnchor),
+            planetNameLabel.leadingAnchor.constraint(equalTo: planetImage.trailingAnchor, constant: 36),
+            planetNameLabel.widthAnchor.constraint(equalToConstant: 150),
+            planetNameLabel.heightAnchor.constraint(equalToConstant: 49)
         ])
         
         NSLayoutConstraint.activate([
-            surfaceareaLabel.topAnchor.constraint(equalTo: planetNameLabel.bottomAnchor, constant: 22),
+            surfaceareaLabel.topAnchor.constraint(equalTo: planetNameLabel.bottomAnchor, constant: 2),
             surfaceareaLabel.leadingAnchor.constraint(equalTo: planetNameLabel.leadingAnchor),
+            surfaceareaLabel.heightAnchor.constraint(equalToConstant: 25),
+            surfaceareaLabel.widthAnchor.constraint(equalToConstant: 128)
         ])
         
         NSLayoutConstraint.activate([
-            arrowImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            arrowImage.leadingAnchor.constraint(equalTo: planetNameLabel.trailingAnchor, constant: 47),
-            arrowImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            arrowImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            arrowImage.leadingAnchor.constraint(equalTo: surfaceareaLabel.trailingAnchor, constant: 25),
+            arrowImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
     }
     

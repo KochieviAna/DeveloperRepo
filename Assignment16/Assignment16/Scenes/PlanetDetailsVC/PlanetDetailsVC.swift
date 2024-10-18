@@ -12,6 +12,6 @@ final class PlanetDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hexString: "210D04")
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }

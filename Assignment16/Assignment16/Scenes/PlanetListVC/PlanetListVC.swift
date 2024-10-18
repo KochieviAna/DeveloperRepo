@@ -25,44 +25,43 @@ final class PlanetListVC: UIViewController {
         return tableView
     }()
     
-    private let planetData: [PlanetData] = [
+    let planetData: [PlanetData] = [
         PlanetData(
             image: UIImage(named: "Mercury")!,
             name: "Mercury",
-            surfaceArea: 74800000),
+            surfaceArea: "74 800 000 km²"),
         PlanetData(
             image: UIImage(named: "Venus")!,
             name: "Venus",
-            surfaceArea: 460200000),
+            surfaceArea: "460 200 000 km²"),
         PlanetData(
             image: UIImage(named: "Earth")!,
             name: "Earth",
-            surfaceArea: 510100000),
+            surfaceArea: "510 100 000 km²"),
         PlanetData(
             image: UIImage(named: "Mars")!,
             name: "Mars",
-            surfaceArea: 144400000),
+            surfaceArea: "144 400 000 km²"),
         PlanetData(
             image: UIImage(named: "Jupiter")!,
             name: "Jupiter",
-            surfaceArea: 61420000000),
+            surfaceArea: "6,142E10 km²"),
         PlanetData(
             image: UIImage(named: "Saturn")!,
             name: "Saturn",
-            surfaceArea: 42700000000),
+            surfaceArea: "4,27E10 km²"),
         PlanetData(
             image: UIImage(named: "Uranus")!,
             name: "Uranus",
-            surfaceArea: 8083000000),
+            surfaceArea: "8,083E9 km²"),
         PlanetData(
             image: UIImage(named: "Neptune")!,
             name: "Neptune",
-            surfaceArea: 7618000000)
+            surfaceArea: "7,618E9 km²")
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("PlanetListVC Loaded")
         view.backgroundColor = UIColor(hexString: "210D04")
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         tableView.register(PlanetCell.self, forCellReuseIdentifier: "PlanetCell")
@@ -82,35 +81,14 @@ final class PlanetListVC: UIViewController {
         
         NSLayoutConstraint.activate([
             planetLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            planetLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 24),
+            planetLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
         ])
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: planetLabel.bottomAnchor, constant: 60),
+            tableView.topAnchor.constraint(equalTo: planetLabel.bottomAnchor, constant: 25),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-    }
-}
-
-extension PlanetListVC: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        planetData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PlanetCell", for: indexPath) as? PlanetCell else { return UITableViewCell() }
-        let planetData = planetData[indexPath.row]
-        print("Loading cell for planet: \(planetData.name)")
-        cell.configureCell(with: planetData)
-        cell.backgroundColor = .clear
-        return cell
-    }
-}
-
-extension PlanetListVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        150
     }
 }
