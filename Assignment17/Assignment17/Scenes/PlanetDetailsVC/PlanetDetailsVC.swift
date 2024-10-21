@@ -30,6 +30,7 @@ class PlanetDetailsVC: UIViewController {
         let starImage = UIImage(systemName: "star.fill")
         button.setImage(starImage, for: .normal)
         button.setImage(starImage, for: .selected)
+        button.tintColor = UIColor(hexString: "F2F2F2")
         button.addAction(UIAction(handler: { [weak self] action in
             self?.starButtonTapped()
         }), for: .touchUpInside)
