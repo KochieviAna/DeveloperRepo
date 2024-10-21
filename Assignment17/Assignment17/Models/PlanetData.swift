@@ -13,5 +13,5 @@ struct PlanetData {
     let surfaceArea: String
     let temperature: String
     let mass: String
-    let isFavourite: Bool
+    var isFavourite: Bool
 }
