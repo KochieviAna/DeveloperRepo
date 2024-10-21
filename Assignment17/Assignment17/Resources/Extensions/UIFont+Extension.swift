@@ -9,14 +9,10 @@ import UIKit
 
 extension UIFont {
     static func oSBold(size: CGFloat) -> UIFont {
-        return UIFont(name: "OpenSans_Condensed-Bold", size: size) ?? .systemFont(ofSize: size)
-    }
-    
-    static func oSSemiBold(size: CGFloat) -> UIFont {
-        return UIFont(name: "OpenSans_Condensed-SemiBold", size: size) ?? .systemFont(ofSize: size)
+        return UIFont(name: "OpenSans-Bold.ttf", size: size) ?? .systemFont(ofSize: size, weight: .bold)
     }
     
     static func oSRegular(size: CGFloat) -> UIFont {
-        return UIFont(name: "OpenSans_SemiCondensed-Regular", size: size) ?? .systemFont(ofSize: size)
+        return UIFont(name: "OpenSans-Regular.ttf", size: size) ?? .systemFont(ofSize: size, weight: .medium)
     }
 }

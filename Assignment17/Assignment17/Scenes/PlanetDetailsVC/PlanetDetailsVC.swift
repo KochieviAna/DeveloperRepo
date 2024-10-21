@@ -12,7 +12,7 @@ class PlanetDetailsVC: UIViewController {
     private lazy var planetNameLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = UIColor(hexString: "F2EDEB")
-        label.font = .oSSemiBold(size: 36)
+        label.font = .oSBold(size: 36)
         return label
     }()
     

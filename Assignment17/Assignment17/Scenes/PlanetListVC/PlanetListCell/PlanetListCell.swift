@@ -11,6 +11,7 @@ class PlanetListCell: UICollectionViewCell {
     
     private lazy var planetImage: UIImageView = {
         let imageView = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -36,15 +37,9 @@ class PlanetListCell: UICollectionViewCell {
         button.addAction(UIAction(handler: { [ weak self ] action in
             self?.starButtonTapped()
         }), for: .touchUpInside)
+        button.backgroundColor = .clear
+        button.tintColor = .white
         return button
-    }()
-    
-    private lazy var planetStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [ planetNameLabel, starButton ])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        stackView.spacing = 4
-        return stackView
     }()
     
     override init(frame: CGRect) {
@@ -59,30 +54,44 @@ class PlanetListCell: UICollectionViewCell {
     
     private func setUpUI() {
         contentView.addSubview(planetImage)
-        contentView.addSubview(planetStackView)
+        contentView.addSubview(planetNameLabel)
+        contentView.addSubview(starButton)
         contentView.addSubview(surfaceareaLabel)
     }
     
     private func setUpConstraints() {
         planetImage.translatesAutoresizingMaskIntoConstraints = false
-        planetStackView.translatesAutoresizingMaskIntoConstraints = false
+        planetNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        starButton.translatesAutoresizingMaskIntoConstraints = false
         surfaceareaLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             planetImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            planetImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+            planetImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
             planetImage.heightAnchor.constraint(equalToConstant: 100),
             planetImage.widthAnchor.constraint(equalTo: planetImage.heightAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            planetStackView.centerXAnchor.constraint(equalTo: planetImage.centerXAnchor),
-            planetStackView.topAnchor.constraint(equalTo: planetImage.bottomAnchor, constant: 10)
+            planetNameLabel.centerXAnchor.constraint(equalTo: planetImage.centerXAnchor),
+            planetNameLabel.topAnchor.constraint(equalTo: planetImage.bottomAnchor, constant: 5),
+            planetNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            planetNameLabel.heightAnchor.constraint(equalToConstant: 50),
+            planetNameLabel.widthAnchor.constraint(equalToConstant: 150)
         ])
         
         NSLayoutConstraint.activate([
-            surfaceareaLabel.centerXAnchor.constraint(equalTo: planetStackView.centerXAnchor),
-            surfaceareaLabel.topAnchor.constraint(equalTo: planetStackView.bottomAnchor, constant: 8)
+            starButton.topAnchor.constraint(equalTo: planetNameLabel.topAnchor),
+            starButton.leadingAnchor.constraint(greaterThanOrEqualTo: planetNameLabel.trailingAnchor, constant: 3),
+            starButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+            starButton.heightAnchor.constraint(equalToConstant: 15),
+            starButton.widthAnchor.constraint(equalToConstant: 15)
+        ])
+        
+        NSLayoutConstraint.activate([
+            surfaceareaLabel.centerXAnchor.constraint(equalTo: planetNameLabel.centerXAnchor),
+            surfaceareaLabel.topAnchor.constraint(equalTo: planetNameLabel.bottomAnchor, constant: 2),
+            surfaceareaLabel.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -99,5 +108,6 @@ class PlanetListCell: UICollectionViewCell {
         planetImage.image = data.image
         planetNameLabel.text = data.name
         surfaceareaLabel.text = data.surfaceArea
+        starButton.isSelected = false
     }
 }
