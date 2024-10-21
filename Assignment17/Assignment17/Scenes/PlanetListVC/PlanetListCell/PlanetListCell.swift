@@ -32,12 +32,23 @@ class PlanetListCell: UICollectionViewCell {
     
     private lazy var starButton: UIButton = {
         let button = UIButton(frame: .zero)
-        button.setImage(UIImage(systemName: "star"), for: .normal)
-        button.setImage(UIImage(systemName: "star_filled"), for: .selected)
+        let starImage = UIImage(systemName: "star.fill")
+        button.setImage(starImage, for: .normal)
+        button.setImage(starImage, for: .selected)
+        button.tintColor = UIColor(hexString: "F2F2F2")
         button.addAction(UIAction(handler: { [ weak self ] action in
             self?.starButtonTapped()
         }), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var buttonAndLabelStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [planetNameLabel, starButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 5
+        return stackView
     }()
     
     override init(frame: CGRect) {
@@ -52,15 +63,13 @@ class PlanetListCell: UICollectionViewCell {
     
     private func setUpUI() {
         contentView.addSubview(planetImage)
-        contentView.addSubview(planetNameLabel)
-        contentView.addSubview(starButton)
+        contentView.addSubview(buttonAndLabelStackView)
         contentView.addSubview(surfaceareaLabel)
     }
     
     private func setUpConstraints() {
         planetImage.translatesAutoresizingMaskIntoConstraints = false
-        planetNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        starButton.translatesAutoresizingMaskIntoConstraints = false
+        buttonAndLabelStackView.translatesAutoresizingMaskIntoConstraints = false
         surfaceareaLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -71,33 +80,24 @@ class PlanetListCell: UICollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            planetNameLabel.centerXAnchor.constraint(equalTo: planetImage.centerXAnchor),
-            planetNameLabel.topAnchor.constraint(equalTo: planetImage.bottomAnchor, constant: 5),
-            planetNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            planetNameLabel.heightAnchor.constraint(equalToConstant: 50),
-            planetNameLabel.widthAnchor.constraint(equalToConstant: 150)
+            buttonAndLabelStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            buttonAndLabelStackView.topAnchor.constraint(equalTo: planetImage.bottomAnchor, constant: 5),
+            buttonAndLabelStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 200)
         ])
         
         NSLayoutConstraint.activate([
-            starButton.topAnchor.constraint(equalTo: planetNameLabel.topAnchor),
-            starButton.leadingAnchor.constraint(greaterThanOrEqualTo: planetNameLabel.trailingAnchor, constant: 3),
-            starButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
-            starButton.heightAnchor.constraint(equalToConstant: 15),
-            starButton.widthAnchor.constraint(equalToConstant: 15)
-        ])
-        
-        NSLayoutConstraint.activate([
-            surfaceareaLabel.centerXAnchor.constraint(equalTo: planetNameLabel.centerXAnchor),
+            surfaceareaLabel.centerXAnchor.constraint(equalTo: planetImage.centerXAnchor),
             surfaceareaLabel.topAnchor.constraint(equalTo: planetNameLabel.bottomAnchor, constant: 2),
             surfaceareaLabel.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     private func starButtonTapped() {
+        starButton.isSelected.toggle()
         if starButton.isSelected {
-            starButton.setImage(UIImage(named: "star_filled"), for: .normal)
+            starButton.tintColor = UIColor(hexString: "DFB300")
         } else {
-            starButton.setImage(UIImage(named: "star"), for: .normal)
+            starButton.tintColor = UIColor(hexString: "F2F2F2")
         }
     }
     
@@ -105,6 +105,6 @@ class PlanetListCell: UICollectionViewCell {
         planetImage.image = data.image
         planetNameLabel.text = data.name
         surfaceareaLabel.text = data.surfaceArea
-        starButton.isSelected = false
+        starButton.isSelected = data.isFavoutite
     }
 }

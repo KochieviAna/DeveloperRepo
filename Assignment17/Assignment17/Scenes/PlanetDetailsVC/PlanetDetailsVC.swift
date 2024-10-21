@@ -9,13 +9,6 @@ import UIKit
 
 class PlanetDetailsVC: UIViewController {
     
-    private lazy var planetNameLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.textColor = UIColor(hexString: "F2EDEB")
-        label.font = .oSBold(size: 36)
-        return label
-    }()
-    
     private lazy var arrowBackButton: UIButton = {
         let imageButton = UIButton(frame: .zero)
         imageButton.setImage(UIImage(named: "navigate_before"), for: .normal)
@@ -23,6 +16,21 @@ class PlanetDetailsVC: UIViewController {
             self?.arrowBackButtonTapped()
         }), for: .touchUpInside)
         return imageButton
+    }()
+    
+    private lazy var planetNameLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.textColor = UIColor(hexString: "F2EDEB")
+        label.font = .oSBold(size: 36)
+        return label
+    }()
+    
+    private lazy var starButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        let starImage = UIImage(systemName: "star.fill")
+        button.setImage(starImage, for: .normal)
+        button.setImage(starImage, for: .selected)
+        return button
     }()
     
     private lazy var planetDisplayImage: UIImageView = {
@@ -125,6 +133,7 @@ class PlanetDetailsVC: UIViewController {
     var area: String?
     var temperature: String?
     var mass: String?
+    var favorite: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,8 +145,9 @@ class PlanetDetailsVC: UIViewController {
     }
     
     private func setupUI() {
-        view.addSubview(planetNameLabel)
         view.addSubview(arrowBackButton)
+        view.addSubview(planetNameLabel)
+        view.addSubview(starButton)
         view.addSubview(planetDisplayImage)
         view.addSubview(areaStackView)
         view.addSubview(temperatureStackView)
@@ -145,21 +155,29 @@ class PlanetDetailsVC: UIViewController {
     }
     
     private func setupConstraints() {
-        planetNameLabel.translatesAutoresizingMaskIntoConstraints = false
         arrowBackButton.translatesAutoresizingMaskIntoConstraints = false
+        planetNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        starButton.translatesAutoresizingMaskIntoConstraints = false
         planetDisplayImage.translatesAutoresizingMaskIntoConstraints = false
         areaStackView.translatesAutoresizingMaskIntoConstraints = false
         temperatureStackView.translatesAutoresizingMaskIntoConstraints = false
         massStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            arrowBackButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:25),
-            arrowBackButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            arrowBackButton.centerYAnchor.constraint(equalTo: planetNameLabel.centerYAnchor),
+            arrowBackButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
         ])
         
         NSLayoutConstraint.activate([
             planetNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            planetNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
+            planetNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25)
+        ])
+        
+        NSLayoutConstraint.activate([
+            starButton.centerYAnchor.constraint(equalTo: planetNameLabel.centerYAnchor),
+            starButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            starButton.heightAnchor.constraint(equalToConstant: 25),
+            starButton.widthAnchor.constraint(equalTo: starButton.heightAnchor)
         ])
         
         NSLayoutConstraint.activate([
