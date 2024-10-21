@@ -30,6 +30,9 @@ class PlanetDetailsVC: UIViewController {
         let starImage = UIImage(systemName: "star.fill")
         button.setImage(starImage, for: .normal)
         button.setImage(starImage, for: .selected)
+        button.addAction(UIAction(handler: { [weak self] action in
+            self?.starButtonTapped()
+        }), for: .touchUpInside)
         return button
     }()
     
@@ -133,7 +136,6 @@ class PlanetDetailsVC: UIViewController {
     var area: String?
     var temperature: String?
     var mass: String?
-    var favorite: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -213,12 +215,18 @@ class PlanetDetailsVC: UIViewController {
         ])
     }
     
+    
+    
     private func setUpDetails() {
         planetNameLabel.text = planetName
         planetDisplayImage.image = planetImage
         areaValueLabel.text = area
         temperatureValueLabel.text = temperature
         massValueLabel.text = mass
+    }
+    
+    private func starButtonTapped() {
+        
     }
     
     private func arrowBackButtonTapped() {

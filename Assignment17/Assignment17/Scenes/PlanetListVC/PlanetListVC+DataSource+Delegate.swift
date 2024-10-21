@@ -33,7 +33,7 @@ extension PlanetListVC: UICollectionViewDelegate {
         vc.area = planetData.surfaceArea
         vc.temperature = planetData.temperature
         vc.mass = planetData.mass
-        vc.favorite = planetData.isFavoutite
+        
         navigationController?.pushViewController(vc, animated: true)
     }
 }
