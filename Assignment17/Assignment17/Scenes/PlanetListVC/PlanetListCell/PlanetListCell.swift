@@ -105,6 +105,6 @@ class PlanetListCell: UICollectionViewCell {
         planetImage.image = data.image
         planetNameLabel.text = data.name
         surfaceareaLabel.text = data.surfaceArea
-        starButton.isSelected = data.isFavourite
+        starButton.isSelected = data.isFavorite
     }
 }
