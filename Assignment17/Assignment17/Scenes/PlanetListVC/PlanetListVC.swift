@@ -19,13 +19,13 @@ class PlanetListVC: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-           layout.minimumLineSpacing = 40
-           layout.minimumInteritemSpacing = 10
-           let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-           collectionView.backgroundColor = .clear
-           collectionView.register(PlanetListCell.self, forCellWithReuseIdentifier: "PlanetListCell")
-           collectionView.delegate = self
-           collectionView.dataSource = self
+        layout.minimumLineSpacing = 40
+        layout.minimumInteritemSpacing = 10
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.register(PlanetListCell.self, forCellWithReuseIdentifier: "PlanetListCell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
         return collectionView
     }()
     

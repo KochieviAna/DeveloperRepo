@@ -40,12 +40,12 @@ extension PlanetListVC: UICollectionViewDelegate {
 
 extension PlanetListVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           let collectionViewWidth = collectionView.bounds.width
-           
-           let totalSpacing: CGFloat = 30
-           let cellWidth = (collectionViewWidth - totalSpacing) / 2
-           let cellHeight: CGFloat = 180
-           
-           return CGSize(width: cellWidth, height: cellHeight)
-       }
+        let collectionViewWidth = collectionView.bounds.width
+        
+        let totalSpacing: CGFloat = 30
+        let cellWidth = (collectionViewWidth - totalSpacing) / 2
+        let cellHeight: CGFloat = 180
+        
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
 }
