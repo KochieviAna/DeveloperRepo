@@ -32,13 +32,11 @@ class PlanetListCell: UICollectionViewCell {
     
     private lazy var starButton: UIButton = {
         let button = UIButton(frame: .zero)
-        button.setImage(UIImage(named: "star"), for: .normal)
-        button.setImage(UIImage(named: "star_filled"), for: .selected)
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.setImage(UIImage(systemName: "star_filled"), for: .selected)
         button.addAction(UIAction(handler: { [ weak self ] action in
             self?.starButtonTapped()
         }), for: .touchUpInside)
-        button.backgroundColor = .clear
-        button.tintColor = .white
         return button
     }()
     
@@ -96,7 +94,6 @@ class PlanetListCell: UICollectionViewCell {
     }
     
     private func starButtonTapped() {
-        starButton.isSelected.toggle()
         if starButton.isSelected {
             starButton.setImage(UIImage(named: "star_filled"), for: .normal)
         } else {
