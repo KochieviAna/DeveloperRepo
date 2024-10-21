@@ -36,56 +36,56 @@ class PlanetListVC: UIViewController {
             surfaceArea: "74 800 000 km²",
             temperature: "425°C",
             mass: "3,285E23 kg",
-            isFavourite: false),
+            isFavorite: false),
         PlanetData(
             image: UIImage(named: "Venus")!,
             name: "Venus",
             surfaceArea: "460 200 000 km²",
             temperature: "465°C",
             mass: "4,867E24 kg",
-            isFavourite: false),
+            isFavorite: false),
         PlanetData(
             image: UIImage(named: "Earth")!,
             name: "Earth",
             surfaceArea: "510 100 000 km²",
             temperature: "15°C",
             mass: "5,972E24 kg",
-            isFavourite: false),
+            isFavorite: false),
         PlanetData(
             image: UIImage(named: "Mars")!,
             name: "Mars",
             surfaceArea: "144 400 000 km²",
             temperature: "-65°C",
             mass: "6,39E23 kg",
-            isFavourite: false),
+            isFavorite: false),
         PlanetData(
             image: UIImage(named: "Jupiter")!,
             name: "Jupiter",
             surfaceArea: "6,142E10 km²",
             temperature: "-110°C",
             mass: "1,898E27 kg",
-            isFavourite: false),
+            isFavorite: false),
         PlanetData(
             image: UIImage(named: "Saturn")!,
             name: "Saturn",
             surfaceArea: "4,27E10 km²",
             temperature: "-178°C",
             mass: "5,683E26 kg",
-            isFavourite: false),
+            isFavorite: false),
         PlanetData(
             image: UIImage(named: "Uranus")!,
             name: "Uranus",
             surfaceArea: "8,083E9 km²",
             temperature: "-195°°C",
             mass: "8,681E25 kg",
-            isFavourite: false),
+            isFavorite: false),
         PlanetData(
             image: UIImage(named: "Neptune")!,
             name: "Neptune",
             surfaceArea: "7,618E9 km²",
             temperature: "-214°C",
             mass: "1,024E26 kg",
-            isFavourite: false)
+            isFavorite: false)
     ]
     
     override func viewDidLoad() {
