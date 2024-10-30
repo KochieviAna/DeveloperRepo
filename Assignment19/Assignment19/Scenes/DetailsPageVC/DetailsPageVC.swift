@@ -130,7 +130,7 @@ final class DetailsPageVC: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            newsLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 64),
+            newsLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             newsLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             newsLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15)
         ])
@@ -168,7 +168,20 @@ final class DetailsPageVC: UIViewController {
     
     private func configureUI() {
         newsLabel.text = article?.title ?? "No Title Available"
-        dateLabel.text = article?.publishedAt ?? "No Date"
+        
+        if let publishedAtString = article?.publishedAt {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            if let date = dateFormatter.date(from: publishedAtString) {
+                dateFormatter.dateFormat = "EEEE, d MMMM yyyy"
+                dateLabel.text = dateFormatter.string(from: date)
+            } else {
+                dateLabel.text = "No Date"
+            }
+        } else {
+            dateLabel.text = "No Date"
+        }
+        
         newsDescriptionLabel.text = article?.description ?? "No Description Available"
         authorLabel.text = article?.author ?? "Unknown Author"
         

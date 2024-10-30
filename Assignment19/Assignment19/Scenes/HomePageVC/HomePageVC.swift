@@ -15,6 +15,8 @@ final class HomePageVC: UIViewController {
         layout.minimumInteritemSpacing = 8
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(HomePageCell.self, forCellWithReuseIdentifier: HomePageCell.identifier)
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header")
+        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
@@ -90,5 +92,41 @@ extension HomePageVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
         let cellHeight: CGFloat = 128
         
         return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath)
+            header.backgroundColor = .clear
+            
+            lazy var headerLabel: UILabel = {
+                let headerLabel = UILabel(frame: header.bounds)
+                headerLabel.text = "Latest News"
+                headerLabel.textAlignment = .left
+                headerLabel.font = UIFont(name: "AnekDevanagari-Bold", size: 18)
+                headerLabel.textColor = UIColor(hexString: "000000")
+                headerLabel.translatesAutoresizingMaskIntoConstraints = false
+                
+                return headerLabel
+            }()
+            
+            header.subviews.forEach { $0.removeFromSuperview() }
+            
+            header.addSubview(headerLabel)
+            
+            NSLayoutConstraint.activate([
+                headerLabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 16),
+                headerLabel.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -16),
+                headerLabel.topAnchor.constraint(equalTo: header.topAnchor, constant: 8),
+                headerLabel.bottomAnchor.constraint(equalTo: header.bottomAnchor, constant: -8)
+            ])
+            
+            return header
+        }
+        return UICollectionReusableView()
     }
 }

@@ -47,8 +47,6 @@ final class NetworkService {
         let urlRequest = URLRequest(url: url!)
         
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            
-            print(Thread.current.isMainThread, "✅")
             if let error {
                 print(error)
             }
@@ -68,13 +66,11 @@ final class NetworkService {
             do {
                 let newsResponseData = try JSONDecoder().decode(T.self, from: data)
                 DispatchQueue.main.async {
-                    print(Thread.current.isMainThread, "-----")
                     completion(.success(newsResponseData))
                 }
             } catch {
                 print(error.localizedDescription)
             }
-            
         }.resume()
     }
 }
