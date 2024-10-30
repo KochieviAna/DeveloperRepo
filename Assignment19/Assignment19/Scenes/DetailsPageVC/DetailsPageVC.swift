@@ -97,7 +97,7 @@ final class DetailsPageVC: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [publishedLabel, authorLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
         stackView.spacing = 14
         
         return stackView
