@@ -10,6 +10,8 @@ import Kingfisher
 
 final class DetailsPageVC: UIViewController {
     
+    var article: Article?
+    
     private lazy var backArrowButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "backArrow"), for: .normal)
@@ -57,6 +59,7 @@ final class DetailsPageVC: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
         
         return imageView
     }()
@@ -94,7 +97,7 @@ final class DetailsPageVC: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [publishedLabel, authorLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fillEqually
         stackView.spacing = 14
         
         return stackView
@@ -122,6 +125,7 @@ final class DetailsPageVC: UIViewController {
         view.addSubview(publishingStackView)
         
         setupConstraints()
+        configureUI()
     }
     
     private func setupConstraints() {
@@ -140,7 +144,9 @@ final class DetailsPageVC: UIViewController {
         NSLayoutConstraint.activate([
             newsImageView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 11),
             newsImageView.trailingAnchor.constraint(equalTo: dateLabel.trailingAnchor),
-            newsImageView.leadingAnchor.constraint(equalTo: dateLabel.leadingAnchor)
+            newsImageView.leadingAnchor.constraint(equalTo: dateLabel.leadingAnchor),
+            newsImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 144),
+            newsImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 345)
         ])
         
         NSLayoutConstraint.activate([
@@ -158,5 +164,18 @@ final class DetailsPageVC: UIViewController {
     
     private func arrowBackButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func configureUI() {
+        newsLabel.text = article?.title ?? "No Title Available"
+        dateLabel.text = article?.publishedAt ?? "No Date"
+        newsDescriptionLabel.text = article?.description ?? "No Description Available"
+        authorLabel.text = article?.author ?? "Unknown Author"
+        
+        if let imageUrlString = article?.urlToImage, let imageUrl = URL(string: imageUrlString) {
+            newsImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder_image"))
+        } else {
+            newsImageView.image = UIImage(named: "placeholder_image")
+        }
     }
 }
