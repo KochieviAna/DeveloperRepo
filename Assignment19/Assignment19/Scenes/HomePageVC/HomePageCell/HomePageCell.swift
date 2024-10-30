@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class HomePageCell: UICollectionViewCell {
     
@@ -100,7 +101,29 @@ final class HomePageCell: UICollectionViewCell {
         ])
     }
     
-    public func configureCell(with news: String) {
+    public func configureCell(with article: NewsModel.Article) {
+        newsLabel.text = article.title
+        authorLabel.text = article.author ?? "Unknown Author"
         
+        if let publishedAt = article.publishedAt {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            if let date = dateFormatter.date(from: publishedAt) {
+                dateFormatter.dateStyle = .medium
+                dateFormatter.timeStyle = .short
+                dateLabel.text = dateFormatter.string(from: date)
+            } else {
+                dateLabel.text = "Unknown Date"
+            }
+        } else {
+            dateLabel.text = "Unknown Date"
+        }
+        
+        if let imageUrlString = article.urlToImage, let imageUrl = URL(string: imageUrlString) {
+            newsImageView.kf.setImage(with: imageUrl)
+        } else {
+            newsImageView.image = nil
+        }
     }
 }
+

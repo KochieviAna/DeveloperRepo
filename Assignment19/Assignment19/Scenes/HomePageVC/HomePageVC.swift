@@ -22,7 +22,7 @@ final class HomePageVC: UIViewController {
     private lazy var homePageCollectionVIew: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 16
+        layout.minimumInteritemSpacing = 8
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(HomePageCell.self, forCellWithReuseIdentifier: HomePageCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,11 +61,19 @@ final class HomePageVC: UIViewController {
 
 extension HomePageVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return homePageViewModel.newsData?.articles?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomePageCell.identifier, for: indexPath) as? HomePageCell else {
+            return UICollectionViewCell()
+        }
+        
+        if let article = homePageViewModel.newsData?.articles?[indexPath.item] {
+            cell.configureCell(with: article)
+        }
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -74,9 +82,9 @@ extension HomePageVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
-        let totalSpacing: CGFloat = 32
+        let totalSpacing: CGFloat = 16
         let cellWidth = (collectionViewWidth - totalSpacing) / 2
-        let cellHeight: CGFloat = 283
+        let cellHeight: CGFloat = 128
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
