@@ -17,7 +17,6 @@ final class HomePageVC: UIViewController {
         collectionView.register(HomePageCell.self, forCellWithReuseIdentifier: HomePageCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
-        collectionView.layer.cornerRadius = 10
         collectionView.dataSource = self
         collectionView.delegate = self
         

@@ -15,6 +15,7 @@ final class HomePageCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
         
         return imageView
     }()
@@ -42,7 +43,6 @@ final class HomePageCell: UICollectionViewCell {
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-//        label.numberOfLines = 0
         label.font = UIFont(name: "Nunito-SemiBold", size: 12)
         label.textColor = UIColor(hexString: "FFFFFF")
         label.textAlignment = .right
