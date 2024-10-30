@@ -101,7 +101,30 @@ final class HomePageCell: UICollectionViewCell {
         ])
     }
     
-    public func configureCell() {
+    public func configureCell(with data: Article) {
+        newsLabel.text = data.title
+        authorLabel.text = data.author ?? "Unknown Author"
+        
+        if let publishedAt = data.publishedAt {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            if let date = dateFormatter.date(from: publishedAt) {
+                dateFormatter.dateStyle = .medium
+                dateFormatter.timeStyle = .short
+                dateLabel.text = dateFormatter.string(from: date)
+            } else {
+                dateLabel.text = "Unknown Date"
+            }
+        } else {
+            dateLabel.text = "Unknown Date"
+        }
+        
+        if let imageUrlString = data.urlToImage, let imageUrl = URL(string: imageUrlString) {
+            newsImageView.kf.setImage(with: imageUrl)
+        } else {
+            newsImageView.image = nil
+        }
     }
 }
+
 

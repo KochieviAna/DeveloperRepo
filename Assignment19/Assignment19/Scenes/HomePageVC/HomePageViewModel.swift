@@ -8,6 +8,8 @@
 import Foundation
 
 final class HomePageViewModel {
+    
+    private let newsData = NewsData()
     private let networkService = NetworkService()
     
     private var news: [NewsData] = []
@@ -16,7 +18,26 @@ final class HomePageViewModel {
         news.count
     }
     
+    var newsChanged: (()->Void)?
     
+    init() {
+        fetchData()
+    }
+    
+    func news(at index: Int) -> NewsData {
+        news[index]
+    }
+    
+    func fetchData() {
+        networkService.fetchData(ulrStirng: "https://newsapi.org/v2/everything?q=bitcoin&apiKey=1cfd272ed6f74e45ae3f4d37fed3b649") { (response: Result<NewsData, Error>)in
+            switch response {
+            case .success(let success): break
+                
+            case .failure(let failure): break
+                
+            }
+        }
+    }
 }
 
 
@@ -27,11 +48,11 @@ enum CustomErrors: Error {
 
 final class NetworkService {
     
-    func fetchData<T: Decodable>(ulrStirng: String, completion: @escaping ((T?, Error?)-> Void)) {
+    func fetchData<T: Decodable>(ulrStirng: String, completion: @escaping (Result<T, Error>)->Void) {
         let url = URL(string: ulrStirng)
         let urlRequest = URLRequest(url: url!)
         
-        URLSession.shared.dataTask(with: urlRequest) {  [weak self] data, response, error in
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             
             print(Thread.current.isMainThread, "✅")
             if let error {
@@ -39,12 +60,12 @@ final class NetworkService {
             }
             
             guard let response = response as? HTTPURLResponse else {
-                completion(nil, CustomErrors.wrongResponse)
+                completion(.failure(CustomErrors.wrongResponse))
                 return
             }
             
             guard (200...299).contains(response.statusCode) else {
-                completion(nil, CustomErrors.statusCode)
+                completion(.failure(CustomErrors.statusCode))
                 return
             }
             
@@ -54,7 +75,7 @@ final class NetworkService {
                 let newsResponseData = try JSONDecoder().decode(T.self, from: data)
                 DispatchQueue.main.async {
                     print(Thread.current.isMainThread, "-----")
-                    completion(newsResponseData, nil)
+                    completion(.success(newsResponseData))
                 }
             } catch {
                 print(error.localizedDescription)
