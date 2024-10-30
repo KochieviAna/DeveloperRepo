@@ -42,7 +42,7 @@ final class HomePageCell: UICollectionViewCell {
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+//        label.numberOfLines = 0
         label.font = UIFont(name: "Nunito-SemiBold", size: 12)
         label.textColor = UIColor(hexString: "FFFFFF")
         label.textAlignment = .right
@@ -54,7 +54,7 @@ final class HomePageCell: UICollectionViewCell {
         let stackView = UIStackView(arrangedSubviews: [authorLabel, dateLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.distribution = .fill
+        stackView.distribution = .equalSpacing
         stackView.spacing = 1
         
         return stackView
@@ -108,8 +108,7 @@ final class HomePageCell: UICollectionViewCell {
         
         if let dateString = data.publishedAt, let date = ISO8601DateFormatter().date(from: dateString) {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
-            dateFormatter.timeStyle = .short
+            dateFormatter.dateFormat = "EEEE, d MMMM yyyy"
             dateLabel.text = dateFormatter.string(from: date)
         } else {
             dateLabel.text = "No Date"

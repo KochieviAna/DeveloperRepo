@@ -102,6 +102,7 @@ final class DetailsPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupUI()
     }
