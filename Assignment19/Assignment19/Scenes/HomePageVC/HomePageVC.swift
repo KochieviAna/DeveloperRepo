@@ -57,7 +57,7 @@ final class HomePageVC: UIViewController {
                 self?.homePageCollectionVIew.reloadData()
             }
         }
-        homePageViewModel.fetchData()
+        homePageViewModel.fetchData(page: 1)
     }
 }
 
@@ -128,5 +128,17 @@ extension HomePageVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
             return header
         }
         return UICollectionReusableView()
+    }
+}
+
+extension HomePageVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let threshold = contentHeight - scrollView.frame.size.height
+        
+        if offsetY > threshold && !homePageViewModel.isFetching && homePageViewModel.hasMoreData {
+            homePageViewModel.loadMoreData()
+        }
     }
 }
