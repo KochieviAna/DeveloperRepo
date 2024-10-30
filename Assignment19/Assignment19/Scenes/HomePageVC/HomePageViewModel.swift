@@ -8,37 +8,31 @@
 import Foundation
 
 final class HomePageViewModel {
-    
-    private let newsData = NewsData()
+    var articles: [Article] = []
     private let networkService = NetworkService()
     
-    private var news: [NewsData] = []
-    
-    var numberOfNews: Int {
-        news.count
-    }
-    
-    var newsChanged: (()->Void)?
+    var onDataUpdated: (() -> Void)?
     
     init() {
         fetchData()
     }
     
-    func news(at index: Int) -> NewsData {
-        news[index]
-    }
-    
     func fetchData() {
-        networkService.fetchData(ulrStirng: "https://newsapi.org/v2/everything?q=bitcoin&apiKey=1cfd272ed6f74e45ae3f4d37fed3b649") { (response: Result<NewsData, Error>)in
-            switch response {
-            case .success(let success): break
-                
-            case .failure(let failure): break
-                
+        let urlString = "https://newsapi.org/v2/everything?q=bitcoin&apiKey=1cfd272ed6f74e45ae3f4d37fed3b649"
+        networkService.fetchData(ulrStirng: urlString) { [weak self] (result: Result<NewsModel, Error>) in
+            switch result {
+            case .success(let newsModel):
+                self?.articles = newsModel.articles ?? []
+                DispatchQueue.main.async {
+                    self?.onDataUpdated?()
+                }
+            case .failure(let error):
+                print("Error fetching news: \(error)")
             }
         }
     }
 }
+
 
 
 enum CustomErrors: Error {

@@ -102,27 +102,23 @@ final class HomePageCell: UICollectionViewCell {
     }
     
     public func configureCell(with data: Article) {
-        newsLabel.text = data.title
+        newsLabel.text = data.title ?? "No Title Available"
+        
         authorLabel.text = data.author ?? "Unknown Author"
         
-        if let publishedAt = data.publishedAt {
+        if let dateString = data.publishedAt, let date = ISO8601DateFormatter().date(from: dateString) {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-            if let date = dateFormatter.date(from: publishedAt) {
-                dateFormatter.dateStyle = .medium
-                dateFormatter.timeStyle = .short
-                dateLabel.text = dateFormatter.string(from: date)
-            } else {
-                dateLabel.text = "Unknown Date"
-            }
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
+            dateLabel.text = dateFormatter.string(from: date)
         } else {
-            dateLabel.text = "Unknown Date"
+            dateLabel.text = "No Date"
         }
         
         if let imageUrlString = data.urlToImage, let imageUrl = URL(string: imageUrlString) {
-            newsImageView.kf.setImage(with: imageUrl)
+            newsImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder_image"))
         } else {
-            newsImageView.image = nil
+            newsImageView.image = UIImage(named: "placeholder_image")
         }
     }
 }
