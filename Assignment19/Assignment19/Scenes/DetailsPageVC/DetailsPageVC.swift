@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailsPageVC: UIViewController {
+final class DetailsPageVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
