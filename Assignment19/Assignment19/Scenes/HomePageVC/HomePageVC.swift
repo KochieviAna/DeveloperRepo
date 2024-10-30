@@ -9,6 +9,16 @@ import UIKit
 
 final class HomePageVC: UIViewController {
     
+    private lazy var latestNewsLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.text = "Latest News"
+        titleLabel.textColor = UIColor(hexString: "000000")
+        titleLabel.font = UIFont(name: "AnekDevanagari-Bold", size: 17)
+        titleLabel.textAlignment = .center
+        
+        return titleLabel
+    }()
+    
     private lazy var homePageCollectionVIew: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -29,13 +39,14 @@ final class HomePageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Latest News"
+        navigationItem.titleView = latestNewsLabel
         setupUI()
-        setupConstraints()
     }
     
     private func setupUI() {
         view.addSubview(homePageCollectionVIew)
+        
+        setupConstraints()
     }
     
     private func setupConstraints() {

@@ -29,7 +29,7 @@ final class HomePageCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var publisherLabel: UILabel = {
+    private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont(name: "Nunito-SemiBold", size: 12)
@@ -50,7 +50,7 @@ final class HomePageCell: UICollectionViewCell {
     }()
     
     private lazy var publisherAndDateStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [publisherLabel, dateLabel])
+        let stackView = UIStackView(arrangedSubviews: [authorLabel, dateLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fill
@@ -64,7 +64,6 @@ final class HomePageCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCell()
-        setupCellConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -75,6 +74,8 @@ final class HomePageCell: UICollectionViewCell {
         contentView.addSubview(newsImageView)
         contentView.addSubview(newsLabel)
         contentView.addSubview(publisherAndDateStackView)
+        
+        setupCellConstraints()
     }
     
     private func setupCellConstraints() {
@@ -95,7 +96,7 @@ final class HomePageCell: UICollectionViewCell {
             publisherAndDateStackView.topAnchor.constraint(greaterThanOrEqualTo: newsLabel.bottomAnchor, constant: 8),
             publisherAndDateStackView.trailingAnchor.constraint(equalTo: newsLabel.trailingAnchor),
             publisherAndDateStackView.leadingAnchor.constraint(equalTo: newsLabel.leadingAnchor),
-            publisherLabel.bottomAnchor.constraint(equalTo: newsImageView.bottomAnchor, constant: -8)
+            publisherAndDateStackView.bottomAnchor.constraint(equalTo: newsImageView.bottomAnchor, constant: -8)
         ])
     }
     
