@@ -8,32 +8,59 @@
 import Foundation
 
 final class HomePageViewModel {
+    private let networkService = NetworkService()
     
-    var newsData: NewsModel?
+    private var news: [NewsData] = []
     
-    func fetchDataFrom() {
-        let urlString = "https://newsapi.org/v2/everything?q=bitcoin&apiKey=1cfd272ed6f74e45ae3f4d37fed3b649"
-        guard let url = URL(string: urlString) else { return }
-        let urlRequest = URLRequest(url: url)
+    var numberOfNews: Int {
+        news.count
+    }
+    
+    
+}
+
+
+enum CustomErrors: Error {
+    case wrongResponse
+    case statusCode
+}
+
+final class NetworkService {
+    
+    func fetchData<T: Decodable>(ulrStirng: String, completion: @escaping ((T?, Error?)-> Void)) {
+        let url = URL(string: ulrStirng)
+        let urlRequest = URLRequest(url: url!)
         
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        URLSession.shared.dataTask(with: urlRequest) {  [weak self] data, response, error in
+            
+            print(Thread.current.isMainThread, "✅")
             if let error {
                 print(error)
             }
             
-            guard let data else {
+            guard let response = response as? HTTPURLResponse else {
+                completion(nil, CustomErrors.wrongResponse)
                 return
             }
             
+            guard (200...299).contains(response.statusCode) else {
+                completion(nil, CustomErrors.statusCode)
+                return
+            }
+            
+            guard let data else { return }
+            
             do {
-                let newsData = try JSONDecoder().decode(NewsModel.self, from: data)
+                let newsResponseData = try JSONDecoder().decode(T.self, from: data)
                 DispatchQueue.main.async {
-                    self.newsData = newsData
+                    print(Thread.current.isMainThread, "-----")
+                    completion(newsResponseData, nil)
                 }
             } catch {
-                print(error)
+                print(error.localizedDescription)
             }
+            
         }.resume()
-        
     }
 }
+

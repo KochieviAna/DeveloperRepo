@@ -61,20 +61,13 @@ final class HomePageVC: UIViewController {
 
 extension HomePageVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return homePageViewModel.newsData?.articles?.count ?? 0
+        <#code#>
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomePageCell.identifier, for: indexPath) as? HomePageCell else {
-            return UICollectionViewCell()
-        }
-        
-        if let article = homePageViewModel.newsData?.articles?[indexPath.item] {
-            cell.configureCell(with: article)
-        }
-        
-        return cell
+        <#code#>
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
