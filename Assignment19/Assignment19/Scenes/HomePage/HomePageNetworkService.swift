@@ -51,9 +51,7 @@ final class NetworkService {
             
             do {
                 let newsResponseData = try JSONDecoder().decode(T.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(newsResponseData))
-                }
+                completion(.success(newsResponseData))
             } catch {
                 print(error.localizedDescription)
                 completion(.failure(error))
