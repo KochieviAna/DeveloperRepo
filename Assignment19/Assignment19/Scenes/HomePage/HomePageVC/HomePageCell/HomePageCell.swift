@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-final class HomePageCell: UICollectionViewCell {
+final class HomePageCell: UITableViewCell {
     
     private lazy var newsImageView: UIImageView = {
         let imageView = UIImageView()
@@ -18,6 +18,21 @@ final class HomePageCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 10
         
         return imageView
+    }()
+    
+    private lazy var gradientLayer: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        gradient.colors = [
+            UIColor.black.withAlphaComponent(0.8).cgColor,
+            UIColor(hexString: "626262").withAlphaComponent(0.4).cgColor,
+            UIColor.clear.cgColor
+        ]
+        gradient.locations = [0.0, 0.5, 1.0]
+        gradient.startPoint = CGPoint(x: 0.5, y: 1.0)
+        gradient.endPoint = CGPoint(x: 0.5, y: 0.0)
+        gradient.frame = CGRect.zero
+        gradient.cornerRadius = 10
+        return gradient
     }()
     
     private lazy var newsLabel: UILabel = {
@@ -62,8 +77,8 @@ final class HomePageCell: UICollectionViewCell {
     
     static let identifier = "HomePageCell"
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
     
@@ -71,20 +86,32 @@ final class HomePageCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    
     private func setupCell() {
         contentView.addSubview(newsImageView)
+        newsImageView.layer.addSublayer(gradientLayer)
+        
         contentView.addSubview(newsLabel)
         contentView.addSubview(publisherAndDateStackView)
         
         setupCellConstraints()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = newsImageView.bounds
+    }
+    
     private func setupCellConstraints() {
         NSLayoutConstraint.activate([
-            newsImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-            newsImageView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
-            newsImageView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
-            newsImageView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor)
+            newsImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 4),
+            newsImageView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            newsImageView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            newsImageView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -4)
         ])
         
         NSLayoutConstraint.activate([

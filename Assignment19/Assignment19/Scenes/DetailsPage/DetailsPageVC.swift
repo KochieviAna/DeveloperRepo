@@ -105,7 +105,6 @@ final class DetailsPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupUI()
     }
@@ -118,6 +117,8 @@ final class DetailsPageVC: UIViewController {
     }
     
     private func setupUI() {
+        view.backgroundColor = .systemBackground
+        
         view.addSubview(newsLabel)
         view.addSubview(dateLabel)
         view.addSubview(newsImageView)
