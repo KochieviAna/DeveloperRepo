@@ -3,7 +3,7 @@ ________________________
 **Bug 1**
 
 "/Users/macbook/Desktop/DeveloperRepo/IMDB-Info-main/IMDB Info/Presenter/FeaturedCell/FeaturedCell.swift:24:40 Value of type 'GenreList' has no member 'genres'"
-This bug is deisplayed because of pure sintax mistake, instead of:
+This bug is deisplayed because of pure sintax mistake in MovieCollectionView file, instead of:
 
 GenreManager.fetchGenreList(with: genreListUrl) { genreList in
             self.genreList = genreList.genres
@@ -19,7 +19,7 @@ ________________________
 
 "/Users/macbook/Desktop/DeveloperRepo/IMDB-Info-main/IMDB Info/Presenter/FeaturedCell/FeaturedCell.swift:41:53 Binary operator '==' cannot be applied to operands of type 'Bool' and 'Int'"
 
-I have changed the structure Genre, instead of:
+I have changed the structure Genre in Genre file, instead of:
 
 struct Genre: Decodable {
     var id: Bool
@@ -35,7 +35,7 @@ struct Genre: Decodable {
 ________________________
 **Bug 3**
 
-resume() was missing from GenreManager's function fetchGenreList, after this was fixed by me appDelegatee showed following message:
+resume() was missing from GenreManager's function fetchGenreList in GenreManager file, after this was fixed by me appDelegatee showed following message:
 
 Thread 1: "Could not load NIB in bundle: 'NSBundle </Users/macbook/Library/Developer/CoreSimulator/Devices/3E1C4EE5-9C07-419F-A8C2-339A77C6D3AD/data/Containers/Bundle/Application/6AD829B4-36AE-4296-A3F1-F97007DBFE52/IMDB Info.app> (loaded)' with name 'MovieCollectionVie'"
 
@@ -48,7 +48,7 @@ should have been:
 tableView.register(UINib(nibName: "MovieCollectionVie", bundle: nil), forCellReuseIdentifier: "MovieCollectionView")
 ________________________
 **Bug 4**
-Code below was not needed at all, it returned 0 sections for SearchViewController collectionView.
+Code below was not needed at all in SearchViewController file, it returned 0 sections for SearchViewController collectionView.
 
 func numberOfSections(in collectionView: UICollectionView) -> Int {
         if movies.count > 0 {
