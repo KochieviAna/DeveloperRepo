@@ -3,7 +3,7 @@ ________________________
 **Bug 1**
 
 "/Users/macbook/Desktop/DeveloperRepo/IMDB-Info-main/IMDB Info/Presenter/FeaturedCell/FeaturedCell.swift:24:40 Value of type 'GenreList' has no member 'genres'"
-This bug is deisplayed because of pure sintax mistake in MovieCollectionView file, instead of:
+This bug is deisplayed because of pure sintax mistake in FeaturedCell file, instead of:
 
 GenreManager.fetchGenreList(with: genreListUrl) { genreList in
             self.genreList = genreList.genres
@@ -61,10 +61,45 @@ After I had deleted the code section heather was displayed.
 Now I should figure out why cell MovieCollectionViewCell is not displayed on SearchViewController collectionView.
 ________________________
 **Bug 5**
-SearchViewController collectionView cell should be displayed.
+SearchViewController collectionView cell is displayed now, because I've added following code:
+
+New Variable:
+private let searchMovies = "https://api.themoviedb.org/3/movie/now_playing?api_key=b688d2e3d40e21d185f1dd90d122a568&language=en-US&page=1"
+
+FetchMovieList code in viewDidload:
+movieManager.fetchMovieList(with: searchMovies) { movielist in
+            self.movies = movielist.results
+            DispatchQueue.main.async {
+                self.searchCollectionView.reloadData()
+            }
 ________________________
 **Bug 6**
-Should be tested if search bar works correctly.
+Sections height had to be adjusted properly in NowInTheaters file, which has been done.
 ________________________
 **Bug 7**
-Sections height should be adjusted properly, started to try few methods.
+MovieCollectionView extension in MovieCollectionView file:
+
+extension MovieCollectionView: SkeletonCollectionViewDataSource {}
+Was missing UICollectionViewDelegateFlowLayout, therefore, until I added it the code:
+
+func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 120, height: 170)
+    }
+Was useless.
+
+Also added following codes in  override func awakeFromNib() in the same file as well:
+
+let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            self.movieCollectionView.collectionViewLayout = layout
+________________________
+**Bug 8**
+Skeleton was not displayed in SearchViewController file.
+Added following codes:
+
+searchCollectionView.showAnimatedGradientSkeleton()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.searchCollectionView.stopSkeletonAnimation()
+            self.searchCollectionView.hideSkeleton()
+        }
