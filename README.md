@@ -62,7 +62,9 @@ Now I should figure out why cell MovieCollectionViewCell is not displayed on Sea
 ________________________
 **Bug 5**
 SearchViewController collectionView cell should be displayed.
+________________________
 **Bug 6**
 Should be tested if search bar works correctly.
+________________________
 **Bug 7**
 Sections height should be adjusted properly, started to try few methods.
