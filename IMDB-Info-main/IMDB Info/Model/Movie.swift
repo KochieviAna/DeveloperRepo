@@ -28,4 +28,4 @@ struct Movie: Decodable {
         case score = "vote_average"
     }
 }
- 
+

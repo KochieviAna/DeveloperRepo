@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 final class MovieCollectionViewCell: UICollectionViewCell {
-
+    
     private let imagePrefix = "https://image.tmdb.org/t/p/w500/"
     @IBOutlet private weak var mainImage: UIImageView!
     

@@ -9,7 +9,7 @@ import UIKit
 import CoreMIDI
 
 final class FeaturedCell: UITableViewCell {
-
+    
     private let imagePrefix = "https://image.tmdb.org/t/p/w500/"
     private let genreListUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=b688d2e3d40e21d185f1dd90d122a568&language=en-US"
     private var genreList = [Genre]()
