@@ -32,14 +32,18 @@ final class NowInTheaters: UIViewController {
 }
 
 extension NowInTheaters: UITableViewDelegate, UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        movies.count/10
-    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+         return movies.count / 10
+     }
+     
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         return 1
+     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 && movies.count > 0 {
+        if indexPath.section == 0 && movies.count > 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FeaturedCell", for: indexPath) as! FeaturedCell
-            cell.makeNew(movies[indexPath.row])
+            cell.makeNew(movies[indexPath.section])
             return cell
         }
         
@@ -49,7 +53,7 @@ extension NowInTheaters: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 350 : 140
+        return indexPath.section == 0 ? 650 : 550
     }
 }
 

@@ -16,7 +16,6 @@ final class MovieCollectionView: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         movieCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         movieCollectionView.dataSource = self
         movieCollectionView.delegate = self
@@ -25,6 +24,11 @@ final class MovieCollectionView: UITableViewCell {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.movieCollectionView.stopSkeletonAnimation()
             self.movieCollectionView.hideSkeleton()
+            
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            self.movieCollectionView.collectionViewLayout = layout
+            
             self.movieCollectionView.reloadData()
         }
     }
@@ -44,7 +48,7 @@ extension MovieCollectionView: UICollectionViewDelegate {
     }
 }
 
-extension MovieCollectionView: SkeletonCollectionViewDataSource {
+extension MovieCollectionView: SkeletonCollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
         "MovieCollectionViewCell"
     }
@@ -67,6 +71,7 @@ extension MovieCollectionView: SkeletonCollectionViewDataSource {
         return CGSize(width: 120, height: 170)
     }
 }
+
 
 protocol MovieCollectionViewDelegate {
     func openSelection(this vc: UIViewController)
