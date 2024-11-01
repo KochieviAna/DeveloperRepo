@@ -3,17 +3,9 @@ ________________________
 **Bug 1**
 
 "/Users/macbook/Desktop/DeveloperRepo/IMDB-Info-main/IMDB Info/Presenter/FeaturedCell/FeaturedCell.swift:24:40 Value of type 'GenreList' has no member 'genres'"
-This bug is deisplayed because of pure sintax mistake in FeaturedCell file, instead of:
+This bug is deisplayed because of pure sintax mistake in GenreList file, instead of:
 
-GenreManager.fetchGenreList(with: genreListUrl) { genreList in
-            self.genreList = genreList.genres
-        }
-        
-should have been:
-
-GenreManager.fetchGenreList(with: genreListUrl) { genreList in
-            self.genreList = genreList.genr
-        }
+genr changed to genres to match the API.
 ________________________
 **Bug 2**
 
