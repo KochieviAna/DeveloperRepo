@@ -98,13 +98,6 @@ extension SearchViewController: SkeletonCollectionViewDataSource {
         20
     }
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if movies.count > 0 {
-            return 1
-        }
-        return 0
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = searchCollectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as! MovieCollectionViewCell
         cell.makeView(movies[indexPath.row])
