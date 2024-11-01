@@ -13,7 +13,6 @@ final class CollectionViewHeader: UICollectionReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     func makeNew(with header: String) {

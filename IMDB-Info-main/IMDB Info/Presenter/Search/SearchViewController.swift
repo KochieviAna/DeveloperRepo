@@ -14,14 +14,35 @@ final class SearchViewController: UIViewController {
     @IBOutlet private weak var searchCollectionView: UICollectionView!
     private let movieManager = MovieManager()
     private var movies = [Movie]()
+    private let searchMovies = "https://api.themoviedb.org/3/movie/now_playing?api_key=b688d2e3d40e21d185f1dd90d122a568&language=en-US&page=1"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        movieManager.fetchMovieList(with: searchMovies) { movielist in
+            self.movies = movielist.results
+            DispatchQueue.main.async {
+                self.searchCollectionView.reloadData()
+            }
+        }
+        
         searchBar.delegate = self
         searchCollectionView.dataSource = self
         searchCollectionView.delegate = self
+        searchCollectionView.showAnimatedGradientSkeleton()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.searchCollectionView.stopSkeletonAnimation()
+            self.searchCollectionView.hideSkeleton()
+        }
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        self.searchCollectionView.collectionViewLayout = layout
+        
         searchCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         searchCollectionView.register(UINib(nibName: "CollectionViewHeader", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader")
+        
+        searchCollectionView.reloadData()
     }
     
 }
