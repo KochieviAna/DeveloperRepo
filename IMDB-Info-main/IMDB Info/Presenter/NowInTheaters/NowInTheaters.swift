@@ -48,7 +48,9 @@ extension NowInTheaters: UITableViewDelegate, UITableViewDataSource{
         cell.delegate = self
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return indexPath.section == 0 ? 350 : 140
+    }
 }
 
 extension NowInTheaters: MovieCollectionViewDelegate {
