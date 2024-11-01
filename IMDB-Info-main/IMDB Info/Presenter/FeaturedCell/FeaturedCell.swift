@@ -21,7 +21,7 @@ final class FeaturedCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         GenreManager.fetchGenreList(with: genreListUrl) { genreList in
-            self.genreList = genreList.genr
+            self.genreList = genreList.genres
         }
         
         self.showAnimatedGradientSkeleton()
