@@ -1,4 +1,5 @@
-First action that have been taken from my end was building the project and trying to replicate as many issues as possible. During runing the project, I've detected that the two initial errors have been poped up, therefore, I've started debuging with that.
+**First action that have been taken from my end was building the project and trying to replicate as many issues as possible. During runing the project, I've detected that the two initial errors have been poped up, therefore, I've started debuging with that.
+**
 ________________________
 **Bug 1**
 
