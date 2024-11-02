@@ -13,17 +13,17 @@ ________________________
 
 I have changed the structure Genre in Genre file, instead of:
 
-struct Genre: Decodable {
+    struct Genre: Decodable {
     var id: Bool
     var name: String
-}
-
+    }
+    
 should have been:
 
-struct Genre: Decodable {
+    struct Genre: Decodable {
     var id: Int
     var name: String
-}
+    }
 ________________________
 **Bug 3**
 
@@ -33,16 +33,16 @@ Thread 1: "Could not load NIB in bundle: 'NSBundle </Users/macbook/Library/Devel
 
 Therefore it was clear the in MovieCollectionView registration was done incirrectly, instead of:
 
-tableView.register(UINib(nibName: "MovieCollectionVie", bundle: nil), forCellReuseIdentifier: "MovieCollectionView")
+    tableView.register(UINib(nibName: "MovieCollectionVie", bundle: nil), forCellReuseIdentifier: "MovieCollectionView")
 
 should have been:
 
-tableView.register(UINib(nibName: "MovieCollectionVie", bundle: nil), forCellReuseIdentifier: "MovieCollectionView")
+    tableView.register(UINib(nibName: "MovieCollectionVie", bundle: nil), forCellReuseIdentifier: "MovieCollectionView")
 ________________________
 **Bug 4**
 Code below was not needed at all in SearchViewController file, it returned 0 sections for SearchViewController collectionView.
 
-func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         if movies.count > 0 {
             return 1
         }
@@ -56,10 +56,12 @@ ________________________
 SearchViewController collectionView cell is displayed now, because I've added following code:
 
 New Variable:
-private let searchMovies = "https://api.themoviedb.org/3/movie/now_playing?api_key=b688d2e3d40e21d185f1dd90d122a568&language=en-US&page=1"
+
+    private let searchMovies = "https://api.themoviedb.org/3/movie/now_playing?api_key=b688d2e3d40e21d185f1dd90d122a568&language=en-US&page=1"
 
 FetchMovieList code in viewDidload:
-movieManager.fetchMovieList(with: searchMovies) { movielist in
+
+    movieManager.fetchMovieList(with: searchMovies) { movielist in
             self.movies = movielist.results
             DispatchQueue.main.async {
                 self.searchCollectionView.reloadData()
@@ -74,14 +76,15 @@ MovieCollectionView extension in MovieCollectionView file:
 extension MovieCollectionView: SkeletonCollectionViewDataSource {}
 Was missing UICollectionViewDelegateFlowLayout, therefore, until I added it the code:
 
-func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: 
+    IndexPath) -> CGSize {
         return CGSize(width: 120, height: 170)
     }
 Was useless.
 
 Also added following codes in  override func awakeFromNib() in the same file as well:
 
-let layout = UICollectionViewFlowLayout()
+            let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .horizontal
             self.movieCollectionView.collectionViewLayout = layout
 ________________________
