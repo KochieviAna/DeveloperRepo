@@ -100,4 +100,4 @@ searchCollectionView.showAnimatedGradientSkeleton()
         }
 ________________________
 **Bug 9**
-Genres are not displayed in main page, I tried a lot of ways to fix it but it refuses to be fixed. 🥲
+Genres are not displayed on main page, I tried a lot of ways to fix it but it refuses to be fixed. 🥲
