@@ -40,6 +40,7 @@ should have been:
     tableView.register(UINib(nibName: "MovieCollectionVie", bundle: nil), forCellReuseIdentifier: "MovieCollectionView")
 ________________________
 **Bug 4**
+
 Code below was not needed at all in SearchViewController file, it returned 0 sections for SearchViewController collectionView.
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -53,6 +54,7 @@ After I had deleted the code section heather was displayed.
 Now I should figure out why cell MovieCollectionViewCell is not displayed on SearchViewController collectionView.
 ________________________
 **Bug 5**
+
 SearchViewController collectionView cell is displayed now, because I've added following code:
 
 New Variable:
@@ -68,9 +70,11 @@ FetchMovieList code in viewDidload:
             }
 ________________________
 **Bug 6**
+
 Sections height had to be adjusted properly in NowInTheaters file, which has been done.
 ________________________
 **Bug 7**
+
 MovieCollectionView extension in MovieCollectionView file:
 
 extension MovieCollectionView: SkeletonCollectionViewDataSource {}
@@ -89,6 +93,7 @@ Also added following codes in  override func awakeFromNib() in the same file as 
             self.movieCollectionView.collectionViewLayout = layout
 ________________________
 **Bug 8**
+
 Skeleton was not displayed in SearchViewController file.
 Added following codes:
 
@@ -100,4 +105,5 @@ searchCollectionView.showAnimatedGradientSkeleton()
         }
 ________________________
 **Bug 9**
+
 Genres are not displayed on main page, I tried a lot of ways to fix it but it refuses to be fixed. 🥲
