@@ -8,8 +8,19 @@
 import UIKit
 
 class QuestionPageVC: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    private func setupUI() {
+        addDiagonalGradientBackground(to: view)
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        
     }
 }

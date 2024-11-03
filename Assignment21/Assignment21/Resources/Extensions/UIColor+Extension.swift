@@ -26,3 +26,18 @@ extension UIColor {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
 }
+
+
+public func addDiagonalGradientBackground(to view: UIView) {
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.colors = [
+        UIColor(hexString: "060B26").withAlphaComponent(0.9).cgColor,
+        UIColor(hexString: "1A1F37").withAlphaComponent(0.5).cgColor
+    ]
+    gradientLayer.locations = [0.0, 1.0]
+    gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+    gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+    gradientLayer.frame = view.bounds
+    
+    view.layer.insertSublayer(gradientLayer, at: 0)
+}

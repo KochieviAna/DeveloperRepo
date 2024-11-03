@@ -11,7 +11,17 @@ class LogInPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(hexString: "060B26")
+        setupUI()
+    }
+    
+    private func setupUI() {
+        addDiagonalGradientBackground(to: view)
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        
     }
 }
 
