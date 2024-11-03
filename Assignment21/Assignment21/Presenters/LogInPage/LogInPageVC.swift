@@ -22,7 +22,7 @@ class LogInPageVC: UIViewController {
     
     private lazy var userImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.crop.circle.badge.plus")
+        imageView.image = UIImage(systemName: "person.crop.circle.fill.badge.plus")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.tintColor = UIColor(hexString: "060B26")
