@@ -43,7 +43,9 @@ final class QuizPageVC: UIViewController {
     
     private func setupConstraints() {
         quizTableView.snp.remakeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.leading.equalToSuperview().offset(21 * Constraint.xCoeff)
+            make.trailing.equalToSuperview().offset(-21 * Constraint.xCoeff)
         }
     }
 }
@@ -55,7 +57,7 @@ extension QuizPageVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: QuizPageCell.identifier, for: indexPath) as? QuizPageCell else { return UITableViewCell() }
-        
+        cell.backgroundColor = .clear
         return cell
     }
     

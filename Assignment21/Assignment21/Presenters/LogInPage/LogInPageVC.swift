@@ -53,6 +53,10 @@ final class LogInPageVC: UIViewController {
         textField.textContentType = .username
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
         
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: textField.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+        
         return textField
     }()
     
@@ -80,6 +84,10 @@ final class LogInPageVC: UIViewController {
         textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
         
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: textField.frame.height))
+            textField.leftView = paddingView
+            textField.leftViewMode = .always
+        
         return textField
     }()
     
@@ -106,6 +114,10 @@ final class LogInPageVC: UIViewController {
         textField.textContentType = .password
         textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: textField.frame.height))
+            textField.leftView = paddingView
+            textField.leftViewMode = .always
         
         return textField
     }()

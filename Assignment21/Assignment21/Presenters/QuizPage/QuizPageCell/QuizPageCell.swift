@@ -35,7 +35,7 @@ final class QuizPageCell: UITableViewCell {
     }
     
     private func setupCell() {
-        contentView.addSubview(quizlabel)
+        addSubview(quizlabel)
         
         setupCellConstraints()
     }
@@ -43,8 +43,7 @@ final class QuizPageCell: UITableViewCell {
     private func setupCellConstraints() {
         quizlabel.snp.remakeConstraints { make in
             make.top.equalToSuperview().offset(10 * Constraint.yCoeff)
-            make.leading.equalToSuperview().offset(22 * Constraint.xCoeff)
-            make.trailing.equalToSuperview().offset(-22 * Constraint.xCoeff)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview().offset(-10 * Constraint.yCoeff)
         }
     }

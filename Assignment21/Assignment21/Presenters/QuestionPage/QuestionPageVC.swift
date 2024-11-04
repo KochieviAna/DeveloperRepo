@@ -23,16 +23,27 @@ final class QuestionPageVC: UIViewController {
         return button
     }()
     
-    private lazy var questionButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-        button.titleLabel?.font = .senMedium(size: 14)
-        button.backgroundColor = UIColor(hexString: "8E84FF")
-        button.layer.cornerRadius = 25
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor(hexString: "B8B2FF").cgColor
+    private lazy var questionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .senMedium(size: 14)
+        label.textAlignment = .center
+        label.textColor = UIColor(hexString: "FFFFFF")
+        label.backgroundColor = UIColor(hexString: "8E84FF")
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor(hexString: "B8B2FF").cgColor
+        label.clipsToBounds = true
         
-        return button
+        return label
+    }()
+    
+    private lazy var questionTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.register(QuestionPageCell.self, forCellReuseIdentifier: QuestionPageCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        return tableView
     }()
     
     override func viewDidLoad() {
@@ -40,13 +51,33 @@ final class QuestionPageVC: UIViewController {
         setupUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        questionLabel.layer.cornerRadius = questionLabel.frame.height / 2
+    }
+    
+    
     private func setupUI() {
         addDiagonalGradientBackground(to: view)
         
         view.addSubview(backArrowButton)
-        view.addSubview(questionButton)
+        view.addSubview(questionLabel)
+        view.addSubview(questionTableView)
         
+        setupHeaderView()
         setupConstraints()
+        setupHeaderView()
+    }
+    
+    private func setupHeaderView() {
+        let headerView = QuestionPageHeaderView()
+        headerView.headerLabel.text = "ljhabfnljkanfkjafnblkjnlakjfbnlkjabflkjabfkljabflkjbalkfjbalkjbfakjbflkjabflajkbflkajbfkajbfkaljbflkabfklabflkajbfkaljbflakjbflakbflakjbflakjbflkdab"
+        
+        questionTableView.tableHeaderView = headerView
+        headerView.setNeedsLayout()
+        headerView.layoutIfNeeded()
+        headerView.frame.size.height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        questionTableView.tableHeaderView = headerView
     }
     
     private func setupConstraints() {
@@ -57,16 +88,43 @@ final class QuestionPageVC: UIViewController {
             make.width.equalTo(6.09 * Constraint.xCoeff)
         }
         
-        questionButton.snp.remakeConstraints { make in
+        questionLabel.snp.remakeConstraints { make in
             make.top.equalToSuperview().offset(65 * Constraint.yCoeff)
             make.leading.lessThanOrEqualTo(backArrowButton.snp.trailing).offset(203.91 * Constraint.xCoeff)
             make.trailing.equalToSuperview().offset(-24 * Constraint.xCoeff)
             make.height.equalTo(34 * Constraint.yCoeff)
             make.width.greaterThanOrEqualTo(81 * Constraint.xCoeff)
         }
+        
+        questionTableView.snp.remakeConstraints { make in
+            make.top.equalTo(questionLabel.snp.bottom).offset(25 * Constraint.yCoeff)
+            make.leading.equalToSuperview().offset(10 * Constraint.xCoeff)
+            make.trailing.equalToSuperview().offset(-10 * Constraint.xCoeff)
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func setupFooterView() {
+        let footerView = QuestionPageFooterView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
+        questionTableView.tableFooterView = footerView
     }
     
     private func arrowBackButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension QuestionPageVC: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: QuestionPageCell.identifier, for: indexPath) as? QuestionPageCell else { return UITableViewCell() }
+        cell.backgroundColor = .clear
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        57
     }
 }
