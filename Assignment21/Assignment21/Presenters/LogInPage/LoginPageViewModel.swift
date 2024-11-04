@@ -18,6 +18,7 @@ final class LoginPageViewModel {
         return passwordRegex.evaluate(with: password)
     }
     
+    
     func userExists(username: String) -> Bool {
         return LoginPageKeychainService.shared.fetchUserData(key: username) != nil
     }
@@ -29,3 +30,4 @@ final class LoginPageViewModel {
         return status == errSecSuccess
     }
 }
+

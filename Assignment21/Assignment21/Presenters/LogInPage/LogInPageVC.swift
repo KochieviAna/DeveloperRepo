@@ -80,7 +80,6 @@ final class LogInPageVC: UIViewController {
         textField.borderStyle = .none
         textField.layer.cornerRadius = 20
         textField.keyboardType = .default
-        textField.textContentType = .password
         textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
         
@@ -111,7 +110,6 @@ final class LogInPageVC: UIViewController {
         textField.borderStyle = .none
         textField.layer.cornerRadius = 20
         textField.keyboardType = .default
-        textField.textContentType = .password
         textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
         
@@ -229,26 +227,24 @@ final class LogInPageVC: UIViewController {
         guard let username = usernameTextField.text, !username.isEmpty,
               let password = passwordTextField.text, !password.isEmpty,
               let confirmPassword = confirmPasswordTextField.text, !confirmPassword.isEmpty else {
-            showAlert(message: "Please enter username, password, and confirmation.")
-            
+            showErrorAlert(message: "Please enter username, password, and confirmation.")
             return
         }
         
         if !viewModel.isPasswordValid(password) {
-            showAlert(message: "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one digit, and one special character.")
-            
+            showErrorAlert(message: "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one digit, and one special character.")
             return
         }
         
         if password != confirmPassword {
-            showAlert(message: "Passwords do not match.")
+            showErrorAlert(message: "Passwords do not match.")
             
             return
         }
         
         if viewModel.userExists(username: username) {
             print("User already exists")
-            showAlert(message: "User already exists")
+            showErrorAlert(message: "User already exists")
             
             return
         }
@@ -258,14 +254,19 @@ final class LogInPageVC: UIViewController {
             let vc = QuizPageVC()
             navigationController?.pushViewController(vc, animated: true)
         } else {
-            showAlert(message: "Failed to save user data")
+            showErrorAlert(message: "Failed to save user data")
         }
     }
     
-    private func showAlert(message: String) {
+    private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func pushToQuizPage() {
+        let quizPageVC = QuizPageVC()
+        navigationController?.pushViewController(quizPageVC, animated: true)
     }
 }
 
