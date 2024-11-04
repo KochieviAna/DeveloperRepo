@@ -66,7 +66,7 @@ final class QuestionPageVC: UIViewController {
         
         setupHeaderView()
         setupConstraints()
-        setupHeaderView()
+        setupFooterView()
     }
     
     private func setupHeaderView() {
@@ -107,7 +107,7 @@ final class QuestionPageVC: UIViewController {
     }
     
     private func setupFooterView() {
-        let footerView = QuestionPageFooterView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
+        let footerView = QuestionPageFooterView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 150))
         questionTableView.tableFooterView = footerView
     }
     
