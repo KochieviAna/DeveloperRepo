@@ -233,6 +233,8 @@ final class LogInPageVC: UIViewController {
         if viewModel.userExists(username: username) {
             if let storedPassword = viewModel.fetchPassword(for: username), storedPassword == password {
                 pushToQuizPage()
+            } else if confirmPasswordTextField.text?.isEmpty == false {
+                showErrorAlert(message: "Username already exists.")
             } else {
                 showErrorAlert(message: "Incorrect password.")
             }
