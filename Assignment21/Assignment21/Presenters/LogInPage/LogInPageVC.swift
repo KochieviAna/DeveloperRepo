@@ -225,9 +225,22 @@ final class LogInPageVC: UIViewController {
     
     private func signinButtonTapped() {
         guard let username = usernameTextField.text, !username.isEmpty,
-              let password = passwordTextField.text, !password.isEmpty,
-              let confirmPassword = confirmPasswordTextField.text, !confirmPassword.isEmpty else {
-            showErrorAlert(message: "Please enter username, password, and confirmation.")
+              let password = passwordTextField.text, !password.isEmpty else {
+            showErrorAlert(message: "Please enter username and password.")
+            return
+        }
+        
+        if viewModel.userExists(username: username) {
+            if let storedPassword = viewModel.fetchPassword(for: username), storedPassword == password {
+                pushToQuizPage()
+            } else {
+                showErrorAlert(message: "Incorrect password.")
+            }
+            return
+        }
+        
+        guard let confirmPassword = confirmPasswordTextField.text, !confirmPassword.isEmpty else {
+            showErrorAlert(message: "Please confirm your password.")
             return
         }
         
@@ -238,35 +251,25 @@ final class LogInPageVC: UIViewController {
         
         if password != confirmPassword {
             showErrorAlert(message: "Passwords do not match.")
-            
-            return
-        }
-        
-        if viewModel.userExists(username: username) {
-            print("User already exists")
-            showErrorAlert(message: "User already exists")
-            
             return
         }
         
         if viewModel.saveUser(username: username, password: password) {
-            print("User saved successfully")
-            let vc = QuizPageVC()
-            navigationController?.pushViewController(vc, animated: true)
+            pushToQuizPage()
         } else {
-            showErrorAlert(message: "Failed to save user data")
+            showErrorAlert(message: "Failed to save user data.")
         }
-    }
-    
-    private func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
     }
     
     private func pushToQuizPage() {
         let quizPageVC = QuizPageVC()
         navigationController?.pushViewController(quizPageVC, animated: true)
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
     }
 }
 

@@ -18,9 +18,15 @@ final class LoginPageViewModel {
         return passwordRegex.evaluate(with: password)
     }
     
-    
     func userExists(username: String) -> Bool {
         return LoginPageKeychainService.shared.fetchUserData(key: username) != nil
+    }
+    
+    func fetchPassword(for username: String) -> String? {
+        guard let passwordData = LoginPageKeychainService.shared.fetchUserData(key: username) else {
+            return nil
+        }
+        return String(data: passwordData, encoding: .utf8)
     }
     
     func saveUser(username: String, password: String) -> Bool {
@@ -30,4 +36,3 @@ final class LoginPageViewModel {
         return status == errSecSuccess
     }
 }
-
