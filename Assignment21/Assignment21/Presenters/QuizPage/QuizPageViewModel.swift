@@ -7,6 +7,6 @@
 
 import Foundation
 
-class QuizPageViewModel {
+final class QuizPageViewModel {
     
 }

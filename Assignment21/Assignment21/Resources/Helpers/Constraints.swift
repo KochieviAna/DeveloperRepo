@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Constraint {
+final class Constraint {
     static let deviceHeight = UIScreen.main.bounds.height
     static let deviceWidth = UIScreen.main.bounds.width
     

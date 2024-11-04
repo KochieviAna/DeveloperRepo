@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class LogInPageVC: UIViewController {
+final class LogInPageVC: UIViewController {
     
     private lazy var imageWrapperImage: UIImageView = {
         let imageView = UIImageView()
@@ -33,7 +33,7 @@ class LogInPageVC: UIViewController {
     private lazy var usernameLabel: UILabel = {
         let label = UILabel()
         label.text = "Username"
-        label.font = .SenRegular(size: 16)
+        label.font = .senRegular(size: 16)
         label.textColor = UIColor(hexString: "FFFFFF")
         label.textAlignment = .left
         label.numberOfLines = 0
@@ -43,11 +43,12 @@ class LogInPageVC: UIViewController {
     
     private lazy var usernameTextField: UITextField = {
         let textField = UITextField()
+        textField.delegate = self
         textField.placeholder = "Enter username"
-        textField.font = .SenMedium(size: 11)
+        textField.font = .senMedium(size: 11)
         textField.textColor = UIColor(hexString: "2B0063")
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 5
+        textField.layer.cornerRadius = 20
         textField.keyboardType = .default
         textField.textContentType = .username
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
@@ -58,7 +59,7 @@ class LogInPageVC: UIViewController {
     private lazy var passwordLabel: UILabel = {
         let label = UILabel()
         label.text = "Password"
-        label.font = .SenRegular(size: 16)
+        label.font = .senRegular(size: 16)
         label.textColor = UIColor(hexString: "FFFFFF")
         label.textAlignment = .left
         label.numberOfLines = 0
@@ -68,13 +69,15 @@ class LogInPageVC: UIViewController {
     
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
+        textField.delegate = self
         textField.placeholder = "Enter password"
-        textField.font = .SenMedium(size: 11)
+        textField.font = .senMedium(size: 11)
         textField.textColor = UIColor(hexString: "2B0063")
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 5
+        textField.layer.cornerRadius = 20
         textField.keyboardType = .default
         textField.textContentType = .password
+        textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
         
         return textField
@@ -83,7 +86,7 @@ class LogInPageVC: UIViewController {
     private lazy var confirmPasswordLabel: UILabel = {
         let label = UILabel()
         label.text = "Confirm password"
-        label.font = .SenRegular(size: 16)
+        label.font = .senRegular(size: 16)
         label.textColor = UIColor(hexString: "FFFFFF")
         label.textAlignment = .left
         label.numberOfLines = 0
@@ -93,13 +96,15 @@ class LogInPageVC: UIViewController {
     
     private lazy var confirmPasswordTextField: UITextField = {
         let textField = UITextField()
+        textField.delegate = self
         textField.placeholder = "Enter password"
-        textField.font = .SenMedium(size: 11)
+        textField.font = .senMedium(size: 11)
         textField.textColor = UIColor(hexString: "2B0063")
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 5
+        textField.layer.cornerRadius = 20
         textField.keyboardType = .default
         textField.textContentType = .password
+        textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
         
         return textField
@@ -110,7 +115,7 @@ class LogInPageVC: UIViewController {
         button.setTitle("Login", for: .normal)
         button.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
         button.backgroundColor = UIColor(hexString: "8E84FF")
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 20
         button.addAction(UIAction(handler: { [ weak self ] action in
             self?.signinButtonTapped()
         }), for: .touchUpInside)
@@ -126,6 +131,8 @@ class LogInPageVC: UIViewController {
     private func setupUI() {
         addDiagonalGradientBackground(to: view)
         
+        view.addGestureRecognizer(UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing(_:))))
+        
         view.addSubview(imageWrapperImage)
         imageWrapperImage.addSubview(userImageView)
         view.addSubview(usernameLabel)
@@ -134,6 +141,7 @@ class LogInPageVC: UIViewController {
         view.addSubview(passwordTextField)
         view.addSubview(confirmPasswordLabel)
         view.addSubview(confirmPasswordTextField)
+        view.addSubview(loginButton)
         
         setupConstraints()
     }
@@ -165,6 +173,7 @@ class LogInPageVC: UIViewController {
             make.top.equalTo(usernameLabel.snp.bottom).offset(8 * Constraint.yCoeff)
             make.leading.equalTo(usernameLabel.snp.leading)
             make.trailing.equalTo(usernameLabel.snp.trailing)
+            make.height.equalTo(41 * Constraint.yCoeff)
         }
         
         passwordLabel.snp.remakeConstraints { make in
@@ -177,6 +186,7 @@ class LogInPageVC: UIViewController {
             make.top.equalTo(passwordLabel.snp.bottom).offset(8 * Constraint.yCoeff)
             make.leading.equalTo(passwordLabel.snp.leading)
             make.trailing.equalTo(passwordLabel.snp.trailing)
+            make.height.equalTo(41 * Constraint.yCoeff)
         }
         
         confirmPasswordLabel.snp.remakeConstraints { make in
@@ -189,6 +199,15 @@ class LogInPageVC: UIViewController {
             make.top.equalTo(confirmPasswordLabel.snp.bottom).offset(8 * Constraint.yCoeff)
             make.leading.equalTo(confirmPasswordLabel.snp.leading)
             make.trailing.equalTo(confirmPasswordLabel.snp.trailing)
+            make.height.equalTo(41 * Constraint.yCoeff)
+        }
+        
+        loginButton.snp.remakeConstraints { make in
+            make.top.lessThanOrEqualTo(confirmPasswordTextField.snp.bottom).offset(78 * Constraint.yCoeff)
+            make.leading.equalTo(confirmPasswordTextField.snp.leading)
+            make.trailing.equalTo(confirmPasswordTextField.snp.trailing)
+            make.bottom.equalToSuperview().offset(-50 * Constraint.yCoeff)
+            make.height.equalTo(42 * Constraint.yCoeff)
         }
     }
     
@@ -198,3 +217,8 @@ class LogInPageVC: UIViewController {
     }
 }
 
+extension LogInPageVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
+}

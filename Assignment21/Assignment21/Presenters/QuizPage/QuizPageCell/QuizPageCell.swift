@@ -8,7 +8,20 @@
 import UIKit
 import SnapKit
 
-class QuizPageCell: UITableViewCell {
+final class QuizPageCell: UITableViewCell {
+    
+    private lazy var quizlabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(hexString: "2B0063")
+        label.font = .senRegular(size: 15)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.backgroundColor = UIColor(hexString: "FFFFFF")
+        label.layer.cornerRadius = 10
+        label.clipsToBounds = true
+        
+        return label
+    }()
     
     static let identifier = "QuizPageCell"
     
@@ -22,10 +35,20 @@ class QuizPageCell: UITableViewCell {
     }
     
     private func setupCell() {
+        contentView.addSubview(quizlabel)
+        
         setupCellConstraints()
     }
     
     private func setupCellConstraints() {
-        
+        quizlabel.snp.remakeConstraints { make in
+            make.top.equalToSuperview().offset(10 * Constraint.yCoeff)
+            make.leading.equalToSuperview().offset(22 * Constraint.xCoeff)
+            make.trailing.equalToSuperview().offset(-22 * Constraint.xCoeff)
+            make.bottom.equalToSuperview().offset(-10 * Constraint.yCoeff)
+        }
+    }
+    
+    public func configure(with model: QuizPageViewModel) {
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ResultsCell: UITableViewCell {
+final class ResultsCell: UITableViewCell {
     
     static let identifier = "ResultsCell"
     

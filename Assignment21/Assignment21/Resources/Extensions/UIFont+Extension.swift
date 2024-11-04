@@ -8,11 +8,11 @@
 import UIKit
 
 extension UIFont {
-    static func SenMedium(size: CGFloat) -> UIFont {
+    static func senMedium(size: CGFloat) -> UIFont {
         return UIFont(name: "Sen-Medium", size: size) ?? .systemFont(ofSize: size)
     }
     
-    static func SenRegular(size: CGFloat) -> UIFont {
+    static func senRegular(size: CGFloat) -> UIFont {
         return UIFont(name: "Sen-Regular", size: size) ?? .systemFont(ofSize: size)
     }
 }
