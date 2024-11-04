@@ -42,4 +42,9 @@ final class QuestionPageHeaderView: UIView {
             make.bottom.equalToSuperview().offset(-26 * Constraint.yCoeff)
         }
     }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = headerLabel.sizeThatFits(CGSize(width: UIScreen.main.bounds.width - 20, height: CGFloat.greatestFiniteMagnitude))
+        return CGSize(width: size.width, height: size.height + 50)
+    }
 }

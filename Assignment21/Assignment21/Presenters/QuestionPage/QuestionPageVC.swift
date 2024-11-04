@@ -70,14 +70,16 @@ final class QuestionPageVC: UIViewController {
     }
     
     private func setupHeaderView() {
-        let headerView = QuestionPageHeaderView()
-        headerView.headerLabel.text = "ljhabfnljkanfkjafnblkjnlakjfbnlkjabflkjabfkljabflkjbalkfjbalkjbfakjbflkjabflajkbflkajbfkajbfkaljbflkabfklabflkajbfkaljbflakjbflakbflakjbflakjbflkdab"
-        
-        questionTableView.tableHeaderView = headerView
-        headerView.setNeedsLayout()
-        headerView.layoutIfNeeded()
-        headerView.frame.size.height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        questionTableView.tableHeaderView = headerView
+            let headerView = QuestionPageHeaderView()
+            headerView.headerLabel.text = "How would you describe your level of satisfaction with the healthcare system?"
+            
+            headerView.layoutIfNeeded()
+            var headerFrame = headerView.frame
+            headerFrame.size.height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            headerView.frame = headerFrame
+            
+            questionTableView.tableHeaderView = headerView
+            questionTableView.tableHeaderView?.layoutIfNeeded()
     }
     
     private func setupConstraints() {
