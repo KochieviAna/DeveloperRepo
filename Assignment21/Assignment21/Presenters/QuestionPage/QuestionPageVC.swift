@@ -48,6 +48,9 @@ final class QuestionPageVC: UIViewController {
         return tableView
     }()
     
+    var questionLabelText: String?
+    var heatherLabelText: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -68,12 +71,13 @@ final class QuestionPageVC: UIViewController {
         
         setupHeaderView()
         setupConstraints()
+        configureQuestionLabel()
         setupFooterView()
     }
     
     private func setupHeaderView() {
         let headerView = QuestionPageHeaderView()
-        headerView.headerLabel.text = "How would you describe your level of satisfaction with the healthcare system?"
+        headerView.headerLabel.text = heatherLabelText
         
         headerView.layoutIfNeeded()
         var headerFrame = headerView.frame
@@ -106,6 +110,10 @@ final class QuestionPageVC: UIViewController {
             questionTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             questionTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    private func configureQuestionLabel() {
+        questionLabel.text = "Question \(questionLabelText ?? "")"
     }
     
     private func setupFooterView() {
