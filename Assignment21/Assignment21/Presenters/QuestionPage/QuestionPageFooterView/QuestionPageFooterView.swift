@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
 final class QuestionPageFooterView: UIView {
     
     lazy var quizlabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor(hexString: "FFFFFF")
         label.font = .senRegular(size: 15)
         label.numberOfLines = 0
@@ -39,11 +39,12 @@ final class QuestionPageFooterView: UIView {
     }
     
     private func setupViewConstraints() {
-        quizlabel.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(41 * Constraint.yCoeff)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-49 * Constraint.yCoeff)
-            make.height.equalTo(42 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            quizlabel.topAnchor.constraint(equalTo: topAnchor, constant: 41),
+            quizlabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            quizlabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            quizlabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -49),
+            quizlabel.heightAnchor.constraint(equalToConstant: 42)
+        ])
     }
 }

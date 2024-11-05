@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
 final class QuestionPageCell: UITableViewCell {
     
     private lazy var answerButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor(hexString: "2B0063"), for: .normal)
         button.setTitleColor(UIColor(hexString: "FFFFFF"), for: .selected)
         button.setImage(UIImage(systemName: "circle"), for: .normal)
@@ -47,11 +47,12 @@ final class QuestionPageCell: UITableViewCell {
     }
     
     private func setupCellConstraints() {
-        answerButton.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(4 * Constraint.yCoeff)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-4 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            answerButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 4),
+            answerButton.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
+            answerButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+            answerButton.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -4)
+        ])
     }
     
     private func answerButtonTapped() {

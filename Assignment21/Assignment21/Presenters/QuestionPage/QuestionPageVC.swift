@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
 final class QuestionPageVC: UIViewController {
     
     private lazy var backArrowButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         let configuration = UIImage.SymbolConfiguration(weight: .bold)
         let boldImage = UIImage(systemName: "chevron.backward", withConfiguration: configuration)
         button.setImage(boldImage, for: .normal)
@@ -25,6 +25,7 @@ final class QuestionPageVC: UIViewController {
     
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .senMedium(size: 14)
         label.textAlignment = .center
         label.textColor = UIColor(hexString: "FFFFFF")
@@ -38,6 +39,7 @@ final class QuestionPageVC: UIViewController {
     
     private lazy var questionTableView: UITableView = {
         let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.register(QuestionPageCell.self, forCellReuseIdentifier: QuestionPageCell.identifier)
         tableView.delegate = self
@@ -70,40 +72,40 @@ final class QuestionPageVC: UIViewController {
     }
     
     private func setupHeaderView() {
-            let headerView = QuestionPageHeaderView()
-            headerView.headerLabel.text = "How would you describe your level of satisfaction with the healthcare system?"
-            
-            headerView.layoutIfNeeded()
-            var headerFrame = headerView.frame
-            headerFrame.size.height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            headerView.frame = headerFrame
-            
-            questionTableView.tableHeaderView = headerView
-            questionTableView.tableHeaderView?.layoutIfNeeded()
+        let headerView = QuestionPageHeaderView()
+        headerView.headerLabel.text = "How would you describe your level of satisfaction with the healthcare system?"
+        
+        headerView.layoutIfNeeded()
+        var headerFrame = headerView.frame
+        headerFrame.size.height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        headerView.frame = headerFrame
+        
+        questionTableView.tableHeaderView = headerView
+        questionTableView.tableHeaderView?.layoutIfNeeded()
     }
     
     private func setupConstraints() {
-        backArrowButton.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(71 * Constraint.yCoeff)
-            make.leading.equalToSuperview().offset(22 * Constraint.xCoeff)
-            make.height.equalTo(10.59 * Constraint.yCoeff)
-            make.width.equalTo(6.09 * Constraint.xCoeff)
-        }
+        NSLayoutConstraint.activate([
+            backArrowButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            backArrowButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 22),
+            backArrowButton.heightAnchor.constraint(equalToConstant: 10.59),
+            backArrowButton.widthAnchor.constraint(equalToConstant: 6.09)
+        ])
         
-        questionLabel.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(65 * Constraint.yCoeff)
-            make.leading.lessThanOrEqualTo(backArrowButton.snp.trailing).offset(203.91 * Constraint.xCoeff)
-            make.trailing.equalToSuperview().offset(-24 * Constraint.xCoeff)
-            make.height.equalTo(34 * Constraint.yCoeff)
-            make.width.greaterThanOrEqualTo(81 * Constraint.xCoeff)
-        }
+        NSLayoutConstraint.activate([
+            questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
+            questionLabel.leadingAnchor.constraint(lessThanOrEqualTo: backArrowButton.trailingAnchor, constant: 203.91),
+            questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            questionLabel.heightAnchor.constraint(equalToConstant: 34),
+            questionLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 81)
+        ])
         
-        questionTableView.snp.remakeConstraints { make in
-            make.top.equalTo(questionLabel.snp.bottom).offset(25 * Constraint.yCoeff)
-            make.leading.equalToSuperview().offset(10 * Constraint.xCoeff)
-            make.trailing.equalToSuperview().offset(-10 * Constraint.xCoeff)
-            make.bottom.equalToSuperview()
-        }
+        NSLayoutConstraint.activate([
+            questionLabel.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 25),
+            questionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            questionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
     
     private func setupFooterView() {

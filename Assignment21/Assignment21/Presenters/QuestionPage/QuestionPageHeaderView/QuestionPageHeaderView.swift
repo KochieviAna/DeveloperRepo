@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
 final class QuestionPageHeaderView: UIView {
     
     lazy var headerLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .senRegular(size: 20)
         label.textColor = UIColor(hexString: "FFFFFF")
         label.textAlignment = .left
@@ -36,11 +36,12 @@ final class QuestionPageHeaderView: UIView {
     }
     
     private func setupViewConstraints() {
-        headerLabel.snp.remakeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-26 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            headerLabel.topAnchor.constraint(equalTo: topAnchor),
+            headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            headerLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            headerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -26)
+        ])
     }
     
     override var intrinsicContentSize: CGSize {
