@@ -23,8 +23,8 @@ final class QuestionPageVC: UIViewController {
         return button
     }()
     
-    private lazy var questionLabel: UILabel = {
-        let label = UILabel()
+    private lazy var questionLabel: PaddedLabel = {
+        let label = PaddedLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .senMedium(size: 14)
         label.textAlignment = .center
@@ -33,6 +33,8 @@ final class QuestionPageVC: UIViewController {
         label.layer.borderWidth = 1
         label.layer.borderColor = UIColor(hexString: "B8B2FF").cgColor
         label.clipsToBounds = true
+        label.leftInset = 10
+        label.rightInset = 10
         
         return label
     }()
@@ -98,10 +100,9 @@ final class QuestionPageVC: UIViewController {
         
         NSLayoutConstraint.activate([
             questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
-            questionLabel.leadingAnchor.constraint(greaterThanOrEqualTo: backArrowButton.trailingAnchor, constant: 203.91),
+            questionLabel.leadingAnchor.constraint(greaterThanOrEqualTo: backArrowButton.trailingAnchor, constant: 10),
             questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            questionLabel.heightAnchor.constraint(equalToConstant: 34),
-            questionLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 81)
+            questionLabel.heightAnchor.constraint(equalToConstant: 34)
         ])
         
         NSLayoutConstraint.activate([
@@ -128,7 +129,7 @@ final class QuestionPageVC: UIViewController {
 
 extension QuestionPageVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

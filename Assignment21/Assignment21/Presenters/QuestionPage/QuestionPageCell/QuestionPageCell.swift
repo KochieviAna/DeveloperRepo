@@ -59,4 +59,8 @@ final class QuestionPageCell: UITableViewCell {
         answerButton.isSelected.toggle()
         answerButton.backgroundColor = answerButton.isSelected ? UIColor(hexString: "8E84FF") : UIColor(hexString: "FFFFFF")
     }
+    
+    private func configureCell(with question: Question) {
+        
+    }
 }
