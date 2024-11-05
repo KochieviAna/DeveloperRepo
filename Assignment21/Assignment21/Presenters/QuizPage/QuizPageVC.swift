@@ -20,8 +20,11 @@ final class QuizPageVC: UIViewController {
         return tableView
     }()
     
+    private let quizPageViewModel = QuizPageViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadData()
         setupUI()
     }
     
@@ -49,16 +52,34 @@ final class QuizPageVC: UIViewController {
             quizTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -21)
         ])
     }
+    
+    private func loadData() {
+        quizPageViewModel.saveDataFromPath()
+        quizPageViewModel.loadQuizData()
+    }
+    
+    private func setupQuizViewModel() {
+        quizPageViewModel.onDataUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.quizTableView.reloadData()
+            }
+        }
+    }
 }
 
 extension QuizPageVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        return quizPageViewModel.numberOfQuestions
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: QuizPageCell.identifier, for: indexPath) as? QuizPageCell else { return UITableViewCell() }
         cell.backgroundColor = .clear
+        
+        let question = quizPageViewModel.questions(at: indexPath.row)
+        cell.configure(with: question)
+        
         return cell
     }
     

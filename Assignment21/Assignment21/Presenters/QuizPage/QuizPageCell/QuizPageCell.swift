@@ -49,6 +49,7 @@ final class QuizPageCell: UITableViewCell {
         ])
     }
     
-    public func configure(with model: QuizPageViewModel) {
+    public func configure(with question: Question) {
+        quizlabel.text = "Question \(question.questionNumber)"
     }
 }

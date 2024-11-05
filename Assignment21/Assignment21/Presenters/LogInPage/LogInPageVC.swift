@@ -141,7 +141,7 @@ final class LogInPageVC: UIViewController {
         return button
     }()
     
-    private let viewModel = LoginPageViewModel()
+    private let loginPageiewModel = LoginPageViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -238,8 +238,8 @@ final class LogInPageVC: UIViewController {
             return
         }
         
-        if viewModel.userExists(username: username) {
-            if let storedPassword = viewModel.fetchPassword(for: username), storedPassword == password {
+        if loginPageiewModel.userExists(username: username) {
+            if let storedPassword = loginPageiewModel.fetchPassword(for: username), storedPassword == password {
                 pushToQuizPage()
             } else if confirmPasswordTextField.text?.isEmpty == false {
                 showErrorAlert(message: "Username already exists.")
@@ -254,7 +254,7 @@ final class LogInPageVC: UIViewController {
             return
         }
         
-        if !viewModel.isPasswordValid(password) {
+        if !loginPageiewModel.isPasswordValid(password) {
             showErrorAlert(message: "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one digit, and one special character.")
             return
         }
@@ -264,7 +264,7 @@ final class LogInPageVC: UIViewController {
             return
         }
         
-        if viewModel.saveUser(username: username, password: password) {
+        if loginPageiewModel.saveUser(username: username, password: password) {
             pushToQuizPage()
         } else {
             showErrorAlert(message: "Failed to save user data.")
