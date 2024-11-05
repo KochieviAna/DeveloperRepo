@@ -60,17 +60,17 @@ final class QuizPageHeaderView: UIView {
     private func setupViewConstraints() {
         NSLayoutConstraint.activate([
             headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 13),
-            headerLabel.leftAnchor.constraint(equalTo: leftAnchor),
+            headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             headerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -14)
         ])
         
         NSLayoutConstraint.activate([
             resetButton.topAnchor.constraint(equalTo: topAnchor, constant: 11),
-            resetButton.leadingAnchor.constraint(equalTo: headerLabel.trailingAnchor, constant: 156),
-            resetButton.trailingAnchor.constraint(equalTo: rightAnchor),
+            resetButton.leadingAnchor.constraint(greaterThanOrEqualTo: headerLabel.trailingAnchor, constant: 156),
+            resetButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             resetButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -11),
             resetButton.heightAnchor.constraint(equalToConstant: 34),
-            resetButton.widthAnchor.constraint(equalToConstant: 66)
+            resetButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 66)
         ])
     }
 }

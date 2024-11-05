@@ -17,7 +17,7 @@ final class QuestionPageFooterView: UIView {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.backgroundColor = UIColor(hexString: "8E84FF")
-        label.layer.cornerRadius = 10
+        label.layer.cornerRadius = 12
         label.clipsToBounds = true
         
         return label

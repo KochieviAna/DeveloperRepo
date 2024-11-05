@@ -94,17 +94,17 @@ final class QuestionPageVC: UIViewController {
         
         NSLayoutConstraint.activate([
             questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
-            questionLabel.leadingAnchor.constraint(lessThanOrEqualTo: backArrowButton.trailingAnchor, constant: 203.91),
+            questionLabel.leadingAnchor.constraint(greaterThanOrEqualTo: backArrowButton.trailingAnchor, constant: 203.91),
             questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
             questionLabel.heightAnchor.constraint(equalToConstant: 34),
             questionLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 81)
         ])
         
         NSLayoutConstraint.activate([
-            questionLabel.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 25),
-            questionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            questionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            questionTableView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 25),
+            questionTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            questionTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            questionTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     

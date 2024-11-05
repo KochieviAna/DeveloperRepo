@@ -19,7 +19,7 @@ final class QuestionPageCell: UITableViewCell {
         button.tintColor = UIColor(hexString: "2B0063")
         button.titleLabel?.font = .senRegular(size: 16)
         button.backgroundColor = UIColor(hexString: "FFFFFF")
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = 12
         button.contentHorizontalAlignment = .left
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
         button.addAction(UIAction(handler: { [ weak self ] action in

@@ -51,7 +51,7 @@ final class LogInPageVC: UIViewController {
         textField.font = .senMedium(size: 11)
         textField.textColor = UIColor(hexString: "2B0063")
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 20
+        textField.layer.cornerRadius = 12
         textField.keyboardType = .default
         textField.textContentType = .username
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
@@ -83,7 +83,7 @@ final class LogInPageVC: UIViewController {
         textField.font = .senMedium(size: 11)
         textField.textColor = UIColor(hexString: "2B0063")
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 20
+        textField.layer.cornerRadius = 12
         textField.keyboardType = .default
         textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
@@ -115,7 +115,7 @@ final class LogInPageVC: UIViewController {
         textField.font = .senMedium(size: 11)
         textField.textColor = UIColor(hexString: "2B0063")
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 20
+        textField.layer.cornerRadius = 12
         textField.keyboardType = .default
         textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(hexString: "FFFFFF")
@@ -133,7 +133,7 @@ final class LogInPageVC: UIViewController {
         button.setTitle("Login", for: .normal)
         button.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
         button.backgroundColor = UIColor(hexString: "8E84FF")
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 12
         button.addAction(UIAction(handler: { [ weak self ] action in
             self?.signinButtonTapped()
         }), for: .touchUpInside)
@@ -185,8 +185,8 @@ final class LogInPageVC: UIViewController {
         
         NSLayoutConstraint.activate([
             usernameLabel.topAnchor.constraint(equalTo: imageWrapperImage.bottomAnchor, constant: 22.79),
-            usernameLabel.leadingAnchor.constraint(equalTo: imageWrapperImage.leadingAnchor, constant: 26),
-            usernameLabel.trailingAnchor.constraint(equalTo: imageWrapperImage.trailingAnchor, constant: -26)
+            usernameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
+            usernameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -26)
         ])
         
         NSLayoutConstraint.activate([
@@ -198,8 +198,8 @@ final class LogInPageVC: UIViewController {
         
         NSLayoutConstraint.activate([
             passwordLabel.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 13),
-            usernameLabel.leadingAnchor.constraint(equalTo: usernameTextField.leadingAnchor),
-            usernameLabel.trailingAnchor.constraint(equalTo: usernameTextField.trailingAnchor)
+            passwordLabel.leadingAnchor.constraint(equalTo: usernameTextField.leadingAnchor),
+            passwordLabel.trailingAnchor.constraint(equalTo: usernameTextField.trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -223,7 +223,7 @@ final class LogInPageVC: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            loginButton.topAnchor.constraint(lessThanOrEqualTo: confirmPasswordTextField.bottomAnchor, constant: 78),
+            loginButton.topAnchor.constraint(greaterThanOrEqualTo: confirmPasswordTextField.bottomAnchor, constant: 78),
             loginButton.leadingAnchor.constraint(equalTo: confirmPasswordTextField.leadingAnchor),
             loginButton.trailingAnchor.constraint(equalTo: confirmPasswordTextField.trailingAnchor),
             loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
