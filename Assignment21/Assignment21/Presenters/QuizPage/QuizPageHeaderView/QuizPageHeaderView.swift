@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
 final class QuizPageHeaderView: UIView {
     
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Quiz"
         label.font = .senRegular(size: 24)
         label.textColor = UIColor(hexString: "FFFFFF")
@@ -23,6 +23,7 @@ final class QuizPageHeaderView: UIView {
     
     private lazy var resetButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Reset", for: .normal)
         button.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
         button.titleLabel?.font = .senMedium(size: 14)
@@ -57,19 +58,19 @@ final class QuizPageHeaderView: UIView {
     }
     
     private func setupViewConstraints() {
-        headerLabel.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(13 * Constraint.yCoeff)
-            make.leading.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-14 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 13),
+            headerLabel.leftAnchor.constraint(equalTo: leftAnchor),
+            headerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -14)
+        ])
         
-        resetButton.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(11 * Constraint.yCoeff)
-            make.leading.equalTo(headerLabel.snp.trailing).offset(156 * Constraint.xCoeff)
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-11 * Constraint.yCoeff)
-            make.height.equalTo(34 * Constraint.yCoeff)
-            make.width.equalTo(66 * Constraint.xCoeff)
-        }
+        NSLayoutConstraint.activate([
+            resetButton.topAnchor.constraint(equalTo: topAnchor, constant: 11),
+            resetButton.leadingAnchor.constraint(equalTo: headerLabel.trailingAnchor, constant: 156),
+            resetButton.trailingAnchor.constraint(equalTo: rightAnchor),
+            resetButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -11),
+            resetButton.heightAnchor.constraint(equalToConstant: 34),
+            resetButton.widthAnchor.constraint(equalToConstant: 66)
+        ])
     }
 }

@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
 final class LogInPageVC: UIViewController {
     
     private lazy var imageWrapperImage: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(systemName: "circle.fill")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -22,6 +22,7 @@ final class LogInPageVC: UIViewController {
     
     private lazy var userImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(systemName: "person.crop.circle.fill.badge.plus")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -32,6 +33,7 @@ final class LogInPageVC: UIViewController {
     
     private lazy var usernameLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Username"
         label.font = .senRegular(size: 16)
         label.textColor = UIColor(hexString: "FFFFFF")
@@ -43,6 +45,7 @@ final class LogInPageVC: UIViewController {
     
     private lazy var usernameTextField: UITextField = {
         let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         textField.placeholder = "Enter username"
         textField.font = .senMedium(size: 11)
@@ -62,6 +65,7 @@ final class LogInPageVC: UIViewController {
     
     private lazy var passwordLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Password"
         label.font = .senRegular(size: 16)
         label.textColor = UIColor(hexString: "FFFFFF")
@@ -73,6 +77,7 @@ final class LogInPageVC: UIViewController {
     
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         textField.placeholder = "Enter password"
         textField.font = .senMedium(size: 11)
@@ -92,6 +97,7 @@ final class LogInPageVC: UIViewController {
     
     private lazy var confirmPasswordLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Confirm password"
         label.font = .senRegular(size: 16)
         label.textColor = UIColor(hexString: "FFFFFF")
@@ -103,6 +109,7 @@ final class LogInPageVC: UIViewController {
     
     private lazy var confirmPasswordTextField: UITextField = {
         let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         textField.placeholder = "Enter password"
         textField.font = .senMedium(size: 11)
@@ -122,6 +129,7 @@ final class LogInPageVC: UIViewController {
     
     private lazy var loginButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Login", for: .normal)
         button.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
         button.backgroundColor = UIColor(hexString: "8E84FF")
@@ -159,68 +167,68 @@ final class LogInPageVC: UIViewController {
     }
     
     private func setupConstraints() {
-        imageWrapperImage.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(79 * Constraint.yCoeff)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(98.21 * Constraint.yCoeff)
-            make.width.equalTo(104 * Constraint.xCoeff)
-        }
+        NSLayoutConstraint.activate([
+            imageWrapperImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 35),
+            imageWrapperImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageWrapperImage.heightAnchor.constraint(equalToConstant: 98.21),
+            imageWrapperImage.widthAnchor.constraint(equalToConstant: 104)
+        ])
         
-        userImageView.snp.remakeConstraints { make in
-            make.top.equalTo(imageWrapperImage.snp.top).offset(22.27 * Constraint.yCoeff)
-            make.leading.equalTo(imageWrapperImage.snp.leading).offset(13.94 * Constraint.xCoeff)
-            make.trailing.equalTo(imageWrapperImage.snp.trailing).offset(-15.37 * Constraint.xCoeff)
-            make.bottom.equalTo(imageWrapperImage.snp.bottom).offset(-22.48 * Constraint.yCoeff)
-            make.height.equalTo(53.45 * Constraint.yCoeff)
-            make.width.equalTo(74.69 * Constraint.xCoeff)
-        }
+        NSLayoutConstraint.activate([
+            userImageView.topAnchor.constraint(equalTo: imageWrapperImage.topAnchor, constant: 22.27),
+            userImageView.leadingAnchor.constraint(equalTo: imageWrapperImage.leadingAnchor, constant: 13.94),
+            userImageView.trailingAnchor.constraint(equalTo: imageWrapperImage.trailingAnchor, constant: -15.37),
+            userImageView.bottomAnchor.constraint(equalTo: imageWrapperImage.bottomAnchor, constant: -22.48),
+            userImageView.heightAnchor.constraint(equalToConstant: 53.45),
+            userImageView.widthAnchor.constraint(equalToConstant: 74.69)
+        ])
         
-        usernameLabel.snp.remakeConstraints { make in
-            make.top.equalTo(imageWrapperImage.snp.bottom).offset(22.79 * Constraint.yCoeff)
-            make.leading.equalToSuperview().offset(26 * Constraint.xCoeff)
-            make.trailing.equalToSuperview().offset(-26 * Constraint.xCoeff)
-        }
+        NSLayoutConstraint.activate([
+            usernameLabel.topAnchor.constraint(equalTo: imageWrapperImage.bottomAnchor, constant: 22.79),
+            usernameLabel.leadingAnchor.constraint(equalTo: imageWrapperImage.leadingAnchor, constant: 26),
+            usernameLabel.trailingAnchor.constraint(equalTo: imageWrapperImage.trailingAnchor, constant: -26)
+        ])
         
-        usernameTextField.snp.remakeConstraints { make in
-            make.top.equalTo(usernameLabel.snp.bottom).offset(8 * Constraint.yCoeff)
-            make.leading.equalTo(usernameLabel.snp.leading)
-            make.trailing.equalTo(usernameLabel.snp.trailing)
-            make.height.equalTo(41 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            usernameTextField.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 8),
+            usernameTextField.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
+            usernameTextField.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
+            usernameTextField.heightAnchor.constraint(equalToConstant: 41)
+        ])
         
-        passwordLabel.snp.remakeConstraints { make in
-            make.top.equalTo(usernameTextField.snp.bottom).offset(13 * Constraint.yCoeff)
-            make.leading.equalTo(usernameTextField.snp.leading)
-            make.trailing.equalTo(usernameTextField.snp.trailing)
-        }
+        NSLayoutConstraint.activate([
+            passwordLabel.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 13),
+            usernameLabel.leadingAnchor.constraint(equalTo: usernameTextField.leadingAnchor),
+            usernameLabel.trailingAnchor.constraint(equalTo: usernameTextField.trailingAnchor)
+        ])
         
-        passwordTextField.snp.remakeConstraints { make in
-            make.top.equalTo(passwordLabel.snp.bottom).offset(8 * Constraint.yCoeff)
-            make.leading.equalTo(passwordLabel.snp.leading)
-            make.trailing.equalTo(passwordLabel.snp.trailing)
-            make.height.equalTo(41 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 8),
+            passwordTextField.leadingAnchor.constraint(equalTo: passwordLabel.leadingAnchor),
+            passwordTextField.trailingAnchor.constraint(equalTo: passwordLabel.trailingAnchor),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 41)
+        ])
         
-        confirmPasswordLabel.snp.remakeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(13 * Constraint.yCoeff)
-            make.leading.equalTo(passwordTextField.snp.leading)
-            make.trailing.equalTo(passwordTextField.snp.trailing)
-        }
+        NSLayoutConstraint.activate([
+            confirmPasswordLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 13),
+            confirmPasswordLabel.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            confirmPasswordLabel.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor)
+        ])
         
-        confirmPasswordTextField.snp.remakeConstraints { make in
-            make.top.equalTo(confirmPasswordLabel.snp.bottom).offset(8 * Constraint.yCoeff)
-            make.leading.equalTo(confirmPasswordLabel.snp.leading)
-            make.trailing.equalTo(confirmPasswordLabel.snp.trailing)
-            make.height.equalTo(41 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            confirmPasswordTextField.topAnchor.constraint(equalTo: confirmPasswordLabel.bottomAnchor, constant: 8),
+            confirmPasswordTextField.leadingAnchor.constraint(equalTo: confirmPasswordLabel.leadingAnchor),
+            confirmPasswordTextField.trailingAnchor.constraint(equalTo: confirmPasswordLabel.trailingAnchor),
+            confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 41)
+        ])
         
-        loginButton.snp.remakeConstraints { make in
-            make.top.lessThanOrEqualTo(confirmPasswordTextField.snp.bottom).offset(78 * Constraint.yCoeff)
-            make.leading.equalTo(confirmPasswordTextField.snp.leading)
-            make.trailing.equalTo(confirmPasswordTextField.snp.trailing)
-            make.bottom.equalToSuperview().offset(-50 * Constraint.yCoeff)
-            make.height.equalTo(42 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            loginButton.topAnchor.constraint(lessThanOrEqualTo: confirmPasswordTextField.bottomAnchor, constant: 78),
+            loginButton.leadingAnchor.constraint(equalTo: confirmPasswordTextField.leadingAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: confirmPasswordTextField.trailingAnchor),
+            loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            loginButton.heightAnchor.constraint(equalToConstant: 42)
+        ])
     }
     
     private func signinButtonTapped() {

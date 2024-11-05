@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
 final class QuizPageCell: UITableViewCell {
     
     private lazy var quizlabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor(hexString: "2B0063")
         label.font = .senRegular(size: 15)
         label.numberOfLines = 0
@@ -41,11 +41,12 @@ final class QuizPageCell: UITableViewCell {
     }
     
     private func setupCellConstraints() {
-        quizlabel.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(10 * Constraint.yCoeff)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-10 * Constraint.yCoeff)
-        }
+        NSLayoutConstraint.activate([
+            quizlabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            quizlabel.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
+            quizlabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+            quizlabel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+        ])
     }
     
     public func configure(with model: QuizPageViewModel) {

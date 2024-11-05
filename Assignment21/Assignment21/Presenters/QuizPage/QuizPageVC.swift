@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
 final class QuizPageVC: UIViewController {
     
     private lazy var quizTableView: UITableView = {
         let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.register(QuizPageCell.self, forCellReuseIdentifier: QuizPageCell.identifier)
         tableView.delegate = self
@@ -42,11 +42,12 @@ final class QuizPageVC: UIViewController {
     }
     
     private func setupConstraints() {
-        quizTableView.snp.remakeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.equalToSuperview().offset(21 * Constraint.xCoeff)
-            make.trailing.equalToSuperview().offset(-21 * Constraint.xCoeff)
-        }
+        NSLayoutConstraint.activate([
+            quizTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            quizTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            quizTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 21),
+            quizTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -21)
+        ])
     }
 }
 
