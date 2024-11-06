@@ -55,6 +55,7 @@ final class QuestionPageVC: UIViewController {
     private var shuffledAnswers: [String] = []
     var questionLabelText: String?
     var heatherLabelText: String?
+    private var isSelectionLocked = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,8 +148,26 @@ extension QuestionPageVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isSelectionLocked {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
+        isSelectionLocked = true
+        
         if let cell = tableView.cellForRow(at: indexPath) as? QuestionPageCell {
             cell.updateSelectionAppearance(isSelected: true)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if isSelectionLocked {
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+            return
+        }
+        
+        if let cell = tableView.cellForRow(at: indexPath) as? QuestionPageCell {
+            cell.updateSelectionAppearance(isSelected: false)
         }
     }
     
