@@ -46,6 +46,7 @@ final class QuestionPageVC: UIViewController {
         tableView.register(QuestionPageCell.self, forCellReuseIdentifier: QuestionPageCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsMultipleSelection = false
         
         return tableView
     }()
@@ -144,6 +145,13 @@ extension QuestionPageVC: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? QuestionPageCell {
+            cell.updateSelectionAppearance(isSelected: true)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         57
     }

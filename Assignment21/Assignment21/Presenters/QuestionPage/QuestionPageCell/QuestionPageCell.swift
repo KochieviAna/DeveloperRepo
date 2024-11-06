@@ -83,4 +83,18 @@ final class QuestionPageCell: UITableViewCell {
     func configureCell(with answerText: String) {
         answerLabel.text = answerText
     }
+    
+    func updateSelectionAppearance(isSelected: Bool) {
+        if isSelected {
+            labelAndImageWrapperView.backgroundColor = UIColor(hexString: "8E84FF")
+            answerLabel.textColor = UIColor(hexString: "FFFFFF")
+            checkmarkImageView.image = UIImage(systemName: "checkmark.circle.fill")
+            checkmarkImageView.tintColor = UIColor(hexString: "2B0063")
+        } else {
+            labelAndImageWrapperView.backgroundColor = UIColor(hexString: "FFFFFF")
+            answerLabel.textColor = UIColor(hexString: "2B0063")
+            checkmarkImageView.image = UIImage(systemName: "circle")
+            checkmarkImageView.tintColor = UIColor(hexString: "2B0063")
+        }
+    }
 }
