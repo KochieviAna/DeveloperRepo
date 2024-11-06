@@ -90,6 +90,7 @@ extension QuizPageVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = QuestionPageVC()
         let selectedQuestion = quizPageViewModel.questions(at: indexPath.row)
+        vc.question = selectedQuestion
         vc.questionLabelText = selectedQuestion.questionNumber
         vc.heatherLabelText = selectedQuestion.question
         navigationController?.pushViewController(vc, animated: true)

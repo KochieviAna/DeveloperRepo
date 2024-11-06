@@ -50,6 +50,8 @@ final class QuestionPageVC: UIViewController {
         return tableView
     }()
     
+    var question: Question?
+    private var shuffledAnswers: [String] = []
     var questionLabelText: String?
     var heatherLabelText: String?
     
@@ -73,7 +75,7 @@ final class QuestionPageVC: UIViewController {
         
         setupHeaderView()
         setupConstraints()
-        configureQuestionLabel()
+        configureQuestionAndAnswers()
         setupFooterView()
     }
     
@@ -113,8 +115,11 @@ final class QuestionPageVC: UIViewController {
         ])
     }
     
-    private func configureQuestionLabel() {
+    private func configureQuestionAndAnswers() {
+        guard let question = question else { return }
+        
         questionLabel.text = "Question \(questionLabelText ?? "")"
+        shuffledAnswers = ([question.correctAnswer] + question.incorrectAnswers).shuffled()
     }
     
     private func setupFooterView() {
@@ -129,12 +134,14 @@ final class QuestionPageVC: UIViewController {
 
 extension QuestionPageVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        return shuffledAnswers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: QuestionPageCell.identifier, for: indexPath) as? QuestionPageCell else { return UITableViewCell() }
         cell.backgroundColor = .clear
+        cell.configureCell(with: shuffledAnswers[indexPath.row])
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

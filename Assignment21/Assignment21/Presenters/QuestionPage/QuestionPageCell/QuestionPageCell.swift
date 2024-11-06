@@ -60,7 +60,7 @@ final class QuestionPageCell: UITableViewCell {
         answerButton.backgroundColor = answerButton.isSelected ? UIColor(hexString: "8E84FF") : UIColor(hexString: "FFFFFF")
     }
     
-    private func configureCell(with question: Question) {
-        
+    func configureCell(with answerText: String) {
+        answerButton.setTitle(answerText, for: .normal)
     }
 }
