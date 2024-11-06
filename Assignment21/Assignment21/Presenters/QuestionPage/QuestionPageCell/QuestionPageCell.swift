@@ -9,24 +9,33 @@ import UIKit
 
 final class QuestionPageCell: UITableViewCell {
     
-    private lazy var answerButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor(hexString: "2B0063"), for: .normal)
-        button.setTitleColor(UIColor(hexString: "FFFFFF"), for: .selected)
-        button.setImage(UIImage(systemName: "circle"), for: .normal)
-        button.setImage(UIImage(systemName: "checkmark.circle"), for: .selected)
-        button.tintColor = UIColor(hexString: "2B0063")
-        button.titleLabel?.font = .senRegular(size: 16)
-        button.backgroundColor = UIColor(hexString: "FFFFFF")
-        button.layer.cornerRadius = 12
-        button.contentHorizontalAlignment = .left
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
-        button.addAction(UIAction(handler: { [ weak self ] action in
-            self?.answerButtonTapped()
-        }), for: .touchUpInside)
+    private lazy var answerLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIColor(hexString: "2B0063")
+        label.font = .senRegular(size: 16)
+        label.textAlignment = .left
+        label.numberOfLines = 0
         
-        return button
+        return label
+    }()
+    
+    private lazy var checkmarkImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "circle")
+        imageView.tintColor = UIColor(hexString: "2B0063")
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
+    
+    private lazy var labelAndImageWrapperView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(hexString: "FFFFFF")
+        view.layer.cornerRadius = 12
+        return view
     }()
     
     static let identifier = "QuestionPageCell"
@@ -41,26 +50,37 @@ final class QuestionPageCell: UITableViewCell {
     }
     
     private func setupCell() {
-        addSubview(answerButton)
+        contentView.addSubview(labelAndImageWrapperView)
+        labelAndImageWrapperView.addSubview(checkmarkImageView)
+        labelAndImageWrapperView.addSubview(answerLabel)
         
         setupCellConstraints()
     }
     
     private func setupCellConstraints() {
         NSLayoutConstraint.activate([
-            answerButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 4),
-            answerButton.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
-            answerButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
-            answerButton.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -4)
+            labelAndImageWrapperView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 4),
+            labelAndImageWrapperView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
+            labelAndImageWrapperView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+            labelAndImageWrapperView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -4)
+        ])
+        
+        NSLayoutConstraint.activate([
+            checkmarkImageView.topAnchor.constraint(equalTo: labelAndImageWrapperView.topAnchor, constant: 15),
+            checkmarkImageView.leadingAnchor.constraint(equalTo: labelAndImageWrapperView.leadingAnchor, constant: 15),
+            checkmarkImageView.bottomAnchor.constraint(equalTo: labelAndImageWrapperView.bottomAnchor, constant: -15),
+            checkmarkImageView.heightAnchor.constraint(equalToConstant: 19),
+            checkmarkImageView.widthAnchor.constraint(equalTo: checkmarkImageView.heightAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            answerLabel.centerYAnchor.constraint(equalTo: labelAndImageWrapperView.centerYAnchor),
+            answerLabel.leadingAnchor.constraint(equalTo: checkmarkImageView.trailingAnchor, constant: 16),
+            answerLabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -15),
         ])
     }
     
-    private func answerButtonTapped() {
-        answerButton.isSelected.toggle()
-        answerButton.backgroundColor = answerButton.isSelected ? UIColor(hexString: "8E84FF") : UIColor(hexString: "FFFFFF")
-    }
-    
     func configureCell(with answerText: String) {
-        answerButton.setTitle(answerText, for: .normal)
+        answerLabel.text = answerText
     }
 }
