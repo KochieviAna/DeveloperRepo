@@ -51,15 +51,23 @@ final class QuestionPageVC: UIViewController {
         return tableView
     }()
     
+    private lazy var footerView: QuestionPageFooterView = {
+        let footer = QuestionPageFooterView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 150))
+        return footer
+    }()
+    
     var question: Question?
     private var shuffledAnswers: [String] = []
     var questionLabelText: String?
     var heatherLabelText: String?
     private var isSelectionLocked = false
+    private var questionPageViewModel: QuestionPageViewModel?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        detectCorrectAnswer()
     }
     
     override func viewDidLayoutSubviews() {
@@ -79,6 +87,7 @@ final class QuestionPageVC: UIViewController {
         setupConstraints()
         configureQuestionAndAnswers()
         setupFooterView()
+        updateFooterView()
     }
     
     private func setupHeaderView() {
@@ -125,8 +134,21 @@ final class QuestionPageVC: UIViewController {
     }
     
     private func setupFooterView() {
-        let footerView = QuestionPageFooterView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 150))
         questionTableView.tableFooterView = footerView
+    }
+    
+    private func updateFooterView() {
+        guard let correctCount = questionPageViewModel?.userDefaultsService.getCorrectAnswersCount() else { return }
+        guard let incorrectCount = questionPageViewModel?.userDefaultsService.getIncorrectAnswersCount() else { return }
+        footerView.updateAnswerCounts(correctCount: correctCount, incorrectCount: incorrectCount)
+    }
+    
+    
+    private func detectCorrectAnswer() {
+        if let question = question {
+            let userDefaultsService = QuestionPageUserDefaultService()
+            questionPageViewModel = QuestionPageViewModel(correctAnswer: question.correctAnswer, userDefaultsService: userDefaultsService)
+        }
     }
     
     private func arrowBackButtonTapped() {
@@ -155,9 +177,15 @@ extension QuestionPageVC: UITableViewDataSource, UITableViewDelegate {
         
         isSelectionLocked = true
         
+        let selectedAnswer = shuffledAnswers[indexPath.row]
+        guard let isCorrect = questionPageViewModel?.checkAnswer(selectedAnswer) else { return }
+        
         if let cell = tableView.cellForRow(at: indexPath) as? QuestionPageCell {
             cell.updateSelectionAppearance(isSelected: true)
+            cell.updateAnswerCorrectnessAppearance(isCorrect: isCorrect)
         }
+        
+        updateFooterView()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

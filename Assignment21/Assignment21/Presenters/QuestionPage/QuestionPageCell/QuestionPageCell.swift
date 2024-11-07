@@ -86,15 +86,31 @@ final class QuestionPageCell: UITableViewCell {
     
     func updateSelectionAppearance(isSelected: Bool) {
         if isSelected {
-            labelAndImageWrapperView.backgroundColor = UIColor(hexString: "8E84FF")
-            answerLabel.textColor = UIColor(hexString: "FFFFFF")
-            checkmarkImageView.image = UIImage(systemName: "checkmark.circle.fill")
-            checkmarkImageView.tintColor = UIColor(hexString: "2B0063")
+            applySelectedAppearance()
         } else {
-            labelAndImageWrapperView.backgroundColor = UIColor(hexString: "FFFFFF")
-            answerLabel.textColor = UIColor(hexString: "2B0063")
-            checkmarkImageView.image = UIImage(systemName: "circle")
-            checkmarkImageView.tintColor = UIColor(hexString: "2B0063")
+            applyDeselectedAppearance()
         }
+    }
+    
+    func updateAnswerCorrectnessAppearance(isCorrect: Bool) {
+        if isCorrect {
+            checkmarkImageView.image = UIImage(systemName: "checkmark.circle.fill")
+        } else {
+            checkmarkImageView.image = UIImage(systemName: "checkmark.circle")
+        }
+    }
+    
+    private func applySelectedAppearance() {
+        labelAndImageWrapperView.backgroundColor = UIColor(hexString: "8E84FF")
+        answerLabel.textColor = UIColor(hexString: "FFFFFF")
+        checkmarkImageView.image = UIImage(systemName: "checkmark.circle.fill")
+        checkmarkImageView.tintColor = UIColor(hexString: "2B0063")
+    }
+    
+    private func applyDeselectedAppearance() {
+        labelAndImageWrapperView.backgroundColor = UIColor(hexString: "FFFFFF")
+        answerLabel.textColor = UIColor(hexString: "2B0063")
+        checkmarkImageView.image = UIImage(systemName: "circle")
+        checkmarkImageView.tintColor = UIColor(hexString: "2B0063")
     }
 }

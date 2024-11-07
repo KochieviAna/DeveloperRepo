@@ -9,7 +9,7 @@ import UIKit
 
 final class QuestionPageFooterView: UIView {
     
-    lazy var quizlabel: UILabel = {
+    lazy var quizLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor(hexString: "FFFFFF")
@@ -33,18 +33,22 @@ final class QuestionPageFooterView: UIView {
     }
     
     private func setupView() {
-        addSubview(quizlabel)
+        addSubview(quizLabel)
         
         setupViewConstraints()
     }
     
     private func setupViewConstraints() {
         NSLayoutConstraint.activate([
-            quizlabel.topAnchor.constraint(equalTo: topAnchor, constant: 41),
-            quizlabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            quizlabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            quizlabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -49),
-            quizlabel.heightAnchor.constraint(equalToConstant: 42)
+            quizLabel.topAnchor.constraint(equalTo: topAnchor, constant: 41),
+            quizLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            quizLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            quizLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -49),
+            quizLabel.heightAnchor.constraint(equalToConstant: 42)
         ])
+    }
+    
+    func updateAnswerCounts(correctCount: Int, incorrectCount: Int) {
+        quizLabel.text = "Correct: \(correctCount)  |  Incorrect: \(incorrectCount)"
     }
 }
