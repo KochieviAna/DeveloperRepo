@@ -49,6 +49,6 @@ final class QuestionPageFooterView: UIView {
     }
     
     func updateAnswerCounts(correctCount: Int, incorrectCount: Int) {
-        quizLabel.text = "Correct: \(correctCount)  |  Incorrect: \(incorrectCount)"
+        quizLabel.text = "Correct Answer \(correctCount) / Incorrect Answer \(incorrectCount)"
     }
 }
