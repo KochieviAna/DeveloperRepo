@@ -30,37 +30,83 @@ final class ImageViewModel {
         self.imageProcessor = imageProcessor
     }
     
-    // MARK: - დეველოპერებო, აქ უნდა ღვაროთ ოფლი
     
-    // დაასრულეთ მეთოდის იმპლემენტაცია GCD-ის გამოყენებით (DispatchGroup)
     func fetchImagesWithGCD() {
         let dispatchGroup = DispatchGroup()
-        var downloadedImages: [UIImage] = []
+        let downloadQueue = DispatchQueue(label: "com.app.imageDownloadQueue", qos: .userInitiated, attributes: .concurrent)
+        var downloadedImages = Array<UIImage?>(repeating: nil, count: imageUrls.count)
         
-        for url in imageUrls {
+        for (index, url) in imageUrls.enumerated() {
             dispatchGroup.enter()
             
-            fetchAndProcessImage(from: url) { image in
-                if let image = image {
-                    downloadedImages.append(image)
+            downloadQueue.async { [weak self] in
+                self?.fetchAndProcessImage(from: url) { image in
+                    if let image = image {
+                        downloadedImages[index] = image
+                    }
+                    dispatchGroup.leave()
                 }
-                dispatchGroup.leave()
             }
         }
         
         dispatchGroup.notify(queue: .main) {
-            self.images = downloadedImages
+            self.images = downloadedImages.compactMap { $0 }
         }
     }
     
-    // დაასრულეთ მეთოდის იმპლემენტაცია NSOperationQueue-ის გამოყენებით
     func fetchImagesWithOperationQueue() {
-        // არ დაგავიწყდეთ, გადმოწერილი იმიჯები საბოლოოდ უნდა მოხვდეს images მასივში.
+        let operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .userInitiated
+        operationQueue.maxConcurrentOperationCount = 5
+        
+        var downloadedImages = Array<UIImage?>(repeating: nil, count: imageUrls.count)
+        let completionOperation = BlockOperation { [weak self] in
+            DispatchQueue.main.async {
+                self?.images = downloadedImages.compactMap { $0 }
+            }
+        }
+        
+        for (index, url) in imageUrls.enumerated() {
+            let downloadOperation = BlockOperation { [weak self] in
+                let semaphore = DispatchSemaphore(value: 0)
+                self?.fetchAndProcessImage(from: url) { image in
+                    if let image = image {
+                        downloadedImages[index] = image
+                    }
+                    semaphore.signal()
+                }
+                semaphore.wait()
+            }
+            
+            completionOperation.addDependency(downloadOperation)
+            operationQueue.addOperation(downloadOperation)
+        }
+        
+        operationQueue.addOperation(completionOperation)
     }
     
-    // დაასრულეთ მეთოდის იმპლემენტაცია async/await-ის გამოყენებით (შეგიძლიათ დაიხმაროთ fetchAndProcessImageAsync())
     func fetchImagesWithAsyncAwait() {
-        // არ დაგავიწყდეთ, გადმოწერილი იმიჯები საბოლოოდ უნდა მოხვდეს images მასივში.
+        Task(priority: .userInitiated) { [weak self] in
+            guard let self = self else { return }
+            
+            let downloadedImages = await withTaskGroup(of: UIImage?.self) { group in
+                for url in self.imageUrls {
+                    group.addTask {
+                        return await self.fetchAndProcessImageAsync(from: url)
+                    }
+                }
+                
+                return await group.reduce(into: [UIImage?]()) { result, image in
+                    if let image = image {
+                        result.append(image)
+                    }
+                }
+            }
+            
+            DispatchQueue.main.async {
+                self.images = downloadedImages.compactMap { $0 }
+            }
+        }
     }
     
     func updateNumberOfImages(to count: Int) {
