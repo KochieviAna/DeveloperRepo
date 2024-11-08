@@ -34,7 +34,23 @@ final class ImageViewModel {
     
     // დაასრულეთ მეთოდის იმპლემენტაცია GCD-ის გამოყენებით (DispatchGroup)
     func fetchImagesWithGCD() {
-        // არ დაგავიწყდეთ, გადმოწერილი იმიჯები საბოლოოდ უნდა მოხვდეს images მასივში.
+        let dispatchGroup = DispatchGroup()
+        var downloadedImages: [UIImage] = []
+        
+        for url in imageUrls {
+            dispatchGroup.enter()
+            
+            fetchAndProcessImage(from: url) { image in
+                if let image = image {
+                    downloadedImages.append(image)
+                }
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.images = downloadedImages
+        }
     }
     
     // დაასრულეთ მეთოდის იმპლემენტაცია NSOperationQueue-ის გამოყენებით
