@@ -1,6 +1,15 @@
 {
-  "originHash" : "20454407ae8131bc85740715eed17a4a5755174e54634c8d15665ced5649ad83",
+  "originHash" : "dce7153a630b84c09e44ab8316ee864c1d02099481d152bc20ac33287cbddf5f",
   "pins" : [
+    {
+      "identity" : "dateformatter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KochieviAna/DateFormatter.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f99a353c86a6821dc6b6ccda7a110d1b2f7e71bc"
+      }
+    },
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
