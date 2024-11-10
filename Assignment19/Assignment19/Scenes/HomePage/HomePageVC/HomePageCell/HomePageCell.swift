@@ -137,8 +137,6 @@ final class HomePageCell: UITableViewCell {
         if let dateString = data.publishedAt {
             let formattedDate = DateFormatterUtility.formatDate(dateString, fromFormat: "yyyy-MM-dd'T'HH:mm:ssZ", toFormat: "EEEE, d MMMM yyyy")
             dateLabel.text = formattedDate ?? "No Date"
-        } else {
-            dateLabel.text = "No Date"
         }
         
         if let imageUrlString = data.urlToImage, let imageUrl = URL(string: imageUrlString) {

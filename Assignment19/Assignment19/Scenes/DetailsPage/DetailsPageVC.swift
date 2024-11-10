@@ -174,8 +174,6 @@ final class DetailsPageVC: UIViewController {
         if let publishedAtString = article?.publishedAt {
             let formattedDate = DateFormatterUtility.formatDate(publishedAtString, fromFormat: "yyyy-MM-dd'T'HH:mm:ssZ", toFormat: "EEEE, d MMMM yyyy")
             dateLabel.text = formattedDate ?? "No Date"
-        } else {
-            dateLabel.text = "No Date"
         }
         
         newsDescriptionLabel.text = article?.description ?? "No Description Available"
