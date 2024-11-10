@@ -1,5 +1,5 @@
 {
-  "originHash" : "ad75ae2d3b8d8b80d99635f65213a3c1092464aa54a86354f850b8317b6fa240",
+  "originHash" : "20454407ae8131bc85740715eed17a4a5755174e54634c8d15665ced5649ad83",
   "pins" : [
     {
       "identity" : "kingfisher",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "c0940e241945e6378c01fbd45fd3815579d47ef5",
         "version" : "8.1.0"
+      }
+    },
+    {
+      "identity" : "networkmanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KochieviAna/NetworkManager.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b22afbdb05558ed779c22747a004c00a730d4744"
       }
     }
   ],
