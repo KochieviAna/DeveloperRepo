@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import NetworkManager
 
 final class HomePageViewModel {
     private var articles: [Article] = []
-    private let networkService = NetworkService()
+    private let networkManager = NetworkManager()
     
     var onDataUpdated: (() -> Void)?
     
@@ -41,20 +42,25 @@ final class HomePageViewModel {
         
         let urlString = "https://newsapi.org/v2/everything?q=bitcoin&page=\(page)&pageSize=\(articlesPerPage)&apiKey=1cfd272ed6f74e45ae3f4d37fed3b649"
         
-        networkService.fetchData(urlString: urlString) { [weak self] (result: Result<NewsModel, Error>) in
+        networkManager.fetchData(urlString: urlString) { [weak self] (result: Result<NewsModel, Error>) in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let newsModel):
                 if let newArticles = newsModel.articles {
-                    self?.articles.append(contentsOf: newArticles)
-                    self?.hasMoreData = newArticles.count == self?.articlesPerPage
+                    self.articles.append(contentsOf: newArticles)
+                    self.hasMoreData = newArticles.count == self.articlesPerPage
                 }
                 DispatchQueue.main.async {
-                    self?.onDataUpdated?()
+                    self.onDataUpdated?()
+                    self.isFetching = false
                 }
             case .failure(let error):
                 print("Error fetching news: \(error)")
+                DispatchQueue.main.async {
+                    self.isFetching = false
+                }
             }
-            self?.isFetching = false
         }
     }
     

@@ -1,6 +1,15 @@
 {
-  "originHash" : "ad75ae2d3b8d8b80d99635f65213a3c1092464aa54a86354f850b8317b6fa240",
+  "originHash" : "dce7153a630b84c09e44ab8316ee864c1d02099481d152bc20ac33287cbddf5f",
   "pins" : [
+    {
+      "identity" : "dateformatter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KochieviAna/DateFormatter.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f99a353c86a6821dc6b6ccda7a110d1b2f7e71bc"
+      }
+    },
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
@@ -8,6 +17,15 @@
       "state" : {
         "revision" : "c0940e241945e6378c01fbd45fd3815579d47ef5",
         "version" : "8.1.0"
+      }
+    },
+    {
+      "identity" : "networkmanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KochieviAna/NetworkManager.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b22afbdb05558ed779c22747a004c00a730d4744"
       }
     }
   ],

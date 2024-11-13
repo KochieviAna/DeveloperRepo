@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import DateFormatter
 
 final class HomePageCell: UITableViewCell {
     
@@ -133,12 +134,9 @@ final class HomePageCell: UITableViewCell {
         
         authorLabel.text = data.author ?? "Unknown Author"
         
-        if let dateString = data.publishedAt, let date = ISO8601DateFormatter().date(from: dateString) {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEEE, d MMMM yyyy"
-            dateLabel.text = dateFormatter.string(from: date)
-        } else {
-            dateLabel.text = "No Date"
+        if let dateString = data.publishedAt {
+            let formattedDate = DateFormatterUtility.formatDate(dateString, fromFormat: "yyyy-MM-dd'T'HH:mm:ssZ", toFormat: "EEEE, d MMMM yyyy")
+            dateLabel.text = formattedDate ?? "No Date"
         }
         
         if let imageUrlString = data.urlToImage, let imageUrl = URL(string: imageUrlString) {

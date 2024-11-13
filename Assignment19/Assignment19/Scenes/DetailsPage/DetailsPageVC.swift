@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import DateFormatter
 
 final class DetailsPageVC: UIViewController {
     
@@ -171,16 +172,8 @@ final class DetailsPageVC: UIViewController {
         newsLabel.text = article?.title ?? "No Title Available"
         
         if let publishedAtString = article?.publishedAt {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-            if let date = dateFormatter.date(from: publishedAtString) {
-                dateFormatter.dateFormat = "EEEE, d MMMM yyyy"
-                dateLabel.text = dateFormatter.string(from: date)
-            } else {
-                dateLabel.text = "No Date"
-            }
-        } else {
-            dateLabel.text = "No Date"
+            let formattedDate = DateFormatterUtility.formatDate(publishedAtString, fromFormat: "yyyy-MM-dd'T'HH:mm:ssZ", toFormat: "EEEE, d MMMM yyyy")
+            dateLabel.text = formattedDate ?? "No Date"
         }
         
         newsDescriptionLabel.text = article?.description ?? "No Description Available"

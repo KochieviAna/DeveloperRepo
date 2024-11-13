@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA3F96D82CE1763600D5E8B5 /* DateFormatter in Frameworks */ = {isa = PBXBuildFile; productRef = FA3F96D72CE1763600D5E8B5 /* DateFormatter */; };
+		FAA970982CE16500005715F4 /* NetworkManager in Frameworks */ = {isa = PBXBuildFile; productRef = FAA970972CE16500005715F4 /* NetworkManager */; };
 		FAB8BEA52CD2898B00426136 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = FAB8BEA42CD2898B00426136 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB8BEA52CD2898B00426136 /* Kingfisher in Frameworks */,
+				FAA970982CE16500005715F4 /* NetworkManager in Frameworks */,
+				FA3F96D82CE1763600D5E8B5 /* DateFormatter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +88,8 @@
 			name = Assignment19;
 			packageProductDependencies = (
 				FAB8BEA42CD2898B00426136 /* Kingfisher */,
+				FAA970972CE16500005715F4 /* NetworkManager */,
+				FA3F96D72CE1763600D5E8B5 /* DateFormatter */,
 			);
 			productName = Assignment19;
 			productReference = FAB8BE3C2CD25E3400426136 /* Assignment19.app */;
@@ -115,6 +121,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				FAB8BEA32CD2898B00426136 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				FAA970962CE16500005715F4 /* XCRemoteSwiftPackageReference "NetworkManager" */,
+				FA3F96D62CE1763600D5E8B5 /* XCRemoteSwiftPackageReference "DateFormatter" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FAB8BE3D2CD25E3400426136 /* Products */;
@@ -356,6 +364,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FA3F96D62CE1763600D5E8B5 /* XCRemoteSwiftPackageReference "DateFormatter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/KochieviAna/DateFormatter.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		FAA970962CE16500005715F4 /* XCRemoteSwiftPackageReference "NetworkManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/KochieviAna/NetworkManager.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		FAB8BEA32CD2898B00426136 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -367,6 +391,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FA3F96D72CE1763600D5E8B5 /* DateFormatter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA3F96D62CE1763600D5E8B5 /* XCRemoteSwiftPackageReference "DateFormatter" */;
+			productName = DateFormatter;
+		};
+		FAA970972CE16500005715F4 /* NetworkManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FAA970962CE16500005715F4 /* XCRemoteSwiftPackageReference "NetworkManager" */;
+			productName = NetworkManager;
+		};
 		FAB8BEA42CD2898B00426136 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FAB8BEA32CD2898B00426136 /* XCRemoteSwiftPackageReference "Kingfisher" */;
