@@ -13,13 +13,13 @@ protocol Discount {
     func applyDiscount(to amount: Double) -> Double
 }
 
-class PercentageDiscount: Discount {
+final class PercentageDiscount: Discount {
     func applyDiscount(to amount: Double) -> Double {
         return amount * 0.10
     }
 }
 
-class FixedDiscount: Discount {
+final class FixedDiscount: Discount {
     func applyDiscount(to amount: Double) -> Double {
         return amount - 10.0
     }
