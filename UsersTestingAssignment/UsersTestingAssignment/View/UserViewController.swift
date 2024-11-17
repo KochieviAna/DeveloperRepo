@@ -21,7 +21,7 @@ class UserViewController: UIViewController {
         return tableView
     }()
     
-    private let networkManager: NetworkManagerProtocol
+    var networkManager: NetworkManagerProtocol
     
     init(networkManager: NetworkManagerProtocol = NetworkManager.sharedInstance) {
         self.networkManager = networkManager
