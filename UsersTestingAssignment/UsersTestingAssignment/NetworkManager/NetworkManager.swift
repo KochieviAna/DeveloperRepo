@@ -11,7 +11,7 @@ protocol NetworkManagerProtocol {
     func fetchUsers(withLimit limit: Int, completionHandler: @escaping ([User]) -> Void)
 }
 
-final class NetworkManager: NSObject {
+final class NetworkManager: NSObject, NetworkManagerProtocol {
     static let sharedInstance = NetworkManager()
     
     var users: [User] = []

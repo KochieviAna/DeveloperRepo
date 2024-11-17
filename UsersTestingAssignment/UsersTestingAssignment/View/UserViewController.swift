@@ -9,7 +9,7 @@ import UIKit
 
 class UserViewController: UIViewController {
     
-    private var usersVM: [UserViewModel] = []
+    var usersVM: [UserViewModel] = []
     private let cellIdentifier = "UserCell"
     
     private let tableView: UITableView = {
@@ -20,6 +20,17 @@ class UserViewController: UIViewController {
         tableView.allowsSelection = false
         return tableView
     }()
+    
+    private let networkManager: NetworkManagerProtocol
+    
+    init(networkManager: NetworkManagerProtocol = NetworkManager.sharedInstance) {
+        self.networkManager = networkManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +57,7 @@ class UserViewController: UIViewController {
         ])
     }
     
-    private func fetchUsersAPICall() {
+    func fetchUsersAPICall() {
         let totalUserLimit = Int.random(in: 5 ... 100)
         
         NetworkManager.sharedInstance.fetchUsers(withLimit: totalUserLimit) { [weak self] (users) in
