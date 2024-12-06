@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @State private var isOnline: Bool = true
+    
     var skills = [
-        SkillsView(skill: "SwiftUI"),
-        SkillsView(skill: "iOS Development"),
-        SkillsView(skill: "Problem Solving"),
-        SkillsView(skill: "UI/UX Design")
+        SkillsModel(skill: "SwiftUI"),
+        SkillsModel(skill: "iOS Development"),
+        SkillsModel(skill: "Problem Solving"),
+        SkillsModel(skill: "UI/UX Design")
     ]
     
     var body: some View {
@@ -31,52 +33,74 @@ struct ProfileView: View {
                 
                 Capsule()
                     .frame(width: 48.95, height: 20)
-                    .foregroundStyle(Color("darkGreen"))
+                    .foregroundStyle(isOnline ? Color("darkGreen") : Color("primaryRed"))
                     .padding(.top, 100.5)
                     .padding(.leading, 71.05)
                 
-                Text("Online")
+                Text(isOnline ? "Online" : "Offline")
                     .font(.robotoBold(size: 10))
                     .foregroundColor(Color("primaryWhite"))
                     .padding(.top, 100.5)
                     .padding(.leading, 71.05)
             }
-            .padding(.top,20)
-            .padding(.leading, 90)
-            .padding(.trailing, 90)
+            .padding(.top, 20)
             
             Text("Ana Kochievi")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(Color("primaryWhite"))
-                .padding(.top, 20)
             
             Text("iOS Developer")
                 .font(.robotoRegular(size: 14))
                 .foregroundColor(Color("primaryWhite"))
-                .padding(.top, 5)
             
             HStack {
                 ContactView(contactInfo: "phone")
-                    .padding(.trailing, 30)
+                    .padding(.trailing, 20)
                 ContactView(contactInfo: "mail")
-                    .padding(.trailing, 30)
+                    .padding(.trailing, 20)
                 ContactView(contactInfo: "social")
             }
-            .padding(.top, 21)
+            
+            Text("Skills")
+                .font(.robotoBold(size: 16))
+                .foregroundColor(Color("primaryWhite"))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 20)
+            
+            ForEach(skills, id: \.skill) { skills in
+                HStack {
+                    Circle()
+                        .frame(width: 5)
+                        .foregroundStyle(Color("primaryWhite")).opacity(0.8)
+                    
+                    Text(skills.skill)
+                        .font(.robotoRegular(size: 14.75))
+                        .foregroundColor(Color("primaryWhite")).opacity(0.8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.top, 5)
+            }
+            
+            ZStack {
+                Capsule()
+                    .frame(width: 164, height: 44)
+                    .foregroundStyle(Color("primaryWhite")).opacity(0.2)
+                Toggle("", isOn: $isOnline)
+                    .padding(.trailing, 50)
+                
+                Text("Set Offline")
+                    .font(.robotoRegular(size: 16))
+                    .foregroundStyle(Color("primaryWhite"))
+                    .padding(.trailing, 50)
+                
+                
+            }
+            .padding(.horizontal, 10)
         }
         .padding()
-        .background(
-            LinearGradient(
-                gradient: Gradient(stops: [
-                    Gradient.Stop(color: Color("electricBlue").opacity(0.65), location: 0.0),
-                    Gradient.Stop(color: Color("primaryPurple").opacity(0.65), location: 1.0)
-                ]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .frame(width: 300, height: 491)
+        .background(GradientView())        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
 
