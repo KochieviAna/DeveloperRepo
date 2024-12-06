@@ -100,7 +100,8 @@ struct ProfileView: View {
         }
         .padding()
         .frame(width: 300, height: 491)
-        .background(GradientView())        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .background(GradientView())
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
 
