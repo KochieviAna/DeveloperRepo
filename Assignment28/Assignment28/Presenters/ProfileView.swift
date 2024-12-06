@@ -86,15 +86,19 @@ struct ProfileView: View {
                 Capsule()
                     .frame(width: 164, height: 44)
                     .foregroundStyle(Color("primaryWhite")).opacity(0.2)
-                Toggle("", isOn: $isOnline)
-                    .padding(.trailing, 50)
                 
-                Text("Set Offline")
-                    .font(.robotoRegular(size: 16))
-                    .foregroundStyle(Color("primaryWhite"))
-                    .padding(.trailing, 50)
-                
-                
+                HStack{
+                    Spacer(minLength: 55)
+                    
+                    Text(isOnline ? "Set Offline" : "Set Online")
+                        .frame(width: 73)
+                        .font(.robotoRegular(size: 16))
+                        .foregroundStyle(Color("primaryWhite"))
+                    
+                    Toggle("", isOn: $isOnline)
+                    
+                    Spacer(minLength: 55)
+                }
             }
             .padding(.horizontal, 10)
         }
