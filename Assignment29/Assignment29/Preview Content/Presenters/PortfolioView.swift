@@ -96,7 +96,7 @@ struct PortfolioView: View {
                     
                     Button("Add Experience") {
                         if companyInput.isEmpty || roleInput.isEmpty || durationInput.isEmpty {
-                            showAlert = true // Show alert if any field is empty
+                            showAlert = true
                         } else {
                             let newJob = JobModel(
                                 company: companyInput,
@@ -124,7 +124,12 @@ struct PortfolioView: View {
                 .cornerRadius(24)
                 .frame(width: 351, height: 298)
             }
-            .offset(y: 98)
+            .offset(y: 100)
+            .padding(.bottom, 100)
+        }
+        .padding(.top)
+        .onTapGesture {
+            UIApplication.shared.endEditing()
         }
     }
 }
