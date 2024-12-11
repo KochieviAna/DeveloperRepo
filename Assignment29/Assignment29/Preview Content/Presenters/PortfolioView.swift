@@ -22,7 +22,7 @@ struct PortfolioView: View {
             LazyVStack(spacing: 23) {
                 ZStack {
                     Rectangle()
-                        .frame(width: 401, height: 84)
+                        .frame(width: .infinity, height: 84)
                         .foregroundStyle(Color("primaryWhite"))
                         .shadow(color: Color("primaryBlack").opacity(0.25), radius: 4, x: 0, y: 8)
                     
