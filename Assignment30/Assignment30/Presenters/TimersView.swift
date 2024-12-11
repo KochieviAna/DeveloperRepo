@@ -50,14 +50,36 @@ struct TimersView: View {
             .background(.clear)
             
             LazyVStack {
-                timerTitleTextFields
-                
+                PlaceholderTextField(
+                    placeholder: "ტაიმერის სახელი",
+                    text: .constant(""),
+                    alignment: .leading,
+                    frameWidth: 350
+                )
                 LazyHStack {
-                    hoursTextField
+                    PlaceholderTextField(
+                        placeholder: "სთ",
+                        text: .constant(""),
+                        keyboardType: .numberPad,
+                        alignment: .center,
+                        frameWidth: 110
+                    )
                     
-                    minutesTextField
+                    PlaceholderTextField(
+                        placeholder: "მნ",
+                        text: .constant(""),
+                        keyboardType: .numberPad,
+                        alignment: .center,
+                        frameWidth: 110
+                    )
                     
-                    secondsTextField
+                    PlaceholderTextField(
+                        placeholder: "წმ",
+                        text: .constant(""),
+                        keyboardType: .numberPad,
+                        alignment: .center,
+                        frameWidth: 110
+                    )
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
