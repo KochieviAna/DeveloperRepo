@@ -33,7 +33,7 @@ struct TimersView: View {
         VStack {
             timerHeadline
             
-            List {
+            ScrollView {
                 ForEach(viewModel.timers.indices, id: \.self) { index in
                     TimerRowView(
                         timer: $viewModel.timers[index],
