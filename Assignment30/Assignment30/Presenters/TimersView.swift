@@ -68,6 +68,9 @@ struct TimersView: View {
             .background(Color.primaryDarkGrey)
         }
         .background(Color.primaryNoirGrey)
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
     }
     
     private var timerHeadline: some View {
