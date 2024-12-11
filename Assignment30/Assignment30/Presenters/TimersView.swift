@@ -106,7 +106,7 @@ struct TimersView: View {
     
     private var minutesTextField: some View {
         PlaceholderTextField(
-            placeholder: "მნ",
+            placeholder: "წთ",
             text: $newMinutes,
             keyboardType: .numberPad,
             alignment: .center,
