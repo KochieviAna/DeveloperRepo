@@ -65,7 +65,7 @@ struct TimersView: View {
                 addTimerButton
             }
             .padding()
-            .background(Color.primaryGrey)
+            .background(Color.primaryDarkGrey)
         }
         .background(Color.primaryNoirGrey)
     }
@@ -79,13 +79,14 @@ struct TimersView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 110)
-        .background(Color.primaryGrey)
+        .background(Color.primaryDarkGrey)
     }
     
     private var timerTitleTextFields: some View {
         TextField("ტაიმერის სახელი", text: $newTitle)
             .frame(width: 350, height: 39)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryLightGrey))
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryGrey))
+            .foregroundColor(.primaryWhite)
     }
     
     private var hoursTextField: some View {
@@ -93,7 +94,8 @@ struct TimersView: View {
             .keyboardType(.numberPad)
             .multilineTextAlignment(.center)
             .frame(width: 110, height: 39)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryLightGrey))
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryGrey))
+            .foregroundColor(.primaryWhite)
     }
     
     private var minutesTextField: some View {
@@ -101,7 +103,8 @@ struct TimersView: View {
             .keyboardType(.numberPad)
             .multilineTextAlignment(.center)
             .frame(width: 110, height: 39)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryLightGrey))
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryGrey))
+            .foregroundColor(.primaryWhite)
     }
     
     private var secondsTextField: some View {
@@ -109,7 +112,8 @@ struct TimersView: View {
             .keyboardType(.numberPad)
             .multilineTextAlignment(.center)
             .frame(width: 110, height: 39)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryLightGrey))
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryGrey))
+            .foregroundColor(.primaryWhite)
     }
     
     private var addTimerButton: some View {
