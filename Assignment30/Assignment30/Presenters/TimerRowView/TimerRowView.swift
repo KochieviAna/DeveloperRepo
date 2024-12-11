@@ -68,7 +68,6 @@ struct TimerRowView: View {
                 
                 deleteButton
             }
-            .padding(.top, 21)
             
             timeText
             
@@ -76,7 +75,6 @@ struct TimerRowView: View {
                 startButton
                 resetButton
             }
-            .padding(.bottom, 20)
         }
         .frame(width: 360, height: 177)
         .background(.primaryDarkGrey)
@@ -91,15 +89,11 @@ struct TimerRowView: View {
     }
 }
 
-struct TimerRowViewPreviews: PreviewProvider {
-    static var previews: some View {
-        TimerRowView(
-            timer: .constant(TimerModel(title: "Sample Timer", duration: 3600)),
-            onDelete: {},
-            onToggle: {},
-            onReset: {}
-        )
-        .previewLayout(.sizeThatFits)
-        .padding()
-    }
+#Preview {
+    TimerRowView(
+        timer: .constant(TimerModel(title: "Sample Timer", duration: 3600)),
+        onDelete: { },
+        onToggle: { },
+        onReset: { }
+    )
 }
