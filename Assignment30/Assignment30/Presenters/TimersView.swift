@@ -50,36 +50,14 @@ struct TimersView: View {
             .background(.clear)
             
             LazyVStack {
-                PlaceholderTextField(
-                    placeholder: "ტაიმერის სახელი",
-                    text: .constant(""),
-                    alignment: .leading,
-                    frameWidth: 350
-                )
+                timerTitleTextFields
+                
                 LazyHStack {
-                    PlaceholderTextField(
-                        placeholder: "სთ",
-                        text: .constant(""),
-                        keyboardType: .numberPad,
-                        alignment: .center,
-                        frameWidth: 110
-                    )
+                    hoursTextField
                     
-                    PlaceholderTextField(
-                        placeholder: "მნ",
-                        text: .constant(""),
-                        keyboardType: .numberPad,
-                        alignment: .center,
-                        frameWidth: 110
-                    )
+                    minutesTextField
                     
-                    PlaceholderTextField(
-                        placeholder: "წმ",
-                        text: .constant(""),
-                        keyboardType: .numberPad,
-                        alignment: .center,
-                        frameWidth: 110
-                    )
+                    secondsTextField
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -105,37 +83,42 @@ struct TimersView: View {
     }
     
     private var timerTitleTextFields: some View {
-        TextField("ტაიმერის სახელი", text: $newTitle)
-            .frame(width: 350, height: 39)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryGrey))
-            .foregroundColor(.primaryWhite)
+        PlaceholderTextField(
+            placeholder: "ტაიმერის სახელი",
+            text: $newTitle,
+            alignment: .leading,
+            frameWidth: 350
+        )
     }
     
     private var hoursTextField: some View {
-        TextField("სთ", text: $newHours)
-            .keyboardType(.numberPad)
-            .multilineTextAlignment(.center)
-            .frame(width: 110, height: 39)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryGrey))
-            .foregroundColor(.primaryWhite)
+        PlaceholderTextField(
+            placeholder: "სთ",
+            text: $newHours,
+            keyboardType: .numberPad,
+            alignment: .center,
+            frameWidth: 110
+        )
     }
     
     private var minutesTextField: some View {
-        TextField("მნ", text: $newMinutes)
-            .keyboardType(.numberPad)
-            .multilineTextAlignment(.center)
-            .frame(width: 110, height: 39)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryGrey))
-            .foregroundColor(.primaryWhite)
+        PlaceholderTextField(
+            placeholder: "მნ",
+            text: $newMinutes,
+            keyboardType: .numberPad,
+            alignment: .center,
+            frameWidth: 110
+        )
     }
     
     private var secondsTextField: some View {
-        TextField("წმ", text: $newSeconds)
-            .keyboardType(.numberPad)
-            .multilineTextAlignment(.center)
-            .frame(width: 110, height: 39)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryGrey))
-            .foregroundColor(.primaryWhite)
+        PlaceholderTextField(
+            placeholder: "წმ",
+            text: $newSeconds,
+            keyboardType: .numberPad,
+            alignment: .center,
+            frameWidth: 110
+        )
     }
     
     private var addTimerButton: some View {
