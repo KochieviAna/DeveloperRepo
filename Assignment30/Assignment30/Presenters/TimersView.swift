@@ -84,32 +84,32 @@ struct TimersView: View {
     
     private var timerTitleTextFields: some View {
         TextField("ტაიმერის სახელი", text: $newTitle)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 350, height: 39)
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryLightGrey))
     }
     
     private var hoursTextField: some View {
         TextField("სთ", text: $newHours)
             .keyboardType(.numberPad)
             .multilineTextAlignment(.center)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 110, height: 39)
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryLightGrey))
     }
     
     private var minutesTextField: some View {
         TextField("მნ", text: $newMinutes)
             .keyboardType(.numberPad)
             .multilineTextAlignment(.center)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 110, height: 39)
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryLightGrey))
     }
     
     private var secondsTextField: some View {
         TextField("წმ", text: $newSeconds)
             .keyboardType(.numberPad)
             .multilineTextAlignment(.center)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(width: 110, height: 39)
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.primaryLightGrey))
     }
     
     private var addTimerButton: some View {
