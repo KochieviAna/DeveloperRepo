@@ -61,13 +61,14 @@ struct TimerRowView: View {
     
     var body: some View {
         LazyVStack {
-            LazyHStack {
+            HStack {
                 titleText
                 
-                Spacer(minLength: 227)
-                
+                Spacer()
+                                
                 deleteButton
             }
+            .padding(.horizontal, 20)
             
             timeText
             
