@@ -30,46 +30,51 @@ struct TimersView: View {
     }
     
     var body: some View {
-        VStack {
-            timerHeadline
-            
-            ScrollView {
-                ForEach(viewModel.timers.indices, id: \.self) { index in
-                    TimerRowView(
-                        timer: $viewModel.timers[index],
-                        onDelete: { viewModel.deleteTimer(index: index) },
-                        onToggle: { viewModel.toggleTimer(index: index) },
-                        onReset: { viewModel.resetTimer(index: index) }
-                    )
-                    .contentShape(Rectangle())
-                    .background(.clear)
-                }
-            }
-            .padding()
-            .scrollContentBackground(.hidden)
-            .background(.clear)
-            
-            LazyVStack {
-                timerTitleTextFields
+        NavigationStack {
+            VStack {
+                timerHeadline
                 
-                LazyHStack {
-                    hoursTextField
-                    
-                    minutesTextField
-                    
-                    secondsTextField
+                ScrollView {
+                    ForEach(viewModel.timers.indices, id: \.self) { index in
+                        NavigationLink(destination: TimerDetailsView(timer: $viewModel.timers[index])) {
+                            TimerRowView(
+                                timer: $viewModel.timers[index],
+                                onDelete: { viewModel.deleteTimer(index: index) },
+                                onToggle: { viewModel.toggleTimer(index: index) },
+                                onReset: { viewModel.resetTimer(index: index) }
+                            )
+                            .contentShape(Rectangle())
+                            .background(.clear)
+                        }
+                    }
                 }
                 .padding()
-                .frame(maxWidth: .infinity)
+                .scrollContentBackground(.hidden)
+                .background(.clear)
                 
-                addTimerButton
+                LazyVStack {
+                    timerTitleTextFields
+                    
+                    LazyHStack {
+                        hoursTextField
+                        
+                        minutesTextField
+                        
+                        secondsTextField
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    
+                    addTimerButton
+                }
+                .padding()
+                .background(Color.primaryDarkGrey)
             }
-            .padding()
-            .background(Color.primaryDarkGrey)
-        }
-        .background(Color.primaryNoirGrey)
-        .onTapGesture {
-            UIApplication.shared.endEditing()
+            .background(Color.primaryNoirGrey)
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
+            .navigationBarHidden(true)
         }
     }
     
