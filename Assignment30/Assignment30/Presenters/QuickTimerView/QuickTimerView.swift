@@ -30,48 +30,51 @@ struct QuickTimerView: View {
     ]
     
     var body: some View {
-        ZStack {
-            Color.primaryNoirGrey
-                .ignoresSafeArea(.all)
-            
-            VStack {
-                headlineText
-                    .padding()
-                    .offset(x: -100)
+        ScrollView{
+            ZStack {
+                Color.primaryNoirGrey
+                    .ignoresSafeArea(.all)
                 
-                LazyVGrid(columns: columns, spacing: 12) {
-                    ForEach(quickTimers) { timer in
-                        Button(action: {
-                            viewModel.addTimer(title: timer.title, duration: timer.duration)
-                            showingQuickTimers = false
-                        }) {
-                            VStack(spacing: 5) {
-                                Text(formatTime(timer.duration))
-                                    .font(.robotoBold(size: 20))
-                                    .foregroundStyle(.primaryBlue)
-                                
-                                Text(timer.title)
-                                    .font(.robotoRegular(size: 13))
-                                    .foregroundColor(.primaryWhite)
+                VStack(alignment: .leading) {
+                    headlineText
+                        .padding()
+                    
+                    LazyVGrid(columns: columns, spacing: 12) {
+                        ForEach(quickTimers) { timer in
+                            Button(action: {
+                                viewModel.addTimer(title: timer.title, duration: timer.duration)
+                                showingQuickTimers = false
+                            }) {
+                                VStack(spacing: 5) {
+                                    Text(formatTime(timer.duration))
+                                        .font(.robotoBold(size: 20))
+                                        .foregroundStyle(.primaryBlue)
+                                    
+                                    Text(timer.title)
+                                        .font(.robotoRegular(size: 13))
+                                        .foregroundColor(.primaryWhite)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 94)
+                                .padding()
+                                .background(.primaryGrey)
+                                .cornerRadius(12)
                             }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 94)
-                            .padding()
-                            .background(.primaryGrey)
-                            .cornerRadius(12)
                         }
                     }
+                    .padding()
                 }
                 .padding()
             }
-            .frame(maxWidth: .infinity)
         }
+        .background(.primaryNoirGrey)
     }
     
     private var headlineText: some View {
         Text("სწრაფი ტაიმერები")
             .font(.robotoBold(size: 20))
             .foregroundStyle(.primaryWhite)
+            .frame(alignment: .leading)
     }
 }
 

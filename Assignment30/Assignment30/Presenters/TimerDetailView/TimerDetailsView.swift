@@ -74,7 +74,30 @@ struct TimerDetailsView: View {
                             activityHistoryText
                                 .padding()
                             
-                            activityHistoryList
+                            ForEach(groupedHistory(), id: \.key) { date, sessions in
+                                VStack(alignment: .leading) {
+                                    Text(date)
+                                        .font(.robotoBold(size: 14))
+                                        .foregroundStyle(.primaryDustyGrey)
+                                        .padding(.top)
+                                    
+                                    ForEach(sessions) { history in
+                                        HStack {
+                                            Text(timeForHistory(history.stopDate))
+                                                .font(.robotoRegular(size: 14))
+                                                .foregroundStyle(.primaryWhite)
+                                            
+                                            Spacer()
+                                            
+                                            Text(formatTime(history.elapsedTime))                                                .font(.robotoRegular(size: 14))
+                                                .foregroundStyle(.primaryWhite)
+                                        }
+                                        .padding(.horizontal)
+                                        .padding(.vertical, 4)
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
                         }
                         .frame(maxWidth: .infinity)
                         .cornerRadius(16)
@@ -132,34 +155,6 @@ struct TimerDetailsView: View {
             .font(.robotoRegular(size: 18))
             .foregroundStyle(.primaryWhite)
             .frame(alignment: .leading)
-    }
-    
-    private var activityHistoryList: some View {
-        List {
-            ForEach(groupedHistory(), id: \.key) { date, sessions in
-                Section(header: Text(date)
-                    .font(.robotoBold(size: 14))
-                    .foregroundStyle(.primaryDustyGrey)
-                    .padding(.top)) {
-                        ForEach(sessions) { history in
-                            HStack {
-                                Text(timeForHistory(history.stopDate))
-                                    .font(.robotoRegular(size: 14))
-                                    .foregroundStyle(.primaryWhite)
-                                
-                                Spacer()
-                                
-                                Text(formatTime(history.elapsedTime))
-                                    .font(.robotoRegular(size: 14))
-                                    .foregroundStyle(.primaryWhite)
-                            }
-                            .padding(.horizontal)
-                            .padding(.vertical, 4)
-                        }
-                    }
-            }
-        }
-        .listStyle(PlainListStyle())
     }
     
     private var sessionsTodayText: some View {
