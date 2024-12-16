@@ -65,6 +65,11 @@ class TimerViewModel: ObservableObject {
     func resetTimer(index: Int) {
         guard timers.indices.contains(index) else { return }
         
+        let currentDate = Date()
+        let currentRemainingTime = timers[index].timeRemaining
+        
+        timers[index].usageHistory.append((date: currentDate, remainingTime: currentRemainingTime))
+        
         timers[index].timeRemaining = timers[index].duration
         
         if timers[index].isON {

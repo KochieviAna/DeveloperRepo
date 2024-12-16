@@ -92,7 +92,7 @@ struct TimerRowView: View {
 
 #Preview {
     TimerRowView(
-        timer: .constant(TimerModel(title: "Sample Timer", duration: 3600)),
+        timer: .constant(TimerModel(title: "საცდელი ტაიმერი", duration: 3600)),
         onDelete: { },
         onToggle: { },
         onReset: { }
