@@ -47,18 +47,7 @@ struct TimersView: View {
                 .background(Color.primaryDarkGrey)
                 
                 ScrollView {
-                    ForEach(viewModel.timers.indices, id: \.self) { index in
-                        NavigationLink(destination: TimerDetailsView(timer: $viewModel.timers[index])) {
-                            TimerRowView(
-                                timer: $viewModel.timers[index],
-                                onDelete: { viewModel.deleteTimer(index: index) },
-                                onToggle: { viewModel.toggleTimer(index: index) },
-                                onReset: { viewModel.resetTimer(index: index) }
-                            )
-                            .contentShape(Rectangle())
-                            .background(.clear)
-                        }
-                    }
+                    timerList
                 }
                 .padding()
                 .scrollContentBackground(.hidden)
@@ -123,6 +112,21 @@ struct TimersView: View {
                 .frame(width: 32, height: 32)
                 .font(.system(size: 30))
                 .foregroundColor(.primaryWhite)
+        }
+    }
+    
+    private var timerList: some View {
+        ForEach(viewModel.timers.indices, id: \.self) { index in
+            NavigationLink(destination: TimerDetailsView(viewModel: viewModel, timer: $viewModel.timers[index])) {
+                TimerRowView(
+                    timer: $viewModel.timers[index],
+                    onDelete: { viewModel.deleteTimer(index: index) },
+                    onToggle: { viewModel.toggleTimer(index: index) },
+                    onReset: { viewModel.resetTimer(index: index) }
+                )
+                .contentShape(Rectangle())
+                .background(.clear)
+            }
         }
     }
     

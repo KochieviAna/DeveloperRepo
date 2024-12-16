@@ -13,26 +13,27 @@ struct TimerDetailsView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        ZStack {
-            Color.primaryNoirGrey
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                HStack {
-                    arrowBackButton
-                    
-                    Spacer()
-                    
-                    titleText
-                    
-                    Spacer(minLength: 30)
-                }
-                .padding(.horizontal)
-                .frame(maxWidth: .infinity)
-                .frame(height: 110)
-                .background(Color.primaryDarkGrey)
+        ScrollView {
+            ZStack {
+                Color.primaryNoirGrey
+                    .edgesIgnoringSafeArea(.all)
                 
-                ScrollView {
+                VStack {
+                    HStack {
+                        arrowBackButton
+                        
+                        Spacer()
+                        
+                        titleText
+                        
+                        Spacer(minLength: 30)
+                    }
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 110)
+                    .background(Color.primaryDarkGrey)
+                    
+                    
                     VStack {
                         VStack {
                             timerImage
