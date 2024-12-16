@@ -8,8 +8,18 @@
 import SwiftUI
 
 class TimerViewModel: ObservableObject {
-    @Published var timers: [TimerModel] = []
+    @AppStorage("timers") private var storedTimersData: Data = Data() // Persistent storage
+    @Published var timers: [TimerModel] = [] {
+        didSet {
+            saveTimers()
+        }
+    }
+    
     private var activeTimers: [Int: Timer] = [:]
+    
+    init() {
+        loadTimers()
+    }
     
     func addTimer(title: String, duration: Int) {
         let newTimer = TimerModel(title: title, duration: duration)
@@ -31,9 +41,7 @@ class TimerViewModel: ObservableObject {
     private func startTimer(index: Int) {
         guard timers.indices.contains(index) else { return }
         
-        if activeTimers[index] != nil {
-            return
-        }
+        if activeTimers[index] != nil { return }
         
         let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             guard let self = self else { return }
@@ -41,7 +49,6 @@ class TimerViewModel: ObservableObject {
             guard self.timers.indices.contains(index) else {
                 timer.invalidate()
                 self.activeTimers.removeValue(forKey: index)
-                
                 return
             }
             
@@ -66,9 +73,10 @@ class TimerViewModel: ObservableObject {
         guard timers.indices.contains(index) else { return }
         
         let currentDate = Date()
-        let currentRemainingTime = timers[index].timeRemaining
+        let elapsedTime = timers[index].duration - timers[index].timeRemaining
         
-        timers[index].usageHistory.append((date: currentDate, remainingTime: currentRemainingTime))
+        let historyEntry = TimerHistory(stopDate: currentDate, elapsedTime: elapsedTime)
+        timers[index].usageHistory.append(historyEntry)
         
         timers[index].timeRemaining = timers[index].duration
         
@@ -83,5 +91,26 @@ class TimerViewModel: ObservableObject {
         
         stopTimer(index: index)
         timers.remove(at: index)
+    }
+    
+    private func saveTimers() {
+        do {
+            let data = try JSONEncoder().encode(timers)
+            storedTimersData = data
+        } catch {
+            print("Error encoding timers: \(error)")
+        }
+    }
+    
+    private func loadTimers() {
+        do {
+            let data = storedTimersData
+            if !data.isEmpty {
+                timers = try JSONDecoder().decode([TimerModel].self, from: data)
+            }
+        } catch {
+            print("Error decoding timers: \(error)")
+            timers = []
+        }
     }
 }

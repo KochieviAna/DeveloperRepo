@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TimerDetailsView: View {
+    @ObservedObject var viewModel: TimerViewModel
     @Binding var timer: TimerModel
     @Environment(\.dismiss) var dismiss
     
@@ -17,7 +18,7 @@ struct TimerDetailsView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
-                HStack{
+                HStack {
                     arrowBackButton
                     
                     Spacer()
@@ -50,35 +51,52 @@ struct TimerDetailsView: View {
                         .padding(.top, 16)
                         .padding(.horizontal)
                         
-                        VStack(alignment: .leading) {
-                            activityHistoryText
-                                .padding([.top, .horizontal])
-                                .padding(16)
+                        VStack(alignment: .leading, spacing: 10) {
+                            sessionsTodayText
                             
                             dividerColor
-                                .padding(.horizontal)
                             
-                            HStack {
-                                dateText
-                                
-                                remainingTimeText
-                                    .offset(x: 70)
-                            }
-                            .padding(.horizontal, 28)
-                            .padding([.top, .bottom], 16)
+                            averageSessionDurationText
                             
-                            ForEach(timer.usageHistory, id: \.date) { history in
-                                HStack {
-                                    formattedDateText(for: history.date)
-                                    formattedTimeText(for: history.remainingTime)
-                                        .offset(x: 70)
-                                }
-                                .padding(.bottom)
-                                .padding(.horizontal, 28)
-                            }
+                            dividerColor
+                            
+                            totalTimeText
                         }
                         .frame(maxWidth: .infinity)
                         .background(Color.primaryDarkGrey)
+                        .cornerRadius(16)
+                        .padding(.horizontal)
+                        
+                        VStack(alignment: .leading) {
+                            activityHistoryText
+                                .padding()
+                            ForEach(groupedHistory(), id: \.key) { date, sessions in
+                                VStack(alignment: .leading) {
+                                    Text(formattedGeorgianDate(from: sessions.first?.stopDate ?? Date()))
+                                        .font(.robotoRegular(size: 14))
+                                        .foregroundStyle(.primaryDustyGrey)
+                                        .padding(.top)
+                                    
+                                    ForEach(sessions) { history in
+                                        HStack {
+                                            Text(formattedGeorgianDate(from: history.stopDate))
+                                                .font(.robotoRegular(size: 14))
+                                                .foregroundStyle(.primaryWhite)
+                                            
+                                            Spacer()
+                                            
+                                            Text(formatTime(history.elapsedTime))
+                                                .font(.robotoRegular(size: 14))
+                                                .foregroundStyle(.primaryWhite)
+                                        }
+                                        .padding(.horizontal)
+                                        .padding(.vertical, 4)
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
                         .cornerRadius(16)
                         .padding(.horizontal)
                     }
@@ -102,7 +120,7 @@ struct TimerDetailsView: View {
     
     private var titleText: some View {
         Text(timer.title)
-            .font(.interBold(size: 24))
+            .font(.robotoBold(size: 24))
             .foregroundStyle(.primaryWhite)
             .frame(maxWidth: .infinity, alignment: .center)
             .multilineTextAlignment(.center)
@@ -117,58 +135,115 @@ struct TimerDetailsView: View {
     
     private var durationText: some View {
         Text("ხანგრძლივობა")
-            .font(.interMedium(size: 18))
+            .font(.robotoRegular(size: 20))
             .foregroundStyle(.primaryWhite)
     }
     
     private var timeText: some View {
-        Text(formatTime(timer.timeRemaining))
-            .font(.interBold(size: 36))
+        Text(formatTimeVerbally(timer.timeRemaining))
+            .font(.robotoBold(size: 36))
             .foregroundStyle(.primaryBlue)
     }
     
     private var activityHistoryText: some View {
         Text("აქტივობის ისტორია")
-            .font(.interMedium(size: 18))
+            .font(.robotoRegular(size: 18))
             .foregroundStyle(.primaryWhite)
+    }
+    
+    private var sessionsTodayText: some View {
+        HStack {
+            Text("დღევანდელი სესიები")
+                .font(.robotoBold(size: 15))
+                .foregroundStyle(.primaryDustyGrey)
+                .padding(.top)
+                .padding(.horizontal)
+            
+            Spacer()
+            
+            Text(sessionsToday())
+                .font(.robotoRegular(size: 15))
+                .foregroundStyle(.primaryWhite)
+                .padding(.top)
+                .padding(.horizontal)
+        }
+    }
+    
+    private var averageSessionDurationText: some View {
+        HStack {
+            Text("საშუალო დრო")
+                .font(.robotoBold(size: 15))
+                .foregroundStyle(.primaryDustyGrey)
+                .padding(.horizontal)
+            
+            Spacer()
+            
+            Text(averageSessionDuration())
+                .font(.robotoRegular(size: 15))
+                .foregroundStyle(.primaryWhite)
+                .padding(.horizontal)
+        }
+    }
+    
+    private var totalTimeText: some View {
+        HStack {
+            Text("სულ დრო")
+                .font(.robotoBold(size: 15))
+                .foregroundStyle(.primaryDustyGrey)
+                .padding(.horizontal)
+                .padding(.bottom)
+            
+            Spacer()
+            
+            Text(totalTime())
+                .font(.robotoRegular(size: 15))
+                .foregroundStyle(.primaryWhite)
+                .padding(.horizontal)
+                .padding(.bottom)
+        }
     }
     
     private var dividerColor: some View {
-        Color.primaryWhite
+        Color.primaryLightGrey
             .frame(maxWidth: .infinity, alignment: .center)
-            .frame(height: 1)
+            .frame(height: 0.5)
     }
     
-    private var dateText: some View {
-        Text("თარიღი")
-            .font(.interMedium(size: 14))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundStyle(.primaryWhite)
+    private func sessionsToday() -> String {
+        let calendar = Calendar.current
+        let sessionCount = timer.usageHistory.filter {
+            calendar.isDateInToday($0.stopDate)
+        }.count
+        
+        return "\(sessionCount) სესია"
     }
     
-    private var remainingTimeText: some View {
-        Text("დრო")
-            .font(.interMedium(size: 14))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundStyle(.primaryWhite)
+    private func averageSessionDuration() -> String {
+        guard !timer.usageHistory.isEmpty else { return "0 წმ" }
+        let totalDuration = timer.usageHistory.map { $0.elapsedTime }.reduce(0, +)
+        
+        return formatTimeVerbally(totalDuration / timer.usageHistory.count)
     }
     
-    private func formattedDateText(for date: Date) -> some View {
-        Text(formattedGeorgianDate(from: date))
-            .font(.interMedium(size: 14))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundStyle(.primaryWhite)
+    private func totalTime() -> String {
+        let totalDuration = timer.usageHistory.map { $0.elapsedTime }.reduce(0, +)
+        
+        return formatTimeVerbally(totalDuration)
     }
     
-    private func formattedTimeText(for time: Int) -> some View {
-        Text(formatTime(time))
-            .font(.interMedium(size: 14))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundStyle(.primaryWhite)
+    private func groupedHistory() -> [(key: String, value: [TimerHistory])] {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        
+        let grouped = Dictionary(grouping: timer.usageHistory) { history in
+            formatter.string(from: history.stopDate)
+        }
+        
+        return grouped.sorted { $0.key > $1.key }
     }
-    
 }
 
 #Preview {
-    TimerDetailsView(timer: .constant(TimerModel(title: "საცდელი ტაიმერი", duration: 3600)))
+    TimerDetailsView(viewModel: TimerViewModel(), timer: .constant(TimerModel(title: "Sample Timer", duration: 3600)))
 }

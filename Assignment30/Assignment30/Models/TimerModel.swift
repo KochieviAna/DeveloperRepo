@@ -5,15 +5,15 @@
 //  Created by MacBook on 11.12.24.
 //
 
-import SwiftUI
+import Foundation
 
-struct TimerModel: Identifiable {
+struct TimerModel: Identifiable, Codable {
     var id = UUID()
     var title: String
     var duration: Int
     var timeRemaining: Int
     var isON: Bool = false
-    var usageHistory: [(date: Date, remainingTime: Int)] = []
+    var usageHistory: [TimerHistory] = []
     
     init(title: String, duration: Int) {
         self.title = title
@@ -22,7 +22,7 @@ struct TimerModel: Identifiable {
     }
 }
 
-struct TimerHistory: Identifiable {
+struct TimerHistory: Identifiable, Codable {
     var id = UUID()
     var stopDate: Date
     var elapsedTime: Int

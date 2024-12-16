@@ -65,7 +65,7 @@ struct TimerRowView: View {
                 titleText
                 
                 Spacer()
-                                
+                
                 deleteButton
             }
             .padding(.horizontal, 20)

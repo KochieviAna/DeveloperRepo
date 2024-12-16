@@ -9,11 +9,13 @@ import SwiftUI
 
 struct TimersView: View {
     @StateObject private var viewModel = TimerViewModel()
-    
     @State private var newTitle: String = ""
     @State private var newHours: String = ""
     @State private var newMinutes: String = ""
     @State private var newSeconds: String = ""
+    
+    @State private var showingQuickTimers = false
+    @State private var blurEffect = false
     
     func addNewTimer() {
         let hours = Int(newHours) ?? 0
@@ -32,7 +34,17 @@ struct TimersView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                timerHeadline
+                LazyHStack {
+                    timerHeadlineText
+                    
+                    Spacer(minLength: 190)
+                    
+                    plusButton
+                }
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: 110)
+                .background(Color.primaryDarkGrey)
                 
                 ScrollView {
                     ForEach(viewModel.timers.indices, id: \.self) { index in
@@ -57,9 +69,7 @@ struct TimersView: View {
                     
                     LazyHStack {
                         hoursTextField
-                        
                         minutesTextField
-                        
                         secondsTextField
                     }
                     .padding()
@@ -75,10 +85,22 @@ struct TimersView: View {
                 UIApplication.shared.endEditing()
             }
             .navigationBarHidden(true)
+            .blur(radius: blurEffect ? 10 : 0)
+            .sheet(isPresented: $showingQuickTimers, onDismiss: {
+                withTransaction(Transaction(animation: .none)) {
+                    blurEffect = false
+                }
+            }) {
+                QuickTimerView(viewModel: viewModel, showingQuickTimers: $showingQuickTimers)
+                    .ignoresSafeArea()
+                    .presentationDetents([.height(490), .medium, .height(650)])
+                    .presentationDragIndicator(.hidden)
+                    .interactiveDismissDisabled()
+            }
         }
     }
     
-    private var timerHeadline: some View {
+    private var timerHeadlineText: some View {
         LazyVStack(alignment: .leading) {
             Text("ტაიმერები")
                 .font(.interBold(size: 24))
@@ -88,6 +110,20 @@ struct TimersView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 110)
         .background(Color.primaryDarkGrey)
+    }
+    
+    private var plusButton: some View {
+        Button(action: {
+            showingQuickTimers.toggle()
+            blurEffect.toggle()
+        }) {
+            Image(systemName: "plus")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 32, height: 32)
+                .font(.system(size: 30))
+                .foregroundColor(.primaryWhite)
+        }
     }
     
     private var timerTitleTextFields: some View {
