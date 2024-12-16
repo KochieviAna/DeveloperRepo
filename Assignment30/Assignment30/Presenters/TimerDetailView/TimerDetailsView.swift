@@ -21,16 +21,18 @@ struct TimerDetailsView: View {
                 VStack {
                     HStack {
                         arrowBackButton
+                            .padding(.top, 30)
                         
                         Spacer()
                         
                         titleText
+                            .padding(.top, 30)
                         
                         Spacer(minLength: 30)
                     }
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 110)
+                    .frame(height: 140)
                     .background(Color.primaryDarkGrey)
                     
                     
@@ -71,31 +73,8 @@ struct TimerDetailsView: View {
                         VStack(alignment: .leading) {
                             activityHistoryText
                                 .padding()
-                            ForEach(groupedHistory(), id: \.key) { date, sessions in
-                                VStack(alignment: .leading) {
-                                    Text(formattedGeorgianDate(from: sessions.first?.stopDate ?? Date()))
-                                        .font(.robotoRegular(size: 14))
-                                        .foregroundStyle(.primaryDustyGrey)
-                                        .padding(.top)
-                                    
-                                    ForEach(sessions) { history in
-                                        HStack {
-                                            Text(formattedGeorgianDate(from: history.stopDate))
-                                                .font(.robotoRegular(size: 14))
-                                                .foregroundStyle(.primaryWhite)
-                                            
-                                            Spacer()
-                                            
-                                            Text(formatTime(history.elapsedTime))
-                                                .font(.robotoRegular(size: 14))
-                                                .foregroundStyle(.primaryWhite)
-                                        }
-                                        .padding(.horizontal)
-                                        .padding(.vertical, 4)
-                                    }
-                                }
-                                .padding(.horizontal)
-                            }
+                            
+                            activityHistoryList
                         }
                         .frame(maxWidth: .infinity)
                         .cornerRadius(16)
@@ -104,6 +83,8 @@ struct TimerDetailsView: View {
                 }
             }
         }
+        .background(.primaryNoirGrey)
+        .ignoresSafeArea(.all)
         .navigationBarBackButtonHidden(true)
     }
     
@@ -150,6 +131,35 @@ struct TimerDetailsView: View {
         Text("აქტივობის ისტორია")
             .font(.robotoRegular(size: 18))
             .foregroundStyle(.primaryWhite)
+            .frame(alignment: .leading)
+    }
+    
+    private var activityHistoryList: some View {
+        List {
+            ForEach(groupedHistory(), id: \.key) { date, sessions in
+                Section(header: Text(date)
+                    .font(.robotoBold(size: 14))
+                    .foregroundStyle(.primaryDustyGrey)
+                    .padding(.top)) {
+                        ForEach(sessions) { history in
+                            HStack {
+                                Text(timeForHistory(history.stopDate))
+                                    .font(.robotoRegular(size: 14))
+                                    .foregroundStyle(.primaryWhite)
+                                
+                                Spacer()
+                                
+                                Text(formatTime(history.elapsedTime))
+                                    .font(.robotoRegular(size: 14))
+                                    .foregroundStyle(.primaryWhite)
+                            }
+                            .padding(.horizontal)
+                            .padding(.vertical, 4)
+                        }
+                    }
+            }
+        }
+        .listStyle(PlainListStyle())
     }
     
     private var sessionsTodayText: some View {
@@ -233,15 +243,17 @@ struct TimerDetailsView: View {
     }
     
     private func groupedHistory() -> [(key: String, value: [TimerHistory])] {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        
         let grouped = Dictionary(grouping: timer.usageHistory) { history in
-            formatter.string(from: history.stopDate)
+            formattedGeorgianDate(from: history.stopDate)
         }
         
         return grouped.sorted { $0.key > $1.key }
+    }
+    
+    private func timeForHistory(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter.string(from: date)
     }
 }
 
