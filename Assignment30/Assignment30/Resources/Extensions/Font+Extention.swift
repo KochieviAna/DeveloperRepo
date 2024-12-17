@@ -19,4 +19,12 @@ extension Font {
     static func interBold(size: CGFloat) -> Font {
         return Font.custom("Inter_24pt-Bold", size: size)
     }
+    
+    static func robotoBold(size: CGFloat) -> Font {
+        return Font.custom("Roboto-Bold", size: size)
+    }
+    
+    static func robotoRegular(size: CGFloat) -> Font {
+        return Font.custom("Roboto-Regular", size: size)
+    }
 }
