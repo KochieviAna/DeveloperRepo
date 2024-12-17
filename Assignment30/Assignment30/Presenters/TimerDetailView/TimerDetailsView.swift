@@ -13,63 +13,63 @@ struct TimerDetailsView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        ScrollView {
-            ZStack {
-                Color.primaryNoirGrey
-                    .edgesIgnoringSafeArea(.all)
+        ZStack {
+            Color.primaryNoirGrey
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                HStack {
+                    arrowBackButton
+                        .padding(.top, 30)
+                    
+                    Spacer()
+                    
+                    titleText
+                        .padding(.top, 30)
+                    
+                    Spacer(minLength: 30)
+                }
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
+                .frame(height: 140)
+                .background(Color.primaryDarkGrey)
+                
                 
                 VStack {
-                    HStack {
-                        arrowBackButton
-                            .padding(.top, 30)
-                        
-                        Spacer()
-                        
-                        titleText
-                            .padding(.top, 30)
-                        
-                        Spacer(minLength: 30)
-                    }
-                    .padding(.horizontal)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 140)
-                    .background(Color.primaryDarkGrey)
-                    
-                    
                     VStack {
-                        VStack {
-                            timerImage
-                                .padding()
-                            
-                            durationText
-                                .padding()
-                            
-                            timeText
-                                .padding()
-                        }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 328)
-                        .background(Color.primaryDarkGrey)
-                        .cornerRadius(16)
-                        .padding(.top, 16)
-                        .padding(.horizontal)
+                        timerImage
+                            .padding()
                         
-                        VStack(alignment: .leading, spacing: 10) {
-                            sessionsTodayText
-                            
-                            dividerColor
-                            
-                            averageSessionDurationText
-                            
-                            dividerColor
-                            
-                            totalTimeText
-                        }
-                        .frame(maxWidth: .infinity)
-                        .background(Color.primaryDarkGrey)
-                        .cornerRadius(16)
-                        .padding(.horizontal)
+                        durationText
+                            .padding()
                         
+                        timeText
+                            .padding()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 328)
+                    .background(Color.primaryDarkGrey)
+                    .cornerRadius(16)
+                    .padding(.top, 16)
+                    .padding(.horizontal)
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        sessionsTodayText
+                        
+                        dividerColor
+                        
+                        averageSessionDurationText
+                        
+                        dividerColor
+                        
+                        totalTimeText
+                    }
+                    .frame(maxWidth: .infinity)
+                    .background(Color.primaryDarkGrey)
+                    .cornerRadius(16)
+                    .padding(.horizontal)
+                    
+                    ScrollView {
                         VStack(alignment: .leading) {
                             activityHistoryText
                                 .padding()
@@ -105,10 +105,10 @@ struct TimerDetailsView: View {
                     }
                 }
             }
+            .background(.primaryNoirGrey)
+            .ignoresSafeArea(.all)
+            .navigationBarBackButtonHidden(true)
         }
-        .background(.primaryNoirGrey)
-        .ignoresSafeArea(.all)
-        .navigationBarBackButtonHidden(true)
     }
     
     private var arrowBackButton: some View {
