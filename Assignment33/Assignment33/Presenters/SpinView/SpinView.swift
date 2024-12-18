@@ -53,13 +53,14 @@ struct SpinView: View {
             .strokeBorder(lineWidth: 4)
             .frame(width: 300, height: 300)
             .overlay(
-                ForEach(0..<viewModel.sectionNames.count, id: \.self) { index in
-                    let angle = Angle(degrees: Double(index) * (360.0 / Double(viewModel.sectionNames.count)))
+                ForEach(0..<viewModel.sections.count, id: \.self) { index in
+                    let angle = Angle(degrees: Double(index) * (360.0 / Double(viewModel.sections.count)))
+                    let section = viewModel.sections[index]
                     WheelSection(
-                        sectionName: viewModel.sectionNames[index],
+                        sectionName: section.0,
                         startAngle: angle,
-                        totalSections: viewModel.sectionNames.count,
-                        color: viewModel.sectionColors[index % viewModel.sectionColors.count]
+                        totalSections: viewModel.sections.count,
+                        color: section.1
                     )
                 }
             )

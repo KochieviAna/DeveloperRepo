@@ -11,8 +11,14 @@ class SpinViewModel: ObservableObject {
     @Published var rotationAngle: Double = 0.0
     @Published var isSpinning = false
     
-    let sectionNames = ["Gift Card", "Vacation", "iPhone", "House", "MacBook", "Car"]
-    let sectionColors = [Color.orange, Color.yellow, Color.green, Color.blue, Color.indigo, Color.purple]
+    let sections = [
+        ("Gift Card", Color.orange),
+        ("Vacation", Color.yellow),
+        ("iPhone", Color.green),
+        ("House", Color.blue),
+        ("MacBook", Color.indigo),
+        ("Car", Color.purple)
+    ]
     
     func startSpin() {
         isSpinning = true
