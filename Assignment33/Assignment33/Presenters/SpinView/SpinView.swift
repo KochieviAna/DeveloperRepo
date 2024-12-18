@@ -24,12 +24,7 @@ struct SpinView: View {
                 .fill(Color.primaryWhite)
                 .frame(width: 30, height: 30)
             
-            Triangle()
-                .fill(Color.red)
-                .frame(width: 40, height: 40)
-                .rotationEffect(Angle(degrees: 180))
-                .offset(y: -150)
-                .shadow(radius: 10)
+            triangleImage
         }
         .gesture(
             DragGesture()
@@ -68,6 +63,17 @@ struct SpinView: View {
                     )
                 }
             )
+    }
+    
+    private var triangleImage: some View {
+        Image(systemName: "triangle.fill")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 40, height: 40)
+            .rotationEffect(Angle(degrees: 180))
+            .offset(y: -150)
+            .shadow(radius: 10)
+            .foregroundStyle(.red)
     }
 }
 
