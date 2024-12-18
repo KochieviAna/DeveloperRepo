@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct SpinView: View {
     @StateObject private var viewModel = SpinViewModel()
     @State private var dragOffset: CGFloat = 0

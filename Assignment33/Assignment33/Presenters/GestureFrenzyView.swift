@@ -11,43 +11,36 @@ struct GestureFrenzyView: View {
     @State private var selectedTab = 0
     
     var body: some View {
-        VStack {
-            ZStack {
-                switch selectedTab {
-                case 0:
-                    SpinView()
-                case 1:
-                    HoldView()
-                case 2:
-                    RotateView()
-                case 3:
-                    TrashView()
-                default:
-                    Text("Invalid Tab")
+        TabView(selection: $selectedTab) {
+            SpinView()
+                .tabItem {
+                    Label("Spin", image: selectedTab == 0 ? "selected.spin" : "spin")
+                        .foregroundColor(selectedTab == 0 ? .primaryGreen : .primaryGrey)
                 }
-            }
-            Spacer()
+                .tag(0)
             
-            HStack {
-                TabBarButton(selectedTab: $selectedTab, index: 0, iconName: "spin", selectedIconName: "selected.spin", label: "Spin")
-                
-                Spacer()
-                
-                TabBarButton(selectedTab: $selectedTab, index: 1, iconName: "hold", selectedIconName: "selected.hold", label: "Hold")
-                
-                Spacer()
-                
-                TabBarButton(selectedTab: $selectedTab, index: 2, iconName: "rotate", selectedIconName: "selected.rotate", label: "Rotate")
-                
-                Spacer()
-                
-                TabBarButton(selectedTab: $selectedTab, index: 3, iconName: "trash", selectedIconName: "selected.trash", label: "Trash")
-            }
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity)
-            .frame(height: 70)
-            .background(.primaryWhite)
+            HoldView()
+                .tabItem {
+                    Label("Hold", image: selectedTab == 1 ? "selected.hold" : "hold")
+                        .foregroundColor(selectedTab == 1 ? .primaryGreen : .primaryGrey)
+                }
+                .tag(1)
+            
+            RotateView()
+                .tabItem {
+                    Label("Rotate", image: selectedTab == 2 ? "selected.rotate" : "rotate")
+                        .foregroundColor(selectedTab == 2 ? .primaryGreen : .primaryGrey)
+                }
+                .tag(2)
+            
+            TrashView()
+                .tabItem {
+                    Label("Trash", image: selectedTab == 3 ? "selected.trash" : "trash")
+                        .foregroundColor(selectedTab == 3 ? .primaryGreen : .primaryGrey)
+                }
+                .tag(3)
         }
+        .accentColor(.primaryGreen)
     }
 }
 
