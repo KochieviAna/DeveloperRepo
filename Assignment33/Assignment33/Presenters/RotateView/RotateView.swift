@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct RotateView: View {
-    @State var angle = Angle(degrees: 0)
+    @State private var angle = Angle(degrees: 0)
+    @State private var scale: CGFloat = 1.0
     
     var body: some View {
         ZStack {
@@ -16,10 +17,18 @@ struct RotateView: View {
             
             calculatorImage
                 .rotationEffect(angle)
+                .scaleEffect(scale)
                 .gesture(
-                    RotationGesture()
-                        .onChanged { angle = $0 }
-                        .onEnded { angle = $0 }
+                    SimultaneousGesture(
+                        RotationGesture()
+                            .onChanged { angle = $0 }
+                            .onEnded { angle = $0 },
+                        MagnificationGesture()
+                            .onChanged { value in
+                                scale = value
+                            }
+                            .onEnded { _ in }
+                    )
                 )
         }
     }
