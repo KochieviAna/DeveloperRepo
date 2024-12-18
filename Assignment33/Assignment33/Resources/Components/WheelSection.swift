@@ -51,7 +51,7 @@ struct WheelSection: View {
     private var wheelsectionName: some View {
         Text(sectionName)
             .font(.interSemiBold(size: 15))
-            .foregroundColor(.white)
+            .foregroundColor(.primaryWhite)
             .rotationEffect(startAngle + Angle(degrees: 360.0 / Double(totalSections) / 2))
     }
 }
