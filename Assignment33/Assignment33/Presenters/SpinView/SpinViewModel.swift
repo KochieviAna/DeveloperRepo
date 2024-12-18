@@ -24,4 +24,14 @@ class SpinViewModel: ObservableObject {
             self.isSpinning = false
         }
     }
+    
+    func startSpinWithSpeed(duration: Double, totalSpin: Double) {
+        isSpinning = true
+        withAnimation(.easeOut(duration: duration)) {
+            rotationAngle += totalSpin
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            self.isSpinning = false
+        }
+    }
 }

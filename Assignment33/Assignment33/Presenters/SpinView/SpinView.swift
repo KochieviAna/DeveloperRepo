@@ -71,18 +71,6 @@ struct SpinView: View {
     }
 }
 
-extension SpinViewModel {
-    func startSpinWithSpeed(duration: Double, totalSpin: Double) {
-        isSpinning = true
-        withAnimation(.easeOut(duration: duration)) {
-            rotationAngle += totalSpin
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            self.isSpinning = false
-        }
-    }
-}
-
 #Preview {
     SpinView()
 }
