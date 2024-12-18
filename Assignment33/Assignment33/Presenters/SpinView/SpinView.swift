@@ -17,20 +17,7 @@ struct SpinView: View {
         ZStack {
             backgroundColor
             
-            Circle()
-                .strokeBorder(lineWidth: 4)
-                .frame(width: 300, height: 300)
-                .overlay(
-                    ForEach(0..<viewModel.sectionNames.count, id: \.self) { index in
-                        let angle = Angle(degrees: Double(index) * (360.0 / Double(viewModel.sectionNames.count)))
-                        WheelSection(
-                            sectionName: viewModel.sectionNames[index],
-                            startAngle: angle,
-                            totalSections: viewModel.sectionNames.count,
-                            color: viewModel.sectionColors[index % viewModel.sectionColors.count]
-                        )
-                    }
-                )
+            wheel
                 .rotationEffect(Angle(degrees: viewModel.rotationAngle))
             
             Circle()
@@ -64,6 +51,23 @@ struct SpinView: View {
     
     private var backgroundColor: Color {
         .primaryGreen
+    }
+    
+    private var wheel: some View {
+        Circle()
+            .strokeBorder(lineWidth: 4)
+            .frame(width: 300, height: 300)
+            .overlay(
+                ForEach(0..<viewModel.sectionNames.count, id: \.self) { index in
+                    let angle = Angle(degrees: Double(index) * (360.0 / Double(viewModel.sectionNames.count)))
+                    WheelSection(
+                        sectionName: viewModel.sectionNames[index],
+                        startAngle: angle,
+                        totalSections: viewModel.sectionNames.count,
+                        color: viewModel.sectionColors[index % viewModel.sectionColors.count]
+                    )
+                }
+            )
     }
 }
 
