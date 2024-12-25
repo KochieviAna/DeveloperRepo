@@ -14,6 +14,10 @@ struct DetailedPlayerView: View {
     var onPlayPause: () -> Void
     var onPrevious: () -> Void
     var onNext: () -> Void
+    var onShuffle: () -> Void
+    var onRepeat: () -> Void
+    @Binding var isShuffleActive: Bool
+    @Binding var isRepeatActive: Bool
     
     var body: some View {
         ZStack {
@@ -56,7 +60,7 @@ struct DetailedPlayerView: View {
                 .padding()
                 
                 ProgressViewWrapper(progress: $progress)
-                    .frame(height: 10)
+                    .frame(width: 250, height: 10)
                     .padding()
                 
                 HStack {
@@ -67,8 +71,6 @@ struct DetailedPlayerView: View {
                             .padding()
                     }
                     
-                    Spacer()
-                    
                     Button(action: onPlayPause) {
                         Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                             .font(.largeTitle)
@@ -78,13 +80,26 @@ struct DetailedPlayerView: View {
                             .clipShape(Circle())
                     }
                     
-                    Spacer()
-                    
                     Button(action: onNext) {
                         Image(systemName: "forward.fill")
                             .font(.largeTitle)
                             .foregroundColor(.blue)
                             .padding()
+                    }
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    Button(action: onShuffle) {
+                        Image(systemName: isShuffleActive ? "shuffle.circle.fill" : "shuffle.circle")
+                            .padding()
+                            .foregroundColor(.blue)
+                    }
+                    
+                    Button(action: onRepeat) {
+                        Image(systemName: isRepeatActive ? "repeat.1.circle.fill" : "repeat.1.circle")
+                            .padding()
+                            .foregroundColor(.blue)
                     }
                 }
                 .padding(.horizontal)
@@ -97,11 +112,20 @@ struct DetailedPlayerView: View {
 
 #Preview {
     DetailedPlayerView(
-        song: SongModel(name: "Sample Song", fileName: "sample", imageName: "SampleImage", author: "Sample Author"),
+        song: SongModel(
+            name: "Come Here",
+            fileName: "Dominic Fike - Come Here (Official Audio)",
+            imageName: "Come Here",
+            author: "Dominic Fike"
+        ),
         progress: .constant(0.5),
         isPlaying: .constant(false),
         onPlayPause: {},
         onPrevious: {},
-        onNext: {}
+        onNext: {},
+        onShuffle: {},
+        onRepeat: {},
+        isShuffleActive: .constant(false),
+        isRepeatActive: .constant(false)
     )
 }

@@ -10,11 +10,36 @@ import SwiftUI
 
 class MusicPlayerViewModel: ObservableObject {
     @Published var songs: [SongModel] = [
-        SongModel(name: "Song 1", fileName: "song1", imageName: "song1Image", author: "song1Author"),
-        SongModel(name: "Song 2", fileName: "song2", imageName: "song2Image", author: "song2Author"),
-        SongModel(name: "Song 3", fileName: "song3", imageName: "song3Image", author: "song3Author"),
-        SongModel(name: "Song 4", fileName: "song4", imageName: "song4Image", author: "song4Author"),
-        SongModel(name: "Song 5", fileName: "song5", imageName: "song5Image", author: "song5Author")
+        SongModel(
+            name: "Monsoon",
+            fileName: "Monsoon - Wesley Joseph (Lyrics Video)",
+            imageName: "Monsoon",
+            author: "Wesley Joseph"
+        ),
+        SongModel(
+            name: "It's Called: Freefall",
+            fileName: "Rainbow Kitten Surprise - It's Called_ Freefall [Official Video]",
+            imageName: "It's Called: Freefall",
+            author: "Rainbow Kitten Surprise"
+        ),
+        SongModel(
+            name: "Thoughts From A Balcony",
+            fileName: "Thoughts From A Balcony - Mac Miller (Official Audio)",
+            imageName: "Thoughts From A Balcony",
+            author: "Mac Miller"
+        ),
+        SongModel(
+            name: "Comatose",
+            fileName: "Low Hum - Comatose",
+            imageName: "Comatose",
+            author: "Low Hum"
+        ),
+        SongModel(
+            name: "Come Here",
+            fileName: "Dominic Fike - Come Here (Official Audio)",
+            imageName: "Come Here",
+            author: "Dominic Fike"
+        )
     ]
     
     @Published var currentSong: SongModel?

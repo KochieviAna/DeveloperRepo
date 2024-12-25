@@ -17,8 +17,28 @@ struct SongListView: View {
                     Button(action: {
                         viewModel.playSong(song)
                     }) {
-                        Text(song.name)
-                            .padding()
+                        HStack {
+                            if let songImage = UIImage(named: song.imageName) {
+                                Image(uiImage: songImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 50, height: 50)
+                                    .cornerRadius(5)
+                                    .padding(.trailing, 10)
+                            }
+                            
+                            VStack(alignment: .leading) {
+                                Text(song.name)
+                                    .font(.headline)
+                                    .lineLimit(1)
+                                Text(song.author)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                    .lineLimit(1)
+                            }
+                            Spacer()
+                        }
+                        .padding()
                     }
                 }
                 Spacer()
@@ -49,7 +69,11 @@ struct SongListView: View {
                     isPlaying: $viewModel.isPlaying,
                     onPlayPause: viewModel.pauseOrResume,
                     onPrevious: viewModel.previousSong,
-                    onNext: viewModel.nextSong
+                    onNext: viewModel.nextSong,
+                    onShuffle: viewModel.toggleShuffle,
+                    onRepeat: viewModel.toggleRepeat,
+                    isShuffleActive: $viewModel.isShuffleActive,
+                    isRepeatActive: $viewModel.isRepeatActive
                 )
             }
         }
