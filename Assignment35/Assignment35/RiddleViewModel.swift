@@ -22,6 +22,9 @@ class RiddleViewModel: ObservableObject {
     @Published var isAnswerCorrect: Bool = false
     @Published var selectedAnswer: String? = nil
     @Published var riddles: [RiddleModel] = []
+    @Published var incorrectAnswersCount: Int = 0
+    
+    private var gameTimer: Timer?
     
     private let movieRiddles: [RiddleModel] = [
         RiddleModel(
@@ -191,13 +194,32 @@ class RiddleViewModel: ObservableObject {
         case .anime:
             riddles = animeRiddles
         }
+        startTimer()
+    }
+    
+    func startTimer() {
+        if !isGameOver {
+            gameTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+                self?.onTimerTick()
+            }
+        }
+    }
+    
+    func stopTimer() {
+        gameTimer?.invalidate()
+        gameTimer = nil
     }
     
     func onTimerTick() {
         if timerValue > 0 && !isGameOver {
-            timerValue -= 1
+            DispatchQueue.main.async {
+                self.timerValue -= 1
+            }
         } else if timerValue == 0 && !isGameOver {
-            nextRiddle()
+            DispatchQueue.main.async { [weak self] in
+                self?.isGameOver = true
+                self?.stopTimer()
+            }
         }
     }
     
@@ -207,9 +229,16 @@ class RiddleViewModel: ObservableObject {
         
         if isAnswerCorrect {
             score += 1
+        } else {
+            incorrectAnswersCount += 1
         }
         
-        nextRiddle()
+        if incorrectAnswersCount > (riddles.count / 2) {
+            isGameOver = true
+            stopTimer()
+        } else {
+            nextRiddle()
+        }
     }
     
     func nextRiddle() {
@@ -220,6 +249,7 @@ class RiddleViewModel: ObservableObject {
             selectedAnswer = nil
         } else {
             isGameOver = true
+            stopTimer()
         }
     }
     
@@ -228,6 +258,8 @@ class RiddleViewModel: ObservableObject {
         currentRiddleIndex = 0
         timerValue = 10
         isGameOver = false
+        incorrectAnswersCount = 0
         selectedAnswer = nil
+        startTimer()
     }
 }
