@@ -9,7 +9,20 @@ import UIKit
 import SwiftUI
 
 class RiddlesViewController: UIViewController {
+    
     var category: Category
+    
+    private lazy var riddleView: RiddleView = {
+        let viewModel = RiddleViewModel(category: category)
+        
+        return RiddleView(viewModel: viewModel)
+    }()
+    
+    private lazy var hostingController: UIHostingController<RiddleView> = {
+        let hostingController = UIHostingController(rootView: riddleView)
+        
+        return hostingController
+    }()
     
     init(category: Category) {
         self.category = category
@@ -22,14 +35,27 @@ class RiddlesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let viewModel = RiddleViewModel(category: category)
-        let riddleView = RiddleView(viewModel: viewModel)
-        
-        let hostingController = UIHostingController(rootView: riddleView)
+        setupUI()
+    }
+    
+    private func setupUI() {
         addChild(hostingController)
-        hostingController.view.frame = view.bounds
+        
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(hostingController.view)
+        
         hostingController.didMove(toParent: self)
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }

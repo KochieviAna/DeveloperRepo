@@ -9,49 +9,83 @@ import UIKit
 
 class CategoriesViewController: UIViewController {
     
+    private lazy var movieButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Movies", for: .normal)
+        button.addAction(UIAction(handler: { [weak self] _ in
+            self?.movieButtonTapped()
+        }), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var bookButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Books", for: .normal)
+        button.addAction(UIAction(handler: { [weak self] _ in
+            self?.bookButtonTapped()
+        }), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var animeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Anime", for: .normal)
+        button.addAction(UIAction(handler: { [weak self] _ in
+            self?.animeButtonTapped()
+        }), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [movieButton, bookButton, animeButton])
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.spacing = 20
+        
+        return stack
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .systemBackground
         
-        self.view.backgroundColor = .white
-        self.title = "Emoji Riddle Categories"
+        view.addSubview(stackView)
         
-        let movieButton = createButton(title: "Movies", action: { [weak self] in
-            guard let self = self else { return }
-            let movieRiddlesVC = RiddlesViewController(category: .movies)
-            self.navigationController?.pushViewController(movieRiddlesVC, animated: true)
-        })
-        
-        let bookButton = createButton(title: "Books", action: { [weak self] in
-            guard let self = self else { return }
-            let bookRiddlesVC = RiddlesViewController(category: .books)
-            self.navigationController?.pushViewController(bookRiddlesVC, animated: true)
-        })
-        
-        let animeButton = createButton(title: "Anime", action: { [weak self] in
-            guard let self = self else { return }
-            let animeRiddlesVC = RiddlesViewController(category: .anime)
-            self.navigationController?.pushViewController(animeRiddlesVC, animated: true)
-        })
-        
-        let stackView = UIStackView(arrangedSubviews: [movieButton, bookButton, animeButton])
-        stackView.axis = .vertical
-        stackView.spacing = 20
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(stackView)
-        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            movieButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            bookButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            animeButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
-    func createButton(title: String, action: @escaping () -> Void) -> UIButton {
-        let button = UIButton(type: .system)
-        button.setTitle(title, for: .normal)
-        button.addAction(UIAction(handler: { [weak self] _ in
-            action()
-        }), for: .touchUpInside)
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        return button
+    private func movieButtonTapped() {
+        let movieRiddlesVC = RiddlesViewController(category: .movies)
+        navigationController?.pushViewController(movieRiddlesVC, animated: true)
+    }
+    
+    private func bookButtonTapped() {
+        let bookRiddlesVC = RiddlesViewController(category: .books)
+        navigationController?.pushViewController(bookRiddlesVC, animated: true)
+    }
+    
+    private func animeButtonTapped() {
+        let animeRiddlesVC = RiddlesViewController(category: .anime)
+        navigationController?.pushViewController(animeRiddlesVC, animated: true)
     }
 }
